@@ -1,2 +1,31 @@
-<h1>{{title}}</h1>
-<p>Welcome to {{title}}</p>
+<div class="row">
+  <div class="col-md-4"></div>
+  <div class="col-md-4">
+
+    <h2>STL VIPER</h2>
+
+    <p>When STL VIPER is hit with a hard problem what do we do??</p>
+    <a href='#' id="justdoit">CLick to find out</a>
+  </div>
+  <div class="col-md-4"></div>
+</div>
+<div class="shia-do-it">
+  <div class="container">
+    <video width="960" height="540" name="media"
+           src="https://raw.githubusercontent.com/ubergoob/do-it-chrome-extension/master/assets/output.webm"
+           style="visibility: hidden;">
+      <source type="video/webm">
+    </video>
+  </div>
+</div>
+
+<script type="application/javascript">
+  $(document).ready(function () {
+    $('#justdoit').on('click', function () {
+      var vid = $('.shia-do-it video');
+      vid.css("visibility", "visible");
+      vid.get(0).play();
+      return false;
+    });
+  });
+</script>
