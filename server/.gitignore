@@ -32,3 +32,8 @@ node_modules
 
 # Runtime configuration for swagger app
 config/runtime.yaml
+
+# Elastic Beanstalk Files
+.elasticbeanstalk/*
+!.elasticbeanstalk/*.cfg.yml
+!.elasticbeanstalk/*.global.yml
