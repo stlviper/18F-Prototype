@@ -4,7 +4,7 @@
  * Module dependencies.
  */
 
-var app = require('../main');
+var app = require('../server/server');
 var debug = require('debug')('f-eighteen:server');
 var http = require('http');
 
