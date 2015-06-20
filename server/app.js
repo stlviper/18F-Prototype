@@ -2,6 +2,11 @@
 
 var SwaggerExpress = require('swagger-express-mw');
 var app = require('express')();
+
+
+
+
+
 module.exports = app; // for testing
 
 var config = {
@@ -13,6 +18,13 @@ SwaggerExpress.create(config, function(err, swaggerExpress) {
 
   // install middleware
   swaggerExpress.register(app);
+
+  app.use(function (req, res, next) {
+    res.setHeader('Access-Control-Allow-Origin', req.headers.origin);
+    res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, PATCH, DELETE');
+    res.setHeader('Access-Control-Allow-Headers', 'X-Requested-With,content-type');
+    next();
+  });
 
   var port = process.env.PORT || 80;
   app.listen(port);

@@ -42,6 +42,8 @@ paths:
           description: Error
           schema:
             $ref: "#/definitions/ErrorResponse"
+  /docs:
+    x-swagger-router-controller: swaggerui
 # complex objects have schema definitions
 definitions:
   HelloWorldResponse:
