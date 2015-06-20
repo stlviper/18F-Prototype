@@ -1,10 +1,10 @@
 branch-defaults:
-  master:
+  default:
     environment: f-eighteen-dev
 global:
   application_name: f-eighteen
   default_ec2_keyname: null
-  default_platform: Node.js
-  default_region: null
-  profile: null
-  sc: git
+  default_platform: 64bit Amazon Linux 2015.03 v1.4.3 running Node.js
+  default_region: us-east-1
+  profile: eb-cli
+  sc: null

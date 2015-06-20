@@ -14,7 +14,7 @@ SwaggerExpress.create(config, function(err, swaggerExpress) {
   // install middleware
   swaggerExpress.register(app);
 
-  var port = process.env.PORT || 10010;
+  var port = process.env.PORT || 80;
   app.listen(port);
 
   console.log('try this:\ncurl http://127.0.0.1:' + port + '/hello?name=Scott');
