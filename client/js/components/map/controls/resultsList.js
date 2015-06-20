@@ -1,7 +1,9 @@
 'use strict';
 
-module.exports = angular.directive('openfdaviz.map.controls.ResultsList', function($scope){
-	angular.element(document).ready(function () {
-		console.log('results list all good');
-	});
+openfdaviz.directive('resultsList', function(){
+	return{
+		restrict: 'AE',
+		replace: 'true',
+		template: '<h3>Results List: all good</h3>'
+	}
 });

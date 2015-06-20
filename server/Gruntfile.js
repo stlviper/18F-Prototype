@@ -9,24 +9,24 @@ module.exports = function(grunt) {
 			},
 			dev: {
 				options: {
-					script: 'main.js'
+					script: ']/main.js'
 				}
 			},
 			prod: { // TODO: decide where prod is
 				options: {
-					script: 'main.js',
+					script: 'www/server/main.js',
 					node_env: 'production'
 				}
 			},
 			test: {
 				options: {
-					script: 'main.js'
+					script: 'server/main.js'
 				}
 			}
 		},
 		mochaTest: {
 			server: {
-				src: ['test/**/*.js'],
+				src: ['server/test/**/*.js'],
 				options: {
 					reporter: 'nyan'
 				}
