@@ -49,7 +49,7 @@ module.exports = function(grunt) {
 		compress: {
 			main: {
 				options: {
-					archive: '../build/openfdaviz-server.zip'
+					archive: '../dist/server/openfdaviz-server.zip'
 				},
 				files: [
 					{src: ['**', '!node_modules/**'], dest: '/', filter: 'isFile'}
@@ -70,7 +70,7 @@ module.exports = function(grunt) {
                     bucket: 'openfdaviz'
                 },
                 files: [
-                    {expand: true, cwd: '../build/', src: ['**'], dest: '/'}
+                    {expand: true, cwd: '../dist/server/', src: ['**'], dest: '/'}
                 ]
             }
         }
