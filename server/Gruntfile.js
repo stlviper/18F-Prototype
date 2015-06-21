@@ -55,15 +55,39 @@ module.exports = function(grunt) {
 					{src: ['**', '!node_modules/**'], dest: '/', filter: 'isFile'}
 				]
 			}
-		}
+		},
+        aws: grunt.file.readJSON('../aws.json'),
+        aws_s3: {
+            options: {
+                accessKeyId: '<%= aws.AWSAccessKeyId %>', // Use the variables
+                secretAccessKey: '<%= aws.AWSSecretKey %>', // You can also use env variables
+                region: 'us-east-1',
+                uploadConcurrency: 5, // 5 simultaneous uploads
+                downloadConcurrency: 5 // 5 simultaneous downloads
+            },
+            production: {
+                options: {
+                    bucket: 'openfdaviz'
+                },
+                files: [
+                    {expand: true, cwd: '../build/', src: ['**'], dest: '/'}
+                ]
+            }
+        }
 	});
 
 	grunt.loadNpmTasks('grunt-mocha-test');
 	grunt.loadNpmTasks('grunt-express-server');
 	grunt.loadNpmTasks('grunt-contrib-compress');
+    grunt.loadNpmTasks('grunt-aws-s3');
 
 	// Register other tasks
 	grunt.registerTask('test', [ 'express:dev', 'mochaTest:server' ]);
 	grunt.registerTask('default', ['test']);
+
+    grunt.registerTask('deploy',[
+        'compress',
+        'aws_s3'
+    ]);
 
 };
