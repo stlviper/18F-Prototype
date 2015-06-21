@@ -44,11 +44,23 @@ module.exports = function(grunt) {
 					timeout: 25000
 				}
 			}
+		},
+        // This will build a zip file that can be copied to S3 and then deployed using CloudFormation
+		compress: {
+			main: {
+				options: {
+					archive: '../build/openfdaviz-server.zip'
+				},
+				files: [
+					{src: ['**', '!node_modules/**'], dest: '/', filter: 'isFile'}
+				]
+			}
 		}
 	});
 
 	grunt.loadNpmTasks('grunt-mocha-test');
 	grunt.loadNpmTasks('grunt-express-server');
+	grunt.loadNpmTasks('grunt-contrib-compress');
 
 	// Register other tasks
 	grunt.registerTask('test', [ 'express:dev', 'mochaTest:server' ]);
