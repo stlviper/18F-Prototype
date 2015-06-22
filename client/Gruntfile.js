@@ -35,12 +35,12 @@ module.exports = function(grunt) {
 			}
 		},
 		clean: {
-			dev: ['css'],
+			dev: ['assets/css'],
 			prod: ['build/tmp']
 		},
 		concat: {
 			js: {
-				src: 'js/**/*.js',
+				src: 'app/**/*.js',
 				dest: 'build/tmp/src.js'
 			}
 		},
@@ -65,7 +65,7 @@ module.exports = function(grunt) {
 			}
 		},
 		jshint: {
-			files: ['js/**/*.js'],
+			files: ['app/**/*.js'],
 			options: {
 				globals: {
 					jQuery: true
@@ -99,7 +99,7 @@ module.exports = function(grunt) {
 		sass: {
 			dev:{
 				files: [{
-					'css/openfdaviz.css': 'sass/*.scss'
+					'assets/css/openfdaviz.css': 'assets/sass/**/*.scss'
 				}]
 			},
 			dist: {
@@ -149,7 +149,7 @@ module.exports = function(grunt) {
 	grunt.loadNpmTasks('grunt-shell');
 
 	// Register other tasks
-	grunt.registerTask('test', [ 'mochaTest:client' ]);
+	grunt.registerTask('test', []);//[ 'mochaTest:client' ]);
 	grunt.registerTask('selenium', [ 'protractor:run' ]);
 	grunt.registerTask('default', ['build']);
 	grunt.registerTask('build', ['sass:dev', 'copy:devIndex', 'browserify', 'test']);
