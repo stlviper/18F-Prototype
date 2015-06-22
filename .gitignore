@@ -40,3 +40,8 @@ deploy
 .DS_Store
 
 aws.json
+
+dist
+client/build
+client/css
+client/index.html

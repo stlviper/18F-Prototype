@@ -2,7 +2,28 @@ module.exports = function(grunt) {
 	// Project configuration.
 	grunt.initConfig({
 		pkg: grunt.file.readJSON('package.json'),
+		aws: grunt.file.readJSON('../aws.json'),
 
+		aws_s3: {
+			options: {
+				accessKeyId: '<%= aws.AWSAccessKeyId %>', // Use the variables
+				secretAccessKey: '<%= aws.AWSSecretKey %>', // You can also use env variables
+				region: 'us-east-1',
+				uploadConcurrency: 5, // 5 simultaneous uploads
+				downloadConcurrency: 5 // 5 simultaneous downloads
+			},
+			production: {
+				options: {
+					bucket: 'openfdaviz'
+				},
+				files: [{
+					expand: true,
+					cwd: '../build/',
+					src: ['**'],
+					dest: '/'
+				}]
+			}
+		},
 		browserify: {
 			options: {
 				debug: true
@@ -10,30 +31,36 @@ module.exports = function(grunt) {
 			pkg: grunt.file.readJSON('package.json'),
 			npm:{
 				src: 'build/lib/npm-lib.js',
-				dest: 'dist/js/lib/npm-lib.js'
+				dest: '../dist/client/js/lib/npm-lib.js'
 			}
 		},
-		clean:{
+		clean: {
 			dev: ['css'],
-			prod: ['dist', 'build/tmp']
+			prod: ['build/tmp']
 		},
-		concat:{
+		concat: {
 			js: {
 				src: 'js/**/*.js',
 				dest: 'build/tmp/src.js'
 			}
 		},
-		copy:{
+		copy: {
 			prodIndex:{
 				files: [{
-					src: ['build/index/index_prod.html'],
-					dest: './dist/index.html'
+					src: ['build/resources/index_prod.html'],
+					dest: '../dist/client/index.html'
+				}]
+			},
+			devIndex:{
+				files: [{
+					src: ['build/resources/index_dev.html'],
+					dest: 'index.html'
 				}]
 			},
 			vendorCss:{
 				files: [{
 					src: ['node_modules/bootstrap/dist/css/bootstrap.min.css'],
-					dest: './dist/css/bootstrap.min.css'
+					dest: '../dist/client/css/bootstrap.min.css'
 				}]
 			}
 		},
@@ -61,7 +88,7 @@ module.exports = function(grunt) {
 			},
 			dist: {
 				files: [{
-					'dist/css/openfdaviz.css': 'sass/*.scss'
+					'../dist/client/css/openfdaviz.css': 'sass/*.scss'
 				}]
 			}
 		},
@@ -70,14 +97,14 @@ module.exports = function(grunt) {
 				command: 'echo "(aws s3 cp dist/ :openfdaviz/)"'
 			}
 		},
-		uglify:{
+		uglify: {
 			src: {
 				files:[
 					{
 						expand: true,
 						cwd: './build/tmp/',
 						src: ['*.js'],
-						dest: './dist/js/',
+						dest: '../dist/client/js/',
 						ext: '.min.js'
 					}
 				]
@@ -97,7 +124,7 @@ module.exports = function(grunt) {
 	// Register other tasks
 	grunt.registerTask('test', [ 'mochaTest:client' ]);
 	grunt.registerTask('default', ['build']);
-	grunt.registerTask('build', ['sass:dev', 'browserify', 'test']);
+	grunt.registerTask('build', ['sass:dev', 'copy:devIndex', 'browserify', 'test']);
 	grunt.registerTask('build:prod', ['build', 'sass:dist', 'concat:js', 'uglify', 'copy']);
 	grunt.registerTask('deploy', ['clean', 'build:prod', 'shell:s3deploy']);
 
