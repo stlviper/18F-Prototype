@@ -76,9 +76,9 @@ openfdaviz.directive("pieChart", ['$parse', function ($parse) {
       loadPieData('20040101', '20150101');
       d3.select('#dateSlider').call(d3.slider()
           .axis(true)
-          .min(2004)
-          .max(2015)
-          .value([2004, 2015])
+          .min(_settings.minDate)
+          .max(_settings.maxDate)
+          .value([_settings.minDate, _settings.maxDate])
           .on("slideend", function (evt, value) {
             var minDate = convertDecimalDate(value[0]);
             var maxDate = convertDecimalDate(value[1]);
