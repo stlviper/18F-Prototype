@@ -2,28 +2,6 @@ module.exports = function(grunt) {
 	// Project configuration.
 	grunt.initConfig({
 		pkg: grunt.file.readJSON('package.json'),
-		aws: grunt.file.readJSON('../aws.json'),
-
-		aws_s3: {
-			options: {
-				accessKeyId: '<%= aws.AWSAccessKeyId %>', // Use the variables
-				secretAccessKey: '<%= aws.AWSSecretKey %>', // You can also use env variables
-				region: 'us-east-1',
-				uploadConcurrency: 5, // 5 simultaneous uploads
-				downloadConcurrency: 5 // 5 simultaneous downloads
-			},
-			production: {
-				options: {
-					bucket: 'openfdaviz'
-				},
-				files: [{
-					expand: true,
-					cwd: '../build/',
-					src: ['**'],
-					dest: '/'
-				}]
-			}
-		},
 		browserify: {
 			options: {
 				debug: true
@@ -31,7 +9,11 @@ module.exports = function(grunt) {
 			pkg: grunt.file.readJSON('package.json'),
 			npm:{
 				src: 'assets/lib/npm-lib.js',
-				dest: '../dist/client/js/lib/npm-lib.js'
+				dest: '../dist/client/js/npm-lib.js'
+			},
+			vendor:{
+				src: 'assets/lib/vendor-lib.js',
+				dest: 'build/tmp/vendor-lib.js'
 			}
 		},
 		clean: {
@@ -42,6 +24,10 @@ module.exports = function(grunt) {
 			js: {
 				src: 'app/**/*.js',
 				dest: 'build/tmp/src.js'
+			},
+			vendor:{
+				src: 'assets/js/**/*.js',
+				dest: 'build/tmp/vendor.js'
 			}
 		},
 		copy: {
@@ -117,7 +103,7 @@ module.exports = function(grunt) {
 			}
 		},
 		uglify: {
-			src: {
+			all: {
 				files: [
 					{
 						expand: true,
@@ -131,7 +117,6 @@ module.exports = function(grunt) {
 		},
 		protractor_webdriver: {
 			options: {
-
 			},
 			all: {
 			}
@@ -147,16 +132,17 @@ module.exports = function(grunt) {
 
 	//to install, run npm install -g protractor, to start, first run webdriver-manager start --standalone
 	grunt.loadNpmTasks('grunt-protractor-runner');
+	//to install, run node_modules/protractor/bin/webdriver-manager update --standalone --chrome
 	grunt.loadNpmTasks('grunt-protractor-webdriver');
 	grunt.loadNpmTasks('grunt-sass');
 	grunt.loadNpmTasks('grunt-shell');
 
 	// Register other tasks
 	grunt.registerTask('test', [ 'mochaTest:client' ]);
-	grunt.registerTask('selenium', [ 'protractor:run' ]);
+	grunt.registerTask('selenium', [ 'protractor_webdriver', 'protractor:run' ]);
 	grunt.registerTask('default', ['build']);
 	grunt.registerTask('build', ['sass:dev', 'copy:devIndex', 'browserify', 'test']);
 	grunt.registerTask('build:prod', ['build', 'sass:dist', 'concat:js', 'uglify', 'copy']);
-	grunt.registerTask('deploy', ['clean', 'build:prod', 'shell:s3deploy']);
+	grunt.registerTask('deploy', ['clean', 'build:prod']);
 
 };

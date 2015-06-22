@@ -11,3 +11,6 @@ require('angular/angular.min');
 require('angular-route/angular-route.min');
 require('bootstrap/dist/js/bootstrap');
 require('leaflet/dist/leaflet');
+require('leaflet/dist/leaflet');
+window.d3 = require('d3/d3.min');
+window.c3 = require('c3/c3.min');
