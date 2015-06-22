@@ -2,28 +2,7 @@ module.exports = function(grunt) {
 	// Project configuration.
 	grunt.initConfig({
 		pkg: grunt.file.readJSON('package.json'),
-		aws: grunt.file.readJSON('../aws.json'),
 
-		aws_s3: {
-			options: {
-				accessKeyId: '<%= aws.AWSAccessKeyId %>', // Use the variables
-				secretAccessKey: '<%= aws.AWSSecretKey %>', // You can also use env variables
-				region: 'us-east-1',
-				uploadConcurrency: 5, // 5 simultaneous uploads
-				downloadConcurrency: 5 // 5 simultaneous downloads
-			},
-			production: {
-				options: {
-					bucket: 'openfdaviz'
-				},
-				files: [{
-					expand: true,
-					cwd: '../build/',
-					src: ['**'],
-					dest: '/'
-				}]
-			}
-		},
 		browserify: {
 			options: {
 				debug: true
@@ -157,6 +136,6 @@ module.exports = function(grunt) {
 	grunt.registerTask('default', ['build']);
 	grunt.registerTask('build', ['sass:dev', 'copy:devIndex', 'browserify', 'test']);
 	grunt.registerTask('build:prod', ['build', 'sass:dist', 'concat:js', 'uglify', 'copy']);
-	grunt.registerTask('deploy', ['clean', 'build:prod', 'shell:s3deploy']);
+	grunt.registerTask('deploy', ['clean', 'build:prod']);
 
 };
