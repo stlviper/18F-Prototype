@@ -30,7 +30,7 @@ module.exports = function(grunt) {
 			},
 			pkg: grunt.file.readJSON('package.json'),
 			npm:{
-				src: 'build/lib/npm-lib.js',
+				src: 'assets/lib/npm-lib.js',
 				dest: '../dist/client/js/lib/npm-lib.js'
 			}
 		},
@@ -47,13 +47,13 @@ module.exports = function(grunt) {
 		copy: {
 			prodIndex:{
 				files: [{
-					src: ['build/resources/index_prod.html'],
+					src: ['assets/html/index_prod.html'],
 					dest: '../dist/client/index.html'
 				}]
 			},
 			devIndex:{
 				files: [{
-					src: ['build/resources/index_dev.html'],
+					src: ['assets/html/index_dev.html'],
 					dest: 'index.html'
 				}]
 			},
@@ -61,6 +61,9 @@ module.exports = function(grunt) {
 				files: [{
 					src: ['node_modules/bootstrap/dist/css/bootstrap.min.css'],
 					dest: '../dist/client/css/bootstrap.min.css'
+				},{
+					src: ['assets/css/openfdaviz.css'],
+					dest: '../dist/client/css/openfdaviz.css'
 				}]
 			}
 		},
