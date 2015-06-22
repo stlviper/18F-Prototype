@@ -30,5 +30,5 @@ SwaggerExpress.create(config, function(err, swaggerExpress) {
   var port = process.env.PORT || 80;
   app.listen(port);
 
-  console.log('try this:\ncurl http://127.0.0.1:' + port + '/hello?name=Scott');
+  console.log('Dev API Server running on http://127.0.0.1:' + port);
 });

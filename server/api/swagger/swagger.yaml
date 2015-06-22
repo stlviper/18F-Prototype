@@ -18,12 +18,48 @@ consumes:
 produces:
   - application/json
 paths:
-  /drug/event/rangecount:
-    x-swagger-router-controller: drugs
+  /drug/event/search:
     get:
-      description: Returns test fetch of a drugs query
-      # used as the method name of the controller
-      operationId: fetch
+      x-swagger-router-controller: drugs
+      operationId: search
+      description: Search field(s)
+      parameters:
+        - name: field
+          in: query
+          description: Field to search on.
+          required: true
+          type: string
+        - name: value
+          in: query
+          description: Value to search on.
+          required: true
+          type: string
+        - name: start
+          description: Start Index to return at
+          in: query
+          required: false
+          type: integer
+        - name: limit
+          in: query
+          description: Limit the number of results
+          required: false
+          type: integer
+      responses:
+        "200":
+          description: Success
+          schema:
+            # a pointer to a definition
+            $ref: "#/definitions/Generic"
+        # responses may fall through to errors
+        default:
+          description: Error
+          schema:
+            $ref: "#/definitions/Error"
+  /drug/event/rangecount:
+    get:
+      x-swagger-router-controller: drugs
+      operationId: rangecount
+      description: Returns test fetch of a drugs query count
       parameters:
         - name: start
           in: query
@@ -45,7 +81,7 @@ paths:
           description: Success
           schema:
             # a pointer to a definition
-            $ref: "#/definitions/Drugs"
+            $ref: "#/definitions/Generic"
         # responses may fall through to errors
         default:
           description: Error
@@ -53,7 +89,7 @@ paths:
             $ref: "#/definitions/Error"
 # complex objects have schema definitions
 definitions:
-  Drugs:
+  Generic:
     properties:
       message:
         type: string
