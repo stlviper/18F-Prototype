@@ -25,7 +25,7 @@ openfdaviz.directive("pieChart", ['$parse', function ($parse) {
     template: '<div><h2>Patient Gender</h2><div id="pieChart"></div><div id="dateSlider"></div></div>',
     link: function (scope, element, attrs) {
       var _settings = {
-        apiUrl: 'http://openfdaviz-dev.elasticbeanstalk.com/drug/event/rangecount',
+        apiUrl: '//openfdaviz-dev.elasticbeanstalk.com/drug/event/rangecount',
         minDate: 2004,
         maxDate: 2015,
         patientSexTerm: 'patient.patientsex',
