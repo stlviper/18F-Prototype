@@ -9,7 +9,11 @@ module.exports = function(grunt) {
 			pkg: grunt.file.readJSON('package.json'),
 			npm:{
 				src: 'assets/lib/npm-lib.js',
-				dest: '../dist/client/js/lib/npm-lib.js'
+				dest: '../dist/client/js/npm-lib.js'
+			},
+			vendor:{
+				src: 'assets/lib/vendor-lib.js',
+				dest: 'build/tmp/vendor-lib.js'
 			}
 		},
 		clean: {
@@ -20,6 +24,10 @@ module.exports = function(grunt) {
 			js: {
 				src: 'app/**/*.js',
 				dest: 'build/tmp/src.js'
+			},
+			vendor:{
+				src: 'assets/js/**/*.js',
+				dest: 'build/tmp/vendor.js'
 			}
 		},
 		copy: {
@@ -95,7 +103,7 @@ module.exports = function(grunt) {
 			}
 		},
 		uglify: {
-			src: {
+			all: {
 				files: [
 					{
 						expand: true,
