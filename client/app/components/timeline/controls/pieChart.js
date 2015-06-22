@@ -25,11 +25,11 @@ openfdaviz.directive("pieChart", ['$parse', function ($parse) {
     template: '<div><h2>Patient Gender</h2><div id="pieChart"></div><div id="dateSlider"></div></div>',
     link: function (scope, element, attrs) {
       var _settings = {
-        apiUrl: 'http://f-eighteen-dev.elasticbeanstalk.com/drug/event/rangecount',
+        apiUrl: 'http://openfdaviz-dev.elasticbeanstalk.com/drug/event/rangecount',
         minDate: 2004,
         maxDate: 2015,
         patientSexTerm: 'patient.patientsex',
-        recieveDateTerm: 'receivedate',
+        receiveDateTerm: 'receivedate',
         pieChart: null
       };
 
@@ -76,9 +76,9 @@ openfdaviz.directive("pieChart", ['$parse', function ($parse) {
       loadPieData('20040101', '20150101');
       d3.select('#dateSlider').call(d3.slider()
           .axis(true)
-          .min(2004)
-          .max(2015)
-          .value([2004, 2015])
+          .min(_settings.minDate)
+          .max(_settings.maxDate)
+          .value([_settings.minDate, _settings.maxDate])
           .on("slideend", function (evt, value) {
             var minDate = convertDecimalDate(value[0]);
             var maxDate = convertDecimalDate(value[1]);
