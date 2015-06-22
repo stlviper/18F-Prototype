@@ -13,17 +13,30 @@ module.exports = function (grunt) {
       }
     },
     clean: {
-      dev: ['assets/css'],
-      prod: ['build/tmp']
+      dev: [ 'build' ],
+      prod: [ 'build' ]
     },
     concat: {
+      cssNpmLib:{
+        src: [
+          'node_modules/bootstrap/dist/css/bootstrap.min.css',
+          'assets/css/d3/c3.min.css'
+        ],
+        dest: 'build/css/npm-lib.css'
+      },
+      cssVendor:{
+        src: [
+          'assets/css/d3/d3.slider.css'
+        ],
+        dest: 'build/css/vendor-lib.css'
+      },
       js: {
         src: 'app/**/*.js',
-        dest: 'build/tmp/src.js'
+        dest: 'build/js/src.js'
       },
       vendor: {
         src: 'assets/js/**/*.js',
-        dest: 'build/tmp/vendor.js'
+        dest: 'build/js/vendor.js'
       }
     },
     copy: {
@@ -41,9 +54,14 @@ module.exports = function (grunt) {
       },
       vendorCss: {
         files: [{
-          src: ['node_modules/bootstrap/dist/css/bootstrap.min.css'],
-          dest: '../dist/client/css/bootstrap.min.css'
-        }, {
+          src: ['build/css/npm-lib.css'],
+          dest: '../dist/client/css/npm-lib.css'
+        },
+        {
+          src: ['build/css/vendor-lib.css'],
+          dest: '../dist/client/css/vendor-lib.css'
+        },
+        {
           src: ['assets/css/openfdaviz.css'],
           dest: '../dist/client/css/openfdaviz.css'
         }]
@@ -84,7 +102,7 @@ module.exports = function (grunt) {
     sass: {
       dev: {
         files: [{
-          'assets/css/openfdaviz.css': 'assets/sass/**/*.scss'
+          'build/css/openfdaviz.css': 'assets/sass/**/*.scss'
         }]
       },
       dist: {
@@ -103,7 +121,7 @@ module.exports = function (grunt) {
         files: [
           {
             expand: true,
-            cwd: './build/tmp/',
+            cwd: './build/js/',
             src: ['*.js'],
             dest: '../dist/client/js/',
             ext: '.min.js'
@@ -136,7 +154,7 @@ module.exports = function (grunt) {
   grunt.registerTask('selenium', ['protractor_webdriver', 'protractor:run']);
   grunt.registerTask('default', ['build']);
   grunt.registerTask('build', ['sass:dev', 'copy:devIndex', 'browserify', 'test']);
-  grunt.registerTask('build:prod', ['build', 'sass:dist', 'concat:js', 'concat:vendor', 'uglify', 'copy']);
+  grunt.registerTask('build:prod', ['build', 'sass:dist', 'concat', 'uglify', 'copy']);
   grunt.registerTask('deploy', ['clean', 'build:prod']);
 
 };
