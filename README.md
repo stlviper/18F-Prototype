@@ -61,6 +61,26 @@ $ PORT=3001 node fake-api/bin/www
 Above will run a fake OpenFDA server for testing. You can view it at 
     http://localhost:3001/healthcheck/
 
-### Deploying on AWS Resources
+### Deploying OpenFDAVizAPI Server on AWS Resources
 
-There is configuration available to deploy all resources to Amazon Web Services, when ready to deploy your 
+There is configuration available to deploy all resources to Amazon Web Services, when ready to deploy OpenFDAViz to your Amazon instance follow the steps below.
+*** WARNING ***
+Executing the commands below will cost you money as it will start 1 EC2 instance with autoscaling turned on and push objects to S3.
+
+Open aws.json and modify the contents to look like this,
+```
+{
+  "AWSAccessKeyId": "YOUR KeyID",
+  "AWSSecretKey": "YOUR SECRET"
+}
+```
+Then you need to have AWS EB Cli Installed (http://docs.aws.amazon.com/elasticbeanstalk/latest/dg/eb-cli3-install.html) you will be prompted to enter your KeyID and Secret when running the command below.
+
+```
+$ cd server
+$ eb init
+$ eb create 
+$ eb open
+```
+
+You will now have a running version of the OpenFDAViz app. The eb open command will open the API in your browser. 
