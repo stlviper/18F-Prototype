@@ -1,5 +1,5 @@
 {
-  "name": "OpenFDAVisualizer",
+  "name": "f-eighteen-server",
   "version": "0.0.1",
   "private": true,
   "description": "New Swagger API Project",
@@ -9,16 +9,16 @@
   "main": "app.js",
   "dependencies": {
     "express": "^4.12.3",
+    "request": "^2.58.0",
     "swagger-express-mw": "0.0.x"
   },
   "devDependencies": {
-    "grunt": "~0.4.5",
-    "grunt-contrib-copy": "~0.8.0",
-    "grunt-contrib-jshint": "~0.10.0",
-    "grunt-contrib-watch": "~0.6.1",
-    "grunt-express-server": "~0.5.1",
-    "grunt-mocha-test": "0.12.7",
-    "mocha": "2.2.5",
+    "grunt": "^0.4.5",
+    "grunt-aws-s3": "^0.13.1",
+    "grunt-contrib-compress": "^0.13.0",
+    "grunt-express-server": "^0.5.1",
+    "grunt-mocha-test": "^0.12.7",
+    "mocha": "^2.2.5",
     "should": "^5.2.0",
     "supertest": "^0.15.0"
   }

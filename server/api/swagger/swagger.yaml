@@ -1,9 +1,9 @@
 swagger: "2.0"
 info:
-  version: "0.0.1"
-  title: Hello World App
+  version: "0.0.2"
+  title: 18F
 # during dev, should point to your local machine
-host: localhost:10010
+#host: localhost:10010
 # basePath prefixes all resource paths 
 basePath: /
 # 
@@ -18,41 +18,53 @@ consumes:
 produces:
   - application/json
 paths:
-  /hello:
-    # binds a127 app logic to a route
-    x-swagger-router-controller: hello_world
+  /drug/event/rangecount:
+    x-swagger-router-controller: drugs
     get:
-      description: Returns 'Hello' to the caller
+      description: Returns test fetch of a drugs query
       # used as the method name of the controller
-      operationId: hello
+      operationId: fetch
       parameters:
-        - name: name
+        - name: start
           in: query
-          description: The name of the person to whom to say hello
-          required: false
+          description: Start day in format YYYYMMDD (ex 20040101)
+          required: true
+          type: string
+        - name: end
+          in: query
+          description: End day in format YYYYMMDD (ex 20150101)
+          required: true
+          type: string
+        - name: field
+          in: query
+          description: path of field to count (ex patient.patientsex)
+          required: true
           type: string
       responses:
         "200":
           description: Success
           schema:
             # a pointer to a definition
-            $ref: "#/definitions/HelloWorldResponse"
+            $ref: "#/definitions/Drugs"
         # responses may fall through to errors
         default:
           description: Error
           schema:
-            $ref: "#/definitions/ErrorResponse"
+            $ref: "#/definitions/Error"
 # complex objects have schema definitions
 definitions:
-  HelloWorldResponse:
-    required:
-      - message
+  Drugs:
     properties:
       message:
         type: string
-  ErrorResponse:
+  Error:
     required:
+      - code
       - message
     properties:
+      code:
+        type: integer
+        format: int32
       message:
         type: string
+

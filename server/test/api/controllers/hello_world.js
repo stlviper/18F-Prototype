@@ -1,6 +1,6 @@
 var should = require('should');
 var request = require('supertest');
-var server = require('../../../main');
+var server = require('../../../app');
 
 process.env.A127_ENV = 'test';
 
