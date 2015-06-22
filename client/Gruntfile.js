@@ -13,7 +13,7 @@ module.exports = function (grunt) {
       }
     },
     clean: {
-      dev: [ 'build' ],
+      dev: [ 'build', 'index.html' ],
       prod: [ 'build' ]
     },
     concat: {
@@ -62,7 +62,7 @@ module.exports = function (grunt) {
           dest: '../dist/client/css/vendor-lib.css'
         },
         {
-          src: ['assets/css/openfdaviz.css'],
+          src: ['build/css/openfdaviz.css'],
           dest: '../dist/client/css/openfdaviz.css'
         }]
       }
@@ -153,7 +153,7 @@ module.exports = function (grunt) {
   grunt.registerTask('test', ['mochaTest:client']);
   grunt.registerTask('selenium', ['protractor_webdriver', 'protractor:run']);
   grunt.registerTask('default', ['build']);
-  grunt.registerTask('build', ['sass:dev', 'copy:devIndex', 'copy:vendorCss', 'concat', 'browserify', 'test']);
+  grunt.registerTask('build', ['sass:dev', 'concat', 'browserify', 'copy:devIndex', 'copy:vendorCss', 'test']);
   grunt.registerTask('build:prod', ['build', 'sass:dist', 'uglify', 'copy:prodIndex']);
   grunt.registerTask('deploy', ['clean', 'build:prod']);
 
