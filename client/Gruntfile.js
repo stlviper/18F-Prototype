@@ -10,10 +10,6 @@ module.exports = function(grunt) {
 			npm:{
 				src: 'assets/lib/npm-lib.js',
 				dest: '../dist/client/js/npm-lib.js'
-			},
-			vendor:{
-				src: 'assets/lib/vendor-lib.js',
-				dest: 'build/tmp/vendor-lib.js'
 			}
 		},
 		clean: {
@@ -142,7 +138,7 @@ module.exports = function(grunt) {
 	grunt.registerTask('selenium', [ 'protractor_webdriver', 'protractor:run' ]);
 	grunt.registerTask('default', ['build']);
 	grunt.registerTask('build', ['sass:dev', 'copy:devIndex', 'browserify', 'test']);
-	grunt.registerTask('build:prod', ['build', 'sass:dist', 'concat:js', 'uglify', 'copy']);
+	grunt.registerTask('build:prod', ['build', 'sass:dist', 'concat:js', 'concat:vendor', 'uglify', 'copy']);
 	grunt.registerTask('deploy', ['clean', 'build:prod']);
 
 };

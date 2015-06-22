@@ -4,4 +4,4 @@
 //
 // Contents: any dependencies *not* brought in via npm
 
-require('../vendor/js/d3/d3.slider');
+d3.slider = require('../js/d3/d3.slider');
