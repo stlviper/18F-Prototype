@@ -77,7 +77,7 @@ module.exports = function(grunt) {
 		},
 		mochaTest: {
 			client: {
-				src: ['test/**/*.js'],
+				src: ['test/mocha/**/*.js'],
 				options: {
 					reporter: 'nyan'
 				}
@@ -152,7 +152,7 @@ module.exports = function(grunt) {
 	grunt.loadNpmTasks('grunt-shell');
 
 	// Register other tasks
-	grunt.registerTask('test', []);//[ 'mochaTest:client' ]);
+	grunt.registerTask('test', [ 'mochaTest:client' ]);
 	grunt.registerTask('selenium', [ 'protractor:run' ]);
 	grunt.registerTask('default', ['build']);
 	grunt.registerTask('build', ['sass:dev', 'copy:devIndex', 'browserify', 'test']);
