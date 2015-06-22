@@ -23,6 +23,14 @@ Open the HTML file 'client/index.html' in a browser of your choice
 ### Local Development using OpenFDA Fake Server
 
 ```sh
+$ cd fake-api
+$ npm install
+$ cd ..
 $ PORT=3001 node fake-api/bin/www
 ```
-Above will run a fake OpenFDA server for testing.
+Above will run a fake OpenFDA server for testing. You can view it at 
+    http://localhost:3001/healthcheck/
+
+### Deploying on AWS Resources
+
+There is configuration available to deploy all resources to Amazon Web Services, when ready to deploy your 
