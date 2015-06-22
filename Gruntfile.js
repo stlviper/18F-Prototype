@@ -29,12 +29,8 @@ module.exports = function(grunt) {
 			}
 		},
 		clean: {
-			client:{
-				dev: ['dist/client']
-			},
-			server:{
-				dev: ['dist/server']
-			}
+			client: ['dist/client'],
+			server: ['dist/server']
 		}
 	});
 
