@@ -15,13 +15,15 @@ module.exports = function(grunt) {
 				},
 				files: [
 					{
-						dest: 'client/', action: 'delete'
+						dest: 'client/',
+						action: 'delete'
 					},
 					{
 						expand: true,
 						cwd: 'dist/client/',
 						src: ['**'],
-						dest: '/client/'
+						dest: '/client/',
+						params: { CacheControl: '1000' }
 					}
 				]
 			}

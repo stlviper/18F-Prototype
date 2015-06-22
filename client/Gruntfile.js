@@ -2,7 +2,6 @@ module.exports = function(grunt) {
 	// Project configuration.
 	grunt.initConfig({
 		pkg: grunt.file.readJSON('package.json'),
-
 		browserify: {
 			options: {
 				debug: true
@@ -110,7 +109,6 @@ module.exports = function(grunt) {
 		},
 		protractor_webdriver: {
 			options: {
-
 			},
 			all: {
 			}
@@ -126,13 +124,14 @@ module.exports = function(grunt) {
 
 	//to install, run npm install -g protractor, to start, first run webdriver-manager start --standalone
 	grunt.loadNpmTasks('grunt-protractor-runner');
+	//to install, run node_modules/protractor/bin/webdriver-manager update --standalone --chrome
 	grunt.loadNpmTasks('grunt-protractor-webdriver');
 	grunt.loadNpmTasks('grunt-sass');
 	grunt.loadNpmTasks('grunt-shell');
 
 	// Register other tasks
 	grunt.registerTask('test', [ 'mochaTest:client' ]);
-	grunt.registerTask('selenium', [ 'protractor:run' ]);
+	grunt.registerTask('selenium', [ 'protractor_webdriver', 'protractor:run' ]);
 	grunt.registerTask('default', ['build']);
 	grunt.registerTask('build', ['sass:dev', 'copy:devIndex', 'browserify', 'test']);
 	grunt.registerTask('build:prod', ['build', 'sass:dist', 'concat:js', 'uglify', 'copy']);
