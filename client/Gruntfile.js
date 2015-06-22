@@ -153,8 +153,8 @@ module.exports = function (grunt) {
   grunt.registerTask('test', ['mochaTest:client']);
   grunt.registerTask('selenium', ['protractor_webdriver', 'protractor:run']);
   grunt.registerTask('default', ['build']);
-  grunt.registerTask('build', ['sass:dev', 'copy:devIndex', 'browserify', 'test']);
-  grunt.registerTask('build:prod', ['build', 'sass:dist', 'concat', 'uglify', 'copy']);
+  grunt.registerTask('build', ['sass:dev', 'copy:devIndex', 'copy:vendorCss', 'concat', 'browserify', 'test']);
+  grunt.registerTask('build:prod', ['build', 'sass:dist', 'uglify', 'copy:prodIndex']);
   grunt.registerTask('deploy', ['clean', 'build:prod']);
 
 };
