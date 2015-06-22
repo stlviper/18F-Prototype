@@ -1,22 +1,41 @@
 <!DOCTYPE html>
 <html ng-app="openfdaviz">
 <head lang="en">
-	<meta charset="UTF-8">
-	<title>OpenFDA Visualization</title>
-	<link href="assets/css/openfdaviz.css" rel="stylesheet" />
-	<link href="node_modules/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet" />
+  <meta charset="UTF-8">
+  <title>OpenFDA Visualization</title>
+  <link href="assets/css/openfdaviz.css" rel="stylesheet"/>
+  <link href="node_modules/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet"/>
+  <link href="assets/lib/c3/c3.min.css" rel="stylesheet"/>
+  <link href="assets/lib/d3/d3.slider.css" rel="stylesheet"/>
 
-	<script src="../dist/client/js/lib/npm-lib.js"></script>
+  <script src="assets/lib/d3/d3.min.js"></script>
+  <script src="assets/lib/c3/c3.min.js"></script>
+  <script src="assets/lib/d3/d3.slider.js"></script>
 
+  <script src="../dist/client/js/lib/npm-lib.js"></script>
 
-	<script src="app/app.js"></script>
-	<script src="app/components/map/mapController.js"></script>
-	<script src="app/components/map/controls/resultsList.js"></script>
-	<script src="app/components/map/controls/searchControls.js"></script>
+  <script src="app/app.js"></script>
+  <script src="app/components/map/mapController.js"></script>
+  <script src="app/components/map/controls/resultsList.js"></script>
+  <script src="app/components/map/controls/searchControls.js"></script>
+
+  <script src="app/components/timeline/timelineController.js"></script>
+  <script src="app/components/timeline/controls/pieChart.js"></script>
 </head>
-<body ng-controller="MapController">
-	<h1>OpenFDA Visualizer Landing Page! (dev build)</h1>
-	<div x-results-list></div>
-	<div x-search-controls></div>
+<body>
+
+<div ng-controller="MapController">
+  <h1>OpenFDA Visualizer Landing Page! (dev build)</h1>
+
+  <div x-results-list></div>
+  <div x-search-controls></div>
+</div>
+
+<div ng-controller="TimelineController">
+  <div class="container">
+    <div pie-chart></div>
+  </div>
+</div>
+
 </body>
 </html>
