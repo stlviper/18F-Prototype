@@ -1,6 +1,6 @@
 'use strict';
 
-var leapYear = function(year) {
+var leapYear = function (year) {
   return ((year % 4 == 0) && (year % 100 != 0)) || (year % 400 == 0);
 };
 
@@ -15,16 +15,16 @@ var convertDecimalDate = function (decimalDate) {
   return outputFormat(yearDate);
 };
 
-var gender = {'0': 'Unknown', '1':'Male', '2':'Female'};
+var gender = {'0': 'Unknown', '1': 'Male', '2': 'Female'};
 
 
-openfdaviz.directive("pieChart", function($parse){
+openfdaviz.directive("pieChart", ['$parse', function ($parse) {
   return {
     restrict: 'AE',
     replace: true,
     template: '<div><h2>Patient Gender</h2><div id="pieChart"></div><div id="dateSlider"></div></div>',
-    link: function(scope, element, attrs){
-     var  _settings = {
+    link: function (scope, element, attrs) {
+      var _settings = {
         apiUrl: 'http://f-eighteen-dev.elasticbeanstalk.com/drug/event/rangecount',
         minDate: 2004,
         maxDate: 2015,
@@ -33,54 +33,54 @@ openfdaviz.directive("pieChart", function($parse){
         pieChart: null
       };
 
-      var loadPieData = function(startDate, endDate){
-        var url = _settings.apiUrl+'?start='+startDate+'&end='+endDate+'&field='+_settings.patientSexTerm;
+      var loadPieData = function (startDate, endDate) {
+        var url = _settings.apiUrl + '?start=' + startDate + '&end=' + endDate + '&field=' + _settings.patientSexTerm;
         $.get(url)
-          .done(function(data){
-            var columns =[];
-            for(var idx in data){
-              columns.push([gender[data[idx].term],data[idx].count])
+          .done(function (data) {
+            var columns = [];
+            for (var idx in data) {
+              columns.push([gender[data[idx].term], data[idx].count])
             }
             _settings.pieChart = c3.generate({
               bindto: '#pieChart',
               data: {
                 columns: columns,
-                type : 'pie'
+                type: 'pie'
               }
             });
           })
-          .fail(function(data){
+          .fail(function (data) {
             console.log(data);
           });
       };
 
-      var updatePieData = function(startDate, endDate){
-        var url = _settings.apiUrl+'?start='+startDate+'&end='+endDate+'&field='+_settings.patientSexTerm;
+      var updatePieData = function (startDate, endDate) {
+        var url = _settings.apiUrl + '?start=' + startDate + '&end=' + endDate + '&field=' + _settings.patientSexTerm;
         $.get(url)
-          .done(function(data){
-            if(_settings.pieChart){
-              var columns =[];
-              for(var idx in data){
-                columns.push([gender[data[idx].term],data[idx].count])
+          .done(function (data) {
+            if (_settings.pieChart) {
+              var columns = [];
+              for (var idx in data) {
+                columns.push([gender[data[idx].term], data[idx].count])
               }
               _settings.pieChart.load({
-                columns:columns
+                columns: columns
               });
             }
           })
-          .fail(function(data){
+          .fail(function (data) {
             console.log(data);
           });
       };
 
-      loadPieData('20040101','20150101');
+      loadPieData('20040101', '20150101');
       d3.select('#dateSlider').call(d3.slider()
           .axis(true)
           .min(2004)
           .max(2015)
-          .value( [ 2004, 2015 ] )
-          .on("slideend", function(evt, value) {
-            var minDate  = convertDecimalDate(value[0]);
+          .value([2004, 2015])
+          .on("slideend", function (evt, value) {
+            var minDate = convertDecimalDate(value[0]);
             var maxDate = convertDecimalDate(value[1]);
             updatePieData(minDate, maxDate);
           })
@@ -88,4 +88,4 @@ openfdaviz.directive("pieChart", function($parse){
 
     }
   };
-});
+}]);
