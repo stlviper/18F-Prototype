@@ -5,7 +5,7 @@ openfdaviz.controller('LayoutController', ['$scope', '$http', function($scope, $
   angular.element(document).ready(function () {
     $http.get('/config.json').success(function(resp){
       $scope.imagePath = resp.paths.images;
-      $('.site-wrapper').css('background', 'url(' + $scope.imagePath + 'splash.jpg) no-repeat center center fixed')
+      $('#splash-page-background ').css('background', 'url(' + $scope.imagePath + 'splash.jpg) no-repeat center center fixed')
     });
   });
 }]);
