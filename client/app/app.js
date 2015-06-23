@@ -9,20 +9,12 @@ window.openfdaviz.config(function ($stateProvider, $urlRouterProvider) {
 
   $stateProvider
     .state('home', {
-      url: '/',
-      templateUrl: '/app/partial-homepage.html'
-    })
-    .state('timeline', {
-      url: '/timeline',
-      templateUrl: '/app/partial-timeline.html'
-    })
-    .state('map', {
-      url: '/map',
-      templateUrl: '/app/partial-map.html'
+      url: '/home',
+      templateUrl: '/app/shared/home/home.html'
     })
     .state('search', {
       url: '/search',
-      templateUrl: '/app/partial-search.html'
+      templateUrl: '/app/shared/search/search.html'
     });
 
 });
