@@ -9,6 +9,7 @@ window.jQuery = $ = jQuery = require('jquery/dist/jquery.min');
 
 require('angular/angular.min');
 require('angular-route/angular-route.min');
+require('angular-ui-router/release/angular-ui-router.min');
 require('bootstrap/dist/js/bootstrap');
 require('leaflet/dist/leaflet');
 require('leaflet/dist/leaflet');
