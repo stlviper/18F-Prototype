@@ -20,7 +20,21 @@ $ grunt deploy
 $ PORT=3002 node server/app.js
 ```
 
-Open the HTML file 'client/index.html' in a browser of your choice
+Prepare either the dev or production client build:
+$ cd client
+
+- To deploy and run the dev build (raw sources, css and templates)
+$ grunt deploy
+
+- To deploy and run the production build (minified sources and concatenated css and templates)
+$ grunt deploy:prod
+
+- To start the mock application server, run either the dev or prod server depending on your build
+$ node test/mockserver/mockserver_dev.js
+or
+$ node test/mockserver/mockserver_prod.js
+
+Navigate to http://localhost:8000/
 
 
 ### Running Mocha unit tests
@@ -40,7 +54,7 @@ $ ./node_modules/protractor/bin/webdriver-manager update --standalone --chrome
 ```
 - Then start the mock application server and run selenium
 ```
-$ node test/mockserver/mockserver.js &
+$ node test/mockserver/mockserver_prod.js &
 $ grunt selenium
 ```
 
