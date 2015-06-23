@@ -39,11 +39,14 @@ module.exports = function(grunt) {
 			npmInstallServer: {
 				command: 'cd server && npm install'
 			},
-			startClient: {
-				command: 'node_modules/forever/bin/forever start client/test/mockserver/mockserver_prod.js'
+			startClientDev: {
+				command: 'cd client && npm run-script startDev'
+			},
+			startClientProd: {
+				command: 'cd client && npm run-script startProd'
 			},
 			startServer: {
-				command: 'PORT=3002 node_modules/forever/bin/forever start server/app.js'
+				command: 'cd server && npm start'
 			}
 		}
 	});
@@ -77,11 +80,19 @@ module.exports = function(grunt) {
 			done();
 		});
 	});
+	grunt.registerTask('setup:all', ['setup:client', 'setup:server']);
 	grunt.registerTask('setup:client', ['shell:npmInstallClient']);
 	grunt.registerTask('setup:server', ['shell:npmInstallServer']);
 	grunt.registerTask('deploy:client', ['clean:client', 'deploysubproject:client', 'aws_s3:production']);
 	grunt.registerTask('deploy:server', ['clean:server', 'deploysubproject:server']);
 	grunt.registerTask('deploy', ['deploy:client', 'deploy:server']);
-	grunt.registerTask('start', ['setup:client', 'setup:server', 'clean:client', 'deploysubproject:client', 'clean:server', 'deploysubproject:server',
-			'shell:startClient', 'shell:startServer']);
+	grunt.registerTask('start:clientDev', ['clean:client', 'deploysubproject:client', 'shell:startClientDev']);
+	grunt.registerTask('start:clientProd', ['clean:client', 'deploysubproject:client', 'shell:startClientProd']);
+	grunt.registerTask('start:server', ['setup:server', 'clean:server', 'deploysubproject:server', 'shell:startServer']);
+
+
+	grunt.registerTask('start', ['clean:client', 'deploysubproject:client', 'clean:server', 'deploysubproject:server',
+			'shell:startClientDev', 'shell:startServer']);
+	grunt.registerTask('start:dev', ['start:clientDev', 'start:server'])
+	grunt.registerTask('start:prod', ['start:clientDev', 'start:server'])
 };

@@ -10,31 +10,15 @@ This project consist of two parts. One is the Server Side API that makes calls t
 $ git clone https://github.com/stlviper/18F-Prototype.git 18F-Prototype
 $ cd 18F-Prototype
 $ npm install
-$ cd client
-$ npm install
-$ cd ../server
-$ npm install
-$ cd ..
 $ echo {} > aws.json
-$ grunt deploy
-$ PORT=3002 node server/app.js
+$ npm run-script startDev
 ```
 
-Prepare either the dev or production client build:
-$ cd client
+Client will be available at - http://localhost:8000
+Server API will be available at - http://localhost:3002
 
-- To deploy and run the dev build (raw sources, css and templates)
-$ grunt deploy
-
-- To deploy and run the production build (minified sources and concatenated css and templates)
+- To deploy and run the production build (minified sources and concatenated css and templates and uploaded to AWS)
 $ grunt deploy:prod
-
-- To start the mock application server, run either the dev or prod server depending on your build
-$ node test/mockserver/mockserver_dev.js
-or
-$ node test/mockserver/mockserver_prod.js
-
-Navigate to http://localhost:8000/
 
 
 ### Running Mocha unit tests
