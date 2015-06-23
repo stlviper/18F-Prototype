@@ -13,7 +13,7 @@ module.exports = function (grunt) {
       }
     },
     clean: {
-      dev: ['build', 'index.html'],
+      dev: ['build', 'index.html', 'config.json'],
       prod: ['build']
     },
     concat: {
@@ -42,16 +42,28 @@ module.exports = function (grunt) {
       }
     },
     copy: {
-      prodIndex: {
+      devConfig: {
         files: [{
-          src: ['assets/html/index_prod.html'],
-          dest: '../dist/client/index.html'
+          src: ['assets/config/dev.json'],
+          dest: 'config.json'
+        }]
+      },
+      prodConfig: {
+        files: [{
+          src: ['assets/config/prod.json'],
+          dest: '../dist/client/config.json'
         }]
       },
       devIndex: {
         files: [{
           src: ['assets/html/index_dev.html'],
           dest: 'index.html'
+        }]
+      },
+      prodIndex: {
+        files: [{
+          src: ['assets/html/index_prod.html'],
+          dest: '../dist/client/index.html'
         }]
       },
       npmLib: {
@@ -65,16 +77,24 @@ module.exports = function (grunt) {
           src: ['build/css/npm-lib.css'],
           dest: '../dist/client/css/npm-lib.css'
         },
-          {
-            src: ['build/css/vendor-lib.css'],
-            dest: '../dist/client/css/vendor-lib.css'
-          },
-          {
-            src: ['build/css/openfdaviz.css'],
-            dest: '../dist/client/css/openfdaviz.css'
-          }]
+        {
+          src: ['build/css/vendor-lib.css'],
+          dest: '../dist/client/css/vendor-lib.css'
+        },
+        {
+          src: ['build/css/openfdaviz.css'],
+          dest: '../dist/client/css/openfdaviz.css'
+        }]
       },
-      images: {
+      prodImages: {
+        files: [{
+          cwd: 'assets/img',
+          src: '**/*.*',
+          dest: '../dist/client/img',
+          expand: true
+        }]
+      },
+      devImages: {
         files: [{
           cwd: 'assets/img',
           src: '**/*.*',
@@ -82,7 +102,15 @@ module.exports = function (grunt) {
           expand: true
         }]
       },
-      fonts: {
+      prodFonts: {
+        files: [{
+          cwd: 'node_modules/bootstrap/fonts',
+          src: '**/*.*',
+          dest: '../dist/client/fonts',
+          expand: true
+        }]
+      },
+      devFonts: {
         files: [{
           cwd: 'node_modules/bootstrap/fonts',
           src: '**/*.*',
@@ -192,8 +220,8 @@ module.exports = function (grunt) {
   grunt.registerTask('test', ['mochaTest:client']);
   grunt.registerTask('selenium', ['protractor_webdriver', 'protractor:run']);
   grunt.registerTask('default', ['build']);
-  grunt.registerTask('build', ['sass:dev', 'concat', 'browserify', 'copy:devIndex', 'copy:vendorCss', 'copy:images', 'copy:fonts', 'ngtemplates', 'test']);
-  grunt.registerTask('build:prod', ['build', 'sass:dist', 'uglify', 'copy:npmLib', 'copy:prodIndex']);
+  grunt.registerTask('build', ['sass:dev', 'concat', 'browserify', 'copy:vendorCss', 'copy:devConfig', 'copy:devImages', 'copy:devFonts', 'copy:devIndex', 'ngtemplates', 'test']);
+  grunt.registerTask('build:prod', ['build', 'sass:dist', 'uglify', 'copy:npmLib', 'copy:prodConfig', 'copy:prodImages', 'copy:prodFonts', 'copy:prodIndex']);
   grunt.registerTask('deploy', ['clean', 'build:prod']);
 
 };

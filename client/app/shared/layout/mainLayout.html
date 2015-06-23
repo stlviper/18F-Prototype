@@ -1,53 +1,22 @@
-<div>
-  <div class="site-wrapper">
-    <div class="site-wrapper-inner">
-      <div class="cover-container">
-        <div class="masthead clearfix">
-          <div class="inner">
-            <h3 class="masthead-brand">open<strong>FDA Visualizer</strong></h3>
-            <nav>
-              <ul class="nav masthead-nav">
-                <li><a href="http://open.fda.gov/api/reference/">OpenFDA</a></li>
-                <li><a href="#search">Search</a></li>
-                <li><a href="http://www.ogsystems.com/">OGSystems</a></li>
-              </ul>
-            </nav>
-          </div>
-        </div>
+<div class="site-wrapper" ng-controller="LayoutController" ng-show="imagePath">
+  <div class="site-wrapper-inner">
+    <div class="cover-container">
 
-        <div class="inner cover">
-          <h1 class="cover-heading">Search &amp; Visualize the FDA</h1>
-
-          <p class="lead">The openFDA Visualizer searches the FDA database and visualizes the results.
-            Search for any combination of Drugs, Devices, or Foods. View your results on a map. Further refine your
-            search results using a timeline.</p>
-
-          <p class="lead">
-            <a href="default-search.html" class="btn btn-lg btn-default">Learn more</a>
-          </p>
-        </div>
-
-        <div class="mastfoot">
-          <div class="inner">
-            <p><a href="http://ogsystems.com" target="_blank"><img src="build/img/OGS_logo-rev.png"
-                                                                   width="200" height="26" alt=""/></a></p>
-          </div>
+      <div class="masthead clearfix">
+        <div class="inner">
+          <h3 class="masthead-brand">open<strong>FDA Visualizer</strong></h3>
+          <nav>
+            <ul class="nav masthead-nav">
+              <li><a href="http://open.fda.gov/api/reference/">OpenFDA</a></li>
+              <li><a href="#/search">Search</a></li>
+              <li><a href="http://www.ogsystems.com/">OGSystems</a></li>
+            </ul>
+          </nav>
         </div>
       </div>
-      <div ng-controller="MapController" >
-        <div x-openfdaviz-map></div>
-        <div x-results-list></div>
-        <div x-search-controls></div>
-      </div>
-
-      <div ng-controller="TimelineController" >
-        <div class="container">
-          <div x-pie-chart></div>
-        </div>
+      <div>
+        <div ui-view></div>
       </div>
     </div>
   </div>
-
-
 </div>
-

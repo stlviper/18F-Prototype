@@ -35,15 +35,18 @@ a:hover {
  * Base structure
  */
 
-html,
-body {
+#splash-page-background {
+  z-index: -50;
+  position: absolute;
+  top: 0;
+  left: 0;
   height: 100%;
-  background-color: #00509a;
-  background: url(../../../client/assets/img/splash.jpg) no-repeat center center fixed;
+  width: 100%;
+  background-color: #00509a !important;
   -webkit-background-size: cover;
   -moz-background-size: cover;
   -o-background-size: cover;
-  background-size: cover;
+  background-size: cover !important;
 }
 body {
   color: #fff;
