@@ -5,7 +5,7 @@ openfdaviz.directive('openfdavizMap', function(){
     templateUrl: '/app/components/map/mapView.html',
     link: function (scope, element, attrs) {
       // create a map in the "map" div, set the view to a given place and zoom
-      var map = L.map('map').setView([38.8750, -77.4025], 13);
+      var map = L.map('map').setView([38.8750, -77.4025], 10);
 
       // add an OpenStreetMap tile layer
       L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {
