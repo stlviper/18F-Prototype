@@ -4,6 +4,8 @@ OpenFDAViz is a cloud based viewer for the OpenFDA Api Data
 
 ### Installation for local Testing
 
+This project consist of two parts. One is the Server Side API that makes calls to OpenFDA API and pre-processes the results while also caching certain values. The second is the User Interface. The server side API code is in the /server/ folder and the UI is in the /client/ folder. Both are managed by npm package manager. To get started you must run npm install in the root, client and server folders. The final production code is also designed to run on Amazon Elastic Beanstalk for the server API and S3/Cloudfront CDN for the User Interface. Neither are required to run locally but you will need to create an empty aws.json credentials file for the build to succeed. Once those commands are entered you can start the API node server and visit the interface. The commands are listed below.
+
 ```sh
 $ git clone https://github.com/stlviper/18F-Prototype.git 18F-Prototype
 $ cd 18F-Prototype
