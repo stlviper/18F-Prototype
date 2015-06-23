@@ -73,21 +73,22 @@ module.exports = function(grunt) {
                     {expand: true, cwd: '../dist/server/', src: ['**'], dest: '/'}
                 ]
             }
-        }
-	});
+        },
+    shell: {
+      start: {
+        command: 'PORT=3002 node_modules/forever/bin/forever server/app.js'
+      }
+    }
+  });
 
-	grunt.loadNpmTasks('grunt-mocha-test');
-	grunt.loadNpmTasks('grunt-express-server');
-	grunt.loadNpmTasks('grunt-contrib-compress');
-    grunt.loadNpmTasks('grunt-aws-s3');
+  grunt.loadNpmTasks('grunt-aws-s3');
+  grunt.loadNpmTasks('grunt-contrib-compress');
+  grunt.loadNpmTasks('grunt-express-server');
+  grunt.loadNpmTasks('grunt-mocha-test');
+  grunt.loadNpmTasks('grunt-shell');
 
-	// Register other tasks
-	grunt.registerTask('test', [ 'express:dev', 'mochaTest:server' ]);
-	grunt.registerTask('default', ['test']);
-
-    grunt.registerTask('deploy',[
-        'compress',
-        'aws_s3'
-    ]);
-
+  // Register other tasks
+  grunt.registerTask('test', ['express:dev', 'mochaTest:server']);
+  grunt.registerTask('default', ['test']);
+  grunt.registerTask('deploy', ['compress', 'aws_s3']);
 };

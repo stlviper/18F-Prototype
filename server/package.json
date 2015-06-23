@@ -7,17 +7,22 @@
   "author": "",
   "license": "",
   "main": "app.js",
+  "scripts":{
+    "start": "grunt start"
+  },
   "dependencies": {
     "express": "^4.12.3",
     "request": "^2.58.0",
     "swagger-express-mw": "0.0.x"
   },
   "devDependencies": {
+    "forever": "0.14.1",
     "grunt": "^0.4.5",
     "grunt-aws-s3": "^0.13.1",
     "grunt-contrib-compress": "^0.13.0",
     "grunt-express-server": "^0.5.1",
     "grunt-mocha-test": "^0.12.7",
+    "grunt-shell": "1.1.2",
     "mocha": "^2.2.5",
     "should": "^5.2.0",
     "supertest": "^0.15.0"
