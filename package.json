@@ -3,8 +3,10 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
+    "postinstall": "grunt setup:all",
     "start": "grunt start",
-    "startClientDev": "grunt start:clientDev"
+    "startClientDev": "grunt start:clientDev",
+    "startDev": "grunt start:dev"
   },
   "devDependencies": {
     "forever": "0.14.1",
