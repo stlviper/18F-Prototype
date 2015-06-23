@@ -20,6 +20,7 @@ module.exports = function (grunt) {
       cssNpmLib:{
         src: [
           'node_modules/bootstrap/dist/css/bootstrap.min.css',
+          'node_modules/leaflet/dist/leaflet.css',
           'assets/css/d3/c3.min.css'
         ],
         dest: 'build/css/npm-lib.css'
