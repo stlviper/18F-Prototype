@@ -7,7 +7,7 @@
   <link href="build/css/npm-lib.css" rel="stylesheet"/>
   <link href="build/css/vendor-lib.css" rel="stylesheet"/>
 
-  <script src="../dist/client/js/npm-lib.js"></script>
+  <script src="build/js/npm-lib.js"></script>
   <script src="build/js/vendor.js"></script>
 
   <script src="app/app.js"></script>
@@ -17,21 +17,12 @@
 
   <script src="app/components/timeline/timelineController.js"></script>
   <script src="app/components/timeline/controls/pieChart.js"></script>
+  <script src="app/shared/layout/mainLayout.js"></script>
+
+  <script src="build/js/templates.js"></script>
 </head>
 <body>
-
-<div ng-controller="MapController">
   <h1>OpenFDA Visualizer Landing Page! (dev build)</h1>
-
-  <div x-results-list></div>
-  <div x-search-controls></div>
-</div>
-
-<div ng-controller="TimelineController">
-  <div class="container">
-    <div x-pie-chart></div>
-  </div>
-</div>
-
+  <div x-openfdaviz-layout></div>
 </body>
 </html>

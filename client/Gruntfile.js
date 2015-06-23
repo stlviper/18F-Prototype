@@ -9,7 +9,7 @@ module.exports = function (grunt) {
       pkg: grunt.file.readJSON('package.json'),
       npm: {
         src: 'assets/lib/npm-lib.js',
-        dest: '../dist/client/js/npm-lib.js'
+        dest: 'build/js/npm-lib.js'
       }
     },
     clean: {
@@ -52,6 +52,12 @@ module.exports = function (grunt) {
           dest: 'index.html'
         }]
       },
+      npmLib: {
+        files: [{
+          src: ['build/js/npm-lib.js'],
+          dest: '../dist/client/js/npm-lib.js'
+        }]
+      },
       vendorCss: {
         files: [{
           src: ['build/css/npm-lib.css'],
@@ -80,6 +86,15 @@ module.exports = function (grunt) {
         src: ['test/mocha/**/*.js'],
         options: {
           reporter: 'nyan'
+        }
+      }
+    },
+    ngtemplates: {
+      openfdaviz: {
+        src: 'app/**/*.html',
+        dest: 'build/js/templates.js',
+        options: {
+          prefix: '/'
         }
       }
     },
@@ -122,7 +137,7 @@ module.exports = function (grunt) {
           {
             expand: true,
             cwd: './build/js/',
-            src: ['*.js'],
+            src: ['*.js', '!npm-lib.js'],
             dest: '../dist/client/js/',
             ext: '.min.js'
           }
@@ -135,6 +150,7 @@ module.exports = function (grunt) {
     }
   });
 
+  grunt.loadNpmTasks('grunt-angular-templates');
   grunt.loadNpmTasks('grunt-browserify');
   grunt.loadNpmTasks('grunt-contrib-clean');
   grunt.loadNpmTasks('grunt-contrib-concat');
@@ -153,8 +169,8 @@ module.exports = function (grunt) {
   grunt.registerTask('test', ['mochaTest:client']);
   grunt.registerTask('selenium', ['protractor_webdriver', 'protractor:run']);
   grunt.registerTask('default', ['build']);
-  grunt.registerTask('build', ['sass:dev', 'concat', 'browserify', 'copy:devIndex', 'copy:vendorCss', 'test']);
-  grunt.registerTask('build:prod', ['build', 'sass:dist', 'uglify', 'copy:prodIndex']);
+  grunt.registerTask('build', ['sass:dev', 'concat', 'browserify', 'copy:devIndex', 'copy:vendorCss', 'ngtemplates', 'test']);
+  grunt.registerTask('build:prod', ['build', 'sass:dist', 'uglify', 'copy:npmLib', 'copy:prodIndex']);
   grunt.registerTask('deploy', ['clean', 'build:prod']);
 
 };
