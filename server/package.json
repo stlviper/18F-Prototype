@@ -13,6 +13,7 @@
     "swagger-express-mw": "0.0.x"
   },
   "devDependencies": {
+    "chai": "^3.0.0",
     "grunt": "^0.4.5",
     "grunt-aws-s3": "^0.13.1",
     "grunt-contrib-compress": "^0.13.0",
