@@ -11,9 +11,16 @@ window.openfdaviz.config(function ($stateProvider, $urlRouterProvider) {
     .state('default', {
       url: '/',
       views: {
-        'nav': {templateUrl: '/app/shared/nav/homepage.html'},
-        'content': {templateUrl: '/app/partial-homepage.html'},
-        'footer': {templateUrl: '/app/shared/footer/homepage.html'}
+        'nav': {
+          templateUrl: '/app/shared/nav/homepage.html'
+        },
+        'content': {
+          templateUrl: '/app/partial-homepage.html',
+          controller: 'HomeController'
+        },
+        'footer': {
+          templateUrl: '/app/shared/footer/homepage.html'
+        }
       }
     })
     .state('search', {
