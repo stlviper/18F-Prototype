@@ -1,0 +1,10 @@
+branch-defaults:
+  master:
+    environment: openfdaviz-dev
+global:
+  application_name: openfdaviz
+  default_ec2_keyname: null
+  default_platform: 64bit Amazon Linux 2015.03 v1.4.3 running Node.js
+  default_region: null
+  profile: null
+  sc: git
