@@ -72,6 +72,14 @@ module.exports = function (grunt) {
           src: ['build/css/openfdaviz.css'],
           dest: '../dist/client/css/openfdaviz.css'
         }]
+      },
+      images: {
+        files: [{
+          cwd: 'assets/img',
+          src: '**/*.*',
+          dest: 'build/img',
+          expand: true
+        }]
       }
     },
     jshint: {
@@ -175,7 +183,7 @@ module.exports = function (grunt) {
   grunt.registerTask('test', ['mochaTest:client']);
   grunt.registerTask('selenium', ['protractor_webdriver', 'protractor:run']);
   grunt.registerTask('default', ['build']);
-  grunt.registerTask('build', ['sass:dev', 'concat', 'browserify', 'copy:devIndex', 'copy:vendorCss', 'ngtemplates', 'test']);
+  grunt.registerTask('build', ['sass:dev', 'concat', 'browserify', 'copy:devIndex', 'copy:vendorCss', 'copy:images', 'ngtemplates', 'test']);
   grunt.registerTask('build:prod', ['build', 'sass:dist', 'uglify', 'copy:npmLib', 'copy:prodIndex']);
   grunt.registerTask('deploy', ['clean', 'build:prod']);
 

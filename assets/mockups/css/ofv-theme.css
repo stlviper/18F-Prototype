@@ -114,9 +114,24 @@ h1, h2, h3, h4, h5 {
 .panel {
 	border-radius: 2px;
 }
+
+/* Categories color palette */
 .drugs { color:#7e9909; }
-.devices { color:#4d0239; }
+.drugs-bkgd { background-color:#7e9909; }
+.devices { color:#6d0356; }
+.devices-bkgd { background-color:#6d0356; }
 .foods { color:#a75307; }
+.foods-bkgd { background-color:#a75307; }
+
+/* Secondary color palette */
+.violet { color:#6d0fa9; }
+.violet-bkgd { background-color:#6d0fa9; }
+.brick { color:#b42f1b; }
+.brick-bkgd { background-color:#b42f1b; }
+.gold { color:#b48f1b; }
+.gold-bkgd { background-color:#b48f1b; }
+.green { color:#36b412; }
+.green-bkgd { background-color:#36b412; }
 
 /* Custom styles for openFDA Visualizer */
 .main-contents {

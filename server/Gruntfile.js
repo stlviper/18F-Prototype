@@ -31,14 +31,8 @@ module.exports = function(grunt) {
 					reporter: 'nyan'
 				}
 			},
-			client: {
-				src: ['public/test/**/*.js'],
-				options: {
-					reporter: 'nyan'
-				}
-			},
 			all: {
-				src: ['test/app/**/*.js', 'test/public/**/*.js' ],
+				src: ['test/api/**/*.js' ],
 				options: {
 					reporter: 'nyan',
 					timeout: 25000
@@ -80,7 +74,7 @@ module.exports = function(grunt) {
       }
     }
   });
-
+	
   grunt.loadNpmTasks('grunt-aws-s3');
   grunt.loadNpmTasks('grunt-contrib-compress');
   grunt.loadNpmTasks('grunt-express-server');
@@ -88,7 +82,7 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks('grunt-shell');
 
   // Register other tasks
-  grunt.registerTask('test', ['express:dev', 'mochaTest:server']);
+  grunt.registerTask('test', ['mochaTest:server', 'mochaTest:all']);
   grunt.registerTask('default', ['test']);
   grunt.registerTask('deploy', ['compress', 'aws_s3']);
 };
