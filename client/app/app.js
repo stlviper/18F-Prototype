@@ -16,11 +16,11 @@ window.openfdaviz.config(function($stateProvider, $urlRouterProvider) {
     })
     .state('timeline', {
       url: '/timeline',
-      templateUrl: '/app/components/timeline/timelineView.html'
+      templateUrl: '/app/partial-timeline.html'
     })
     .state('map', {
       url: '/map',
-      templateUrl: '/app/components/map/mapView.html'
+      templateUrl: '/app/partial-map.html'
     });
 
 });
