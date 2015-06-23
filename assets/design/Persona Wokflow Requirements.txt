@@ -1,0 +1,23 @@
+Persona Workflow Mapping - Requirements
+
+Notes to the Visual Designer:
+- for Node 2, openFDA is 'device agnostic' and works with all
+
+NODES
+Node 1 - User identifies data need
+Node 2 - User navigates to openFDA Visualizer
+Node 3 - User provides search criteria
+Node 4 - User receives search results
+Node 5 - User refines search results
+Node 6 - User extracts search results for personal/institutional use
+
+Deviations from Workflow mapping
+User 1 - Mike - none
+User 2 - Zoe
+   a) Node 5 - Zoe wants to call a hotline and speak with an operator to refine her search results.
+   b) Node 6 - Zoe wants to email her search results to her doctor
+User 3 - Brian - none
+User 4 - Betsy
+   a) Node 4 - Betsy wants to customize the geo-map interface and 'self-define' her customer market boundaries
+   b) Node 6 - Betsy wants to export her results to Excel to share with her sales force
+
