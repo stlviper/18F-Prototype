@@ -42,6 +42,7 @@ deploy
 aws.json
 
 dist
+client/config.json
 client/build
 client/css
 client/index.html
