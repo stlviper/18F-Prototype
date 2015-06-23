@@ -33,9 +33,6 @@ module.exports = function(grunt) {
 			server: ['dist/server']
 		},
 		shell: {
-			foreverInstall: {
-				command: 'npm install -g forever'
-			},
 			npmInstallClient: {
 				command: 'cd client && npm install'
 			},
@@ -43,10 +40,10 @@ module.exports = function(grunt) {
 				command: 'cd server && npm install'
 			},
 			startClient: {
-				command: 'forever start client/test/mockserver/mockserver_prod.js'
+				command: 'node_modules/forever/bin/forever start client/test/mockserver/mockserver_prod.js'
 			},
 			startServer: {
-				command: 'PORT=3002 forever start server/app.js'
+				command: 'PORT=3002 node_modules/forever/bin/forever start server/app.js'
 			}
 		}
 	});
@@ -86,5 +83,5 @@ module.exports = function(grunt) {
 	grunt.registerTask('deploy:server', ['clean:server', 'deploysubproject:server']);
 	grunt.registerTask('deploy', ['deploy:client', 'deploy:server']);
 	grunt.registerTask('start', ['setup:client', 'setup:server', 'clean:client', 'deploysubproject:client', 'clean:server', 'deploysubproject:server',
-			'shell:foreverInstall', 'shell:startClient', 'shell:startServer']);
+			'shell:startClient', 'shell:startServer']);
 };
