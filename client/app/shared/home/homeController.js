@@ -5,7 +5,7 @@ openfdaviz.controller('HomeController', ['$scope', '$http', function($scope, $ht
   $scope.imagePath = '';
   angular.element(document).ready(function () {
     if(!config){
-      $http.get('/config.json').success(function(resp){
+      $http.get('config.json').success(function(resp){
         config = resp;
         setImagePath();
       });
