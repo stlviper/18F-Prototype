@@ -35,8 +35,12 @@ a:hover {
  * Base structure
  */
 
-html,
-body {
+.splash-container{
+  position: absolute;
+  z-index: -50;
+  top:0;
+  left:0;
+  width: 100%;
   height: 100%;
   background-color: #00509a;
   background: url(../../../client/assets/img/splash.jpg) no-repeat center center fixed;
@@ -45,6 +49,7 @@ body {
   -o-background-size: cover;
   background-size: cover;
 }
+
 body {
   color: #fff;
   text-align: center;
