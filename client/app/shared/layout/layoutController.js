@@ -1,6 +1,6 @@
 'use strict';
 
-var config = {};
+var config = null;
 openfdaviz.controller('LayoutController', ['$scope', '$http', function($scope, $http){
   $scope.imagePath = '';
   angular.element(document).ready(function () {

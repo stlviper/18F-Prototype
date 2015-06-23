@@ -3,7 +3,7 @@
 window.openfdaviz = angular.module('openfdaviz', ['ui.router']);
 
 
-window.openfdaviz.config(function ($stateProvider, $urlRouterProvider) {
+window.openfdaviz.config(['$stateProvider', '$urlRouterProvider', function ($stateProvider, $urlRouterProvider) {
 
   $urlRouterProvider.otherwise('/');
 
@@ -32,4 +32,4 @@ window.openfdaviz.config(function ($stateProvider, $urlRouterProvider) {
       }
     });
 
-});
+}]);
