@@ -5,5 +5,7 @@ var path = require('path');
 //serve dev-build index
 app.use(express.static(path.join(__dirname, '../../')));
 
-app.listen(8000);
-console.log('Listening on port 8000');
+var port = process.env.PORT || 8000;
+app.listen(port);
+
+console.log('Listening on port ' + port);

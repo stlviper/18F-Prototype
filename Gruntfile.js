@@ -31,11 +31,23 @@ module.exports = function(grunt) {
 		clean: {
 			client: ['dist/client'],
 			server: ['dist/server']
+		},
+		shell: {
+			foreverInstall: {
+				command: 'npm install -g forever'
+			},
+			startClient: {
+				command: 'forever start client/test/mockserver/mockserver_prod.js'
+			},
+			startServer: {
+				command: 'PORT=3002 forever start server/app.js'
+			}
 		}
 	});
 
 	grunt.loadNpmTasks('grunt-aws-s3');
 	grunt.loadNpmTasks('grunt-contrib-clean');
+	grunt.loadNpmTasks('grunt-shell');
 
 	grunt.registerTask('deploysubproject:client', function (){
 		var done = this.async();
@@ -65,4 +77,6 @@ module.exports = function(grunt) {
 	grunt.registerTask('deploy:client', ['clean:client', 'deploysubproject:client', 'aws_s3:production']);
 	grunt.registerTask('deploy:server', ['clean:server', 'deploysubproject:server']);
 	grunt.registerTask('deploy', ['deploy:client', 'deploy:server']);
+	grunt.registerTask('start', ['clean:client', 'deploysubproject:client', 'clean:server', 'deploysubproject:server',
+			'shell:foreverInstall', 'shell:startClient', 'shell:startServer']);
 };
