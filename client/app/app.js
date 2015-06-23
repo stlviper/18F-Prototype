@@ -3,7 +3,7 @@
 window.openfdaviz = angular.module('openfdaviz', ['ui.router']);
 
 
-window.openfdaviz.config(function($stateProvider, $urlRouterProvider) {
+window.openfdaviz.config(function ($stateProvider, $urlRouterProvider) {
 
   $urlRouterProvider.otherwise('/home');
 
@@ -19,6 +19,10 @@ window.openfdaviz.config(function($stateProvider, $urlRouterProvider) {
     .state('map', {
       url: '/map',
       templateUrl: '/app/partial-map.html'
+    })
+    .state('search', {
+      url: '/search',
+      templateUrl: '/app/partial-search.html'
     });
 
 });
