@@ -45,7 +45,7 @@ module.exports = function (grunt) {
       devConfig: {
         files: [{
           src: ['assets/config/dev.json'],
-          dest: 'build/config.json'
+          dest: 'config.json'
         }]
       },
       prodConfig: {
