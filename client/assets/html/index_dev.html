@@ -2,39 +2,38 @@
 <html ng-app="openfdaviz">
 <head lang="en">
   <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+  <meta name="description" content="">
+  <meta name="author" content="">
+  <link rel="icon" href="favicon.ico">
+
   <title>OpenFDA Visualization</title>
-  <link href="assets/css/openfdaviz.css" rel="stylesheet"/>
-  <link href="node_modules/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet"/>
-  <link href="assets/lib/c3/c3.min.css" rel="stylesheet"/>
-  <link href="assets/lib/d3/d3.slider.css" rel="stylesheet"/>
 
-  <!--<script src="assets/lib/d3/d3.slider.js"></script>-->
+  <link href="build/css/npm-lib.css" rel="stylesheet"/>
+  <link href="build/css/openfdaviz.css" rel="stylesheet"/>
+  <link href="build/css/vendor-lib.css" rel="stylesheet"/>
 
-  <script src="../dist/client/js/npm-lib.js"></script>
-  <script src="../dist/client/js/vendor.min.js"></script>
+  <link href="//fonts.googleapis.com/css?family=Open+Sans:400italic,700italic,700,400|Raleway:500,700,300" rel="stylesheet" type="text/css">
+
+  <script src="build/js/npm-lib.js"></script>
+  <script src="build/js/vendor.js"></script>
 
   <script src="app/app.js"></script>
   <script src="app/components/map/mapController.js"></script>
+  <script src="app/components/map/mapView.js"></script>
   <script src="app/components/map/controls/resultsList.js"></script>
   <script src="app/components/map/controls/searchControls.js"></script>
 
   <script src="app/components/timeline/timelineController.js"></script>
   <script src="app/components/timeline/controls/pieChart.js"></script>
+  <script src="app/shared/layout/mainLayout.js"></script>
+  <script src="app/shared/layout/layoutController.js"></script>
+
+  <script src="build/js/templates.js"></script>
 </head>
 <body>
-
-<div ng-controller="MapController">
-  <h1>OpenFDA Visualizer Landing Page! (dev build)</h1>
-
-  <div x-results-list></div>
-  <div x-search-controls></div>
-</div>
-
-<div ng-controller="TimelineController">
-  <div class="container">
-    <div x-pie-chart></div>
-  </div>
-</div>
-
+  <div x-openfdaviz-layout></div>
 </body>
 </html>

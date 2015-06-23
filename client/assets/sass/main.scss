@@ -1,8 +1,10 @@
-body {
-	padding: 50px;
-	font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
-}
-
-a {
-	color: #00B7FF;
-}
+@charset "UTF-8";
+/* NOTE:
+ * Started doing it this way because Paul and I (Nolan) found an issue with  multiple scss files to one in grunt sass would
+ * sometimes only grab the first one in the directory OR if one errored out it would queitly keeping the rest in
+ * the directory from gettting added. Also thought about concat all the scss to one file first then compile them but went
+ * with this way because is was super simple to make sure everything was included and IF for some reason ordering needed
+ * to be done then it is simple to do
+ */
+@import 'ofv-theme';
+@import 'cover';

@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="icon" href="favicon.ico">
+
+    <title>openFDA Vizualizer</title>
+    
+    <!-- Bootstrap core CSS -->
+	<script type="text/javascript" src="http://code.jquery.com/jquery-2.1.1.min.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <link href="css/bootstrap.css" rel="stylesheet">
+    <!-- Bootstrap theme -->
+    <link href="css/bootstrap-theme.css" rel="stylesheet">
+
+	<!-- Date/time picker -->
+	<script src="http://cdnjs.cloudflare.com/ajax/libs/moment.js/2.9.0/moment-with-locales.js"></script>
+    <script type="text/javascript" src="js/bootstrap-datetimepicker.min.js"></script>
+	<script type="text/javascript" src="js/moment.min.js"></script>
+    <link rel="stylesheet" href="css/bootstrap-datetimepicker.min.css" />
+
+    <!-- Custom styles for this template -->
+	<link href="http://fonts.googleapis.com/css?family=Open+Sans:400italic,700italic,700,400|Raleway:500,700,300" rel="stylesheet" type="text/css">
+    <link href="css/ofv-theme.css" rel="stylesheet">
+
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+    
+  </head>
+
+  <body role="document">
+
+    <!-- Fixed navbar -->
+    <nav class="navbar navbar-inverse navbar-fixed-top">
+      <div class="container">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="#">open<strong>FDA Visualizer</strong></a>
+        </div>
+        <div id="navbar" class="navbar-collapse collapse">
+          <ul class="nav navbar-nav">
+            <li class="active"><a href="#">Link 1</a></li>
+            <li><a href="#">Link 2</a></li>
+            <li><a href="#">Link 3</a></li>
+          </ul>
+        </div><!--/.nav-collapse -->
+      </div>
+    </nav><!-- /container -->
+    
+    <div class="container main-contents">
+    	<div class="row">
+        	<div class="col-sm-7">
+            	<div class="map">
+                	<a href="#"><div class="resize"><span class="glyphicon glyphicon-resize-full"></span></div></a>
+                	Map stuff goes here
+                </div>
+
+                <div class="map-dates">
+                    <form class="form-horizontal">
+                    <div class="input-group date pull-left" id="datetimepicker1">
+                        <input type="text" class="form-control" placeholder="Start date" data-format="yyyy-MM-dd" />
+                        <span class="input-group-addon">
+                            <span class="glyphicon glyphicon-calendar"></span>
+                        </span>
+                    </div>
+                    <div class="input-group date pull-right" id="datetimepicker2">
+                        <input type="text" class="form-control" placeholder="End date"  />
+                        <span class="input-group-addon">
+                            <span class="glyphicon glyphicon-calendar"></span>
+                        </span>
+                    </div>
+                    </form>
+                </div>
+                <div class="map-slider">
+                	Time slider goes here.
+                </div>
+                            
+            </div>
+        	<div class="col-sm-5">
+            	<div class="details">
+                	<a href="#"><div class="resize"><span class="glyphicon glyphicon-resize-full"></span></div></a>
+                    <ul class="nav nav-tabs" role="tablist">
+                        <li role="presentation" class="active"><a href="default-search.html">Search</a></li>
+                        <li role="presentation"><a href="default-results.html">Results</a></li>
+                    </ul>
+                    <div class="details-container">
+                    	<h3>Search</h3>
+                        <form class="form-horizontal">
+                          <label class="drugs">Drugs</label>
+                          <select class="form-control">
+                              <option>1</option>
+                              <option>2</option>
+                              <option>3</option>
+                              <option>4</option>
+                          </select>
+
+                          <label class="devices">Devices</label>
+                          <select class="form-control">
+                              <option>1</option>
+                              <option>2</option>
+                              <option>3</option>
+                              <option>4</option>
+                          </select>
+
+                          <label class="foods">Foods</label>
+                          <select class="form-control">
+                              <option>1</option>
+                              <option>2</option>
+                              <option>3</option>
+                              <option>4</option>
+                          </select>
+
+                            <p class="text-center">
+                            <button type="button" class="btn btn-primary btn-blue">Submit</button></p>
+                        </form>                    
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Fixed footer -->
+    <footer class="footer navbar-inverse">
+    <div class="container">
+        <p class="copyright pull-left"><a href="http://ogsystems.com" target="_blank"><img src="../../client/assets/img/OGS_logo.png" width="120" height="16" alt=""/></a></p>
+    </div>
+    </footer><!-- /footer -->
+
+
+    <!-- Bootstrap core JavaScript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script src="http://getbootstrap.com/assets/js/docs.min.js"></script>
+    <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
+    <script src="http://getbootstrap.com/assets/js/ie10-viewport-bug-workaround.js"></script>
+    
+    <!-- Date/time picker -->
+	<script type="text/javascript">
+    $(function () {
+        $('#datetimepicker1').datetimepicker({
+            format: 'MMMM DD, YYYY'
+        });
+        $('#datetimepicker2').datetimepicker({
+            format: 'MMMM DD, YYYY'
+        });
+        $("#datetimepicker1").on("dp.change", function (e) {
+            $('#datetimepicker2').data("DateTimePicker").minDate(e.date);
+        });
+        $("#datetimepicker2").on("dp.change", function (e) {
+            $('#datetimepicker1').data("DateTimePicker").maxDate(e.date);
+        });
+        $('#datetimepicker3').datetimepicker({
+            format: 'MMMM DD, YYYY'
+        });
+        $('#datetimepicker4').datetimepicker({
+            format: 'MMMM DD, YYYY'
+        });
+        $("#datetimepicker3").on("dp.change", function (e) {
+            $('#datetimepicker2').data("DateTimePicker").minDate(e.date);
+        });
+        $("#datetimepicker4").on("dp.change", function (e) {
+            $('#datetimepicker1').data("DateTimePicker").maxDate(e.date);
+        });
+    });
+	</script>
+
+  </body>
+</html>
