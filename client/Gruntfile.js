@@ -72,6 +72,13 @@ module.exports = function (grunt) {
           src: ['build/css/openfdaviz.css'],
           dest: '../dist/client/css/openfdaviz.css'
         }]
+      },
+      images: {
+        files: [{
+          src: 'assets/img/**/*.*',
+          dest: '/build/img/',
+          expand: true
+        }]
       }
     },
     jshint: {

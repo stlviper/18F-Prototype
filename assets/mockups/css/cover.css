@@ -39,7 +39,7 @@ html,
 body {
   height: 100%;
   background-color: #00509a;
-  background: url(../images/splash.jpg) no-repeat center center fixed; 
+  background: url(../../../client/assets/img/splash.jpg) no-repeat center center fixed;
   -webkit-background-size: cover;
   -moz-background-size: cover;
   -o-background-size: cover;
