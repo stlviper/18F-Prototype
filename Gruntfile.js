@@ -36,6 +36,12 @@ module.exports = function(grunt) {
 			foreverInstall: {
 				command: 'npm install -g forever'
 			},
+			npmInstallClient: {
+				command: 'cd client && npm install'
+			},
+			npmInstallServer: {
+				command: 'cd server && npm install'
+			},
 			startClient: {
 				command: 'forever start client/test/mockserver/mockserver_prod.js'
 			},
@@ -74,9 +80,11 @@ module.exports = function(grunt) {
 			done();
 		});
 	});
+	grunt.registerTask('setup:client', ['shell:npmInstallClient']);
+	grunt.registerTask('setup:server', ['shell:npmInstallServer']);
 	grunt.registerTask('deploy:client', ['clean:client', 'deploysubproject:client', 'aws_s3:production']);
 	grunt.registerTask('deploy:server', ['clean:server', 'deploysubproject:server']);
 	grunt.registerTask('deploy', ['deploy:client', 'deploy:server']);
-	grunt.registerTask('start', ['clean:client', 'deploysubproject:client', 'clean:server', 'deploysubproject:server',
+	grunt.registerTask('start', ['setup:client', 'setup:server', 'clean:client', 'deploysubproject:client', 'clean:server', 'deploysubproject:server',
 			'shell:foreverInstall', 'shell:startClient', 'shell:startServer']);
 };
