@@ -128,8 +128,11 @@ module.exports = function (grunt) {
       }
     },
     shell: {
-      s3deploy: {
-        command: 'echo "(aws s3 cp dist/ :openfdaviz/)"'
+      startDev: {
+        command: 'node_modules/forever/bin/forever start test/mockserver/mockserver_dev.js'
+      },
+      startProd: {
+        command: 'node_modules/forever/bin/forever start test/mockserver/mockserver_prod.js'
       }
     },
     uglify: {
@@ -167,6 +170,8 @@ module.exports = function (grunt) {
   grunt.loadNpmTasks('grunt-shell');
 
   // Register other tasks
+  grunt.registerTask('start:dev', ['build', 'shell:startDev']);
+  grunt.registerTask('start:prod', ['build:prod', 'shell:startProd']);
   grunt.registerTask('test', ['mochaTest:client']);
   grunt.registerTask('selenium', ['protractor_webdriver', 'protractor:run']);
   grunt.registerTask('default', ['build']);
