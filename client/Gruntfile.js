@@ -13,19 +13,20 @@ module.exports = function (grunt) {
       }
     },
     clean: {
-      dev: [ 'build', 'index.html' ],
-      prod: [ 'build' ]
+      dev: ['build', 'index.html'],
+      prod: ['build']
     },
     concat: {
-      cssNpmLib:{
+      cssNpmLib: {
         src: [
           'node_modules/bootstrap/dist/css/bootstrap.min.css',
+          'node_modules/bootstrap/dist/css/bootstrap-theme.min.css',
           'node_modules/leaflet/dist/leaflet.css',
           'assets/css/d3/c3.min.css'
         ],
         dest: 'build/css/npm-lib.css'
       },
-      cssVendor:{
+      cssVendor: {
         src: [
           'assets/css/d3/d3.slider.css'
         ],
@@ -64,20 +65,28 @@ module.exports = function (grunt) {
           src: ['build/css/npm-lib.css'],
           dest: '../dist/client/css/npm-lib.css'
         },
-        {
-          src: ['build/css/vendor-lib.css'],
-          dest: '../dist/client/css/vendor-lib.css'
-        },
-        {
-          src: ['build/css/openfdaviz.css'],
-          dest: '../dist/client/css/openfdaviz.css'
-        }]
+          {
+            src: ['build/css/vendor-lib.css'],
+            dest: '../dist/client/css/vendor-lib.css'
+          },
+          {
+            src: ['build/css/openfdaviz.css'],
+            dest: '../dist/client/css/openfdaviz.css'
+          }]
       },
       images: {
         files: [{
           cwd: 'assets/img',
           src: '**/*.*',
           dest: 'build/img',
+          expand: true
+        }]
+      },
+      fonts: {
+        files: [{
+          cwd: 'node_modules/bootstrap/fonts',
+          src: '**/*.*',
+          dest: 'build/fonts',
           expand: true
         }]
       }
@@ -126,7 +135,7 @@ module.exports = function (grunt) {
     sass: {
       dev: {
         files: [{
-          'build/css/openfdaviz.css': 'assets/sass/**/*.scss'
+          'build/css/openfdaviz.css': 'assets/sass/main.scss'
         }]
       },
       dist: {
@@ -183,7 +192,7 @@ module.exports = function (grunt) {
   grunt.registerTask('test', ['mochaTest:client']);
   grunt.registerTask('selenium', ['protractor_webdriver', 'protractor:run']);
   grunt.registerTask('default', ['build']);
-  grunt.registerTask('build', ['sass:dev', 'concat', 'browserify', 'copy:devIndex', 'copy:vendorCss', 'copy:images', 'ngtemplates', 'test']);
+  grunt.registerTask('build', ['sass:dev', 'concat', 'browserify', 'copy:devIndex', 'copy:vendorCss', 'copy:images', 'copy:fonts', 'ngtemplates', 'test']);
   grunt.registerTask('build:prod', ['build', 'sass:dist', 'uglify', 'copy:npmLib', 'copy:prodIndex']);
   grunt.registerTask('deploy', ['clean', 'build:prod']);
 
