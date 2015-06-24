@@ -1,0 +1,21 @@
+$imgDir: '../img/jquery-ui';
+
+.ui-widget-content{
+  background: #fff url(#{$imgDir}/ui-bg_flat_75_ffffff_40x100.png) 50% 50% repeat-x !important;
+}
+
+.ui-widget-header{
+  background: #ccc url(#{$imgDir}/ui-bg_highlight-soft_75_cccccc_1x100.png) 50% 50% repeat-x !important;
+}
+
+.ui-icon,.ui-widget-header .ui-icon{
+  background-image: url(#{$imgDir}/ui-icons_222222_256x240.png) !important;
+}
+
+.ui-state-default,.ui-widget-content .ui-state-default,.ui-widget-header .ui-state-default{
+  background: #e6e6e6 url(#{$imgDir}/ui-bg_glass_75_e6e6e6_1x400.png) 50% 50% repeat-x !important;
+}
+
+.ui-state-active,.ui-widget-content .ui-state-active,.ui-widget-header .ui-state-active{
+  background: #fff url(#{$imgDir}/ui-bg_glass_65_ffffff_1x400.png) !important;
+}
