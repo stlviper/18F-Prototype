@@ -87,10 +87,13 @@ openfdaviz.directive("openfdavizTimeSlider", ['$parse', function ($parse) {
         _settings.$maxDateSltr = $(attrs.maxDateSltr);
 
         var dateChange = function () {
-          var maxValue = new Date(_settings.$maxDateSltr.val());
-          var minValue = new Date(_settings.$minDateSltr.val());
-          _settings.minDefaultValue = _convertDateToDecimal(minValue);
-          _settings.maxDefaultValue = _convertDateToDecimal(maxValue);
+          var maxValue = _convertDateToDecimal(new Date(_settings.$maxDateSltr.val()));
+          var minValue = _convertDateToDecimal(new Date(_settings.$minDateSltr.val()));
+
+          _settings.minDefaultValue = minValue > _settings.minYear ? minValue : _settings.minYear;
+
+          _settings.maxDefaultValue = maxValue < _settings.maxYear ? maxValue : _settings.maxYear;
+
           _sliderControl();
 
         };
