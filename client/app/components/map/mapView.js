@@ -7,7 +7,7 @@ openfdaviz.directive('openfdavizMap', function(){
     link: function (scope, element, attrs) {
       // create a map in the "map" div, set the view to a given place and zoom
       var map = L.map('map').setView([51.505, -0.09], 13);
-      map.panTo(new L.LatLng(38.8750, -77.4025));
+      map.panToL
 
       L.Icon.Default.imagePath = scope.imagePath;
 
@@ -27,6 +27,8 @@ openfdaviz.directive('openfdavizMap', function(){
       heatmap.pushData(51.5, -0.09, 100);
       heatmap.pushData(51.49, -0.09, 100);
       map.addLayer(heatmap);
+
+      window.searchMap = map
     }
   }
 });
