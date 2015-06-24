@@ -89,7 +89,7 @@ $ eb open
 
 You will now have a running version of the OpenFDAViz app. The eb open command will open the API in your browser.
 
-***** Summary of Team OGSystems Agile Development Methodology *****
+# ***** Summary of Team OGSystems Agile Development Methodology *****
 
 Team OGSystems used an interactive agile software development approach to create the FDA prototype. Team OGSystems operates as an agile shop and pooled resources from a variety of teams and shifted priorities in response to this RFQ.
 While some priorities were shifted for each team member, the process for responding and building the prototype remained business as usual for Team OGSystems.
