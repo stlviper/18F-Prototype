@@ -6,6 +6,7 @@
     "postinstall": "grunt setup:all",
     "start": "grunt start",
     "startClientDev": "grunt start:clientDev",
+    "startClientProd": "grunt start:clientProd",
     "startDev": "grunt start:dev"
   },
   "devDependencies": {
