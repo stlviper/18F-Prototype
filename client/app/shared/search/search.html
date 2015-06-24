@@ -1,75 +1,62 @@
-<div class="container main-contents">
+<div class="container main-contents" ng-controller="SearchController">
   <div class="row">
     <div class="col-sm-7">
-      <div class="map">
-        <a href="#">
-          <div class="resize"><span class="glyphicon glyphicon-resize-full"></span></div>
-        </a>
-        Map stuff goes here
-      </div>
+      <div x-openfdaviz-map></div>
 
       <div class="map-dates">
         <form class="form-horizontal">
           <div class="input-group date pull-left" id="datetimepicker1">
-            <input type="text" class="form-control" placeholder="Start date" data-format="yyyy-MM-dd"/>
-                        <span class="input-group-addon">
-                            <span class="glyphicon glyphicon-calendar"></span>
-                        </span>
+            <input id="start-date" type="text" class="form-control" placeholder="Start date" data-format="yyyy-MM-dd"/>
+            <label for="start-date" class="input-group-addon">
+                <span class="glyphicon glyphicon-calendar"></span>
+            </label>
           </div>
           <div class="input-group date pull-right" id="datetimepicker2">
-            <input type="text" class="form-control" placeholder="End date"/>
-                        <span class="input-group-addon">
-                            <span class="glyphicon glyphicon-calendar"></span>
-                        </span>
+            <input id="end-date" type="text" class="form-control" placeholder="End date"/>
+            <label for="end-date" class="input-group-addon">
+                <span class="glyphicon glyphicon-calendar"></span>
+            </label>
           </div>
         </form>
       </div>
       <div class="map-slider">
-        Time slider goes here.
+        <div x-openfdaviz-time-slider min-date="2004-01-01" max-date="2015-01-01"
+             min-date-sltr="#start-date" max-date-sltr="#end-date">
+        </div>
       </div>
-
     </div>
+
     <div class="col-sm-5">
       <div class="details">
         <a href="#">
           <div class="resize"><span class="glyphicon glyphicon-resize-full"></span></div>
         </a>
         <ul class="nav nav-tabs" role="tablist">
-          <li role="presentation" class="active"><a href="default-search.html">Search</a></li>
-          <li role="presentation"><a href="default-results.html">Results</a></li>
+          <li role="presentation" class="active">
+            <a href="" aria-controls="profile" role="tab" data-toggle="tab" ng-click="activateSearchTab('query')">Search</a>
+          </li>
+          <li role="presentation">
+            <a href="" aria-controls="profile" role="tab" data-toggle="tab" ng-click="activateSearchTab('results')">Results</a>
+          </li>
         </ul>
-        <div class="details-container">
-          <h3>Search</h3>
+        <div class="tab-content">
+          <div role="tabpanel" class="tab-pane active" id="search">
+            <div ng-switch="activeTab">
+              <div ng-switch-when="query">
+                <div ng-include src="'/app/shared/search/queryPane.html'"></div>
+              </div>
+              <div ng-switch-when="results">
+                <div ng-include src="'/app/shared/search/resultsPane.html'"></div>
+              </div>
+            </div>
+          </div>
+          <div role="tabpanel" class="tab-pane" id="results">
+            <div class="details-container">
+              <h3>Results</h3>
+              <p>In Progress</p>
+            </div>
+          </div>
 
-          <form class="form-horizontal">
-            <label class="drugs">Drugs</label>
-            <select class="form-control">
-              <option>1</option>
-              <option>2</option>
-              <option>3</option>
-              <option>4</option>
-            </select>
-
-            <label class="devices">Devices</label>
-            <select class="form-control">
-              <option>1</option>
-              <option>2</option>
-              <option>3</option>
-              <option>4</option>
-            </select>
-
-            <label class="foods">Foods</label>
-            <select class="form-control">
-              <option>1</option>
-              <option>2</option>
-              <option>3</option>
-              <option>4</option>
-            </select>
-
-            <p class="text-center">
-              <button type="button" class="btn btn-primary btn-blue">Submit</button>
-            </p>
-          </form>
         </div>
       </div>
     </div>

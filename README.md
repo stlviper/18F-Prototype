@@ -83,7 +83,7 @@ Then you need to have AWS EB Cli Installed (http://docs.aws.amazon.com/elasticbe
 ```
 $ cd server
 $ eb init
-$ eb create 
+$ eb create
 $ eb open
 ```
 
