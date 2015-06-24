@@ -4,9 +4,20 @@ openfdaviz.directive("openfdavizTimeSlider", ['$parse', function ($parse) {
     minDate: 2014,
     maxDate: 2015
   };
+
+  var _formatDateForQuery = function(date){
+    var outputFormat = d3.time.format('%Y%m%d');
+    return outputFormat(date);
+  };
+
+  var _formateDateForDisplay = function(date){
+    var outputFormat = d3.time.format('%m/%d/%Y');
+    return outputFormat(date)
+  };
+
   var _updateDateFields = function ($minDateControl, minDate, $maxDateControl, maxDate) {
-    $minDateControl.val(minDate);
-    $maxDateControl.val(maxDate);
+    $minDateControl.val(_formateDateForDisplay(minDate));
+    $maxDateControl.val(_formateDateForDisplay(maxDate));
   };
 
   var _leapYear = function (year) {
@@ -19,10 +30,9 @@ openfdaviz.directive("openfdavizTimeSlider", ['$parse', function ($parse) {
     var daysPerYear = _leapYear(year) ? 366 : 365;
     var miliseconds = reminder * daysPerYear * 24 * 60 * 60 * 1000;
     var yearDate = new Date(year, 0, 1);
-    yearDate = new Date(yearDate.getTime() + miliseconds);
-    var outputFormat = d3.time.format('%Y%m%d');
-    return outputFormat(yearDate);
+    return new Date(yearDate.getTime() + miliseconds);
   };
+
 
   return {
     restrict: 'AE',
