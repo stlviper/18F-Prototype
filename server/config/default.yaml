@@ -3,6 +3,7 @@
 # values in the swagger hash are system configuration for swagger
 swagger:
   mapErrorsToJson: true
+  validateResponse: false
   docEndpoints:
     raw: /swagger
 
