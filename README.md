@@ -151,6 +151,6 @@ We conducted a user demo mid-day Wednesday to test the application and gather on
 
 (Figure 10: A Day of Design, Development and collaboration!)
 
-<a href="http://www.youtube.com/watch?feature=player_embedded&v=aAyHSWz8lQ
-" target="_blank"><img src="http://img.youtube.com/vi/aAyHSWz8lQ/0.jpg"
+<a href="http://www.youtube.com/watch?feature=player_embedded&v=-aAyHSWz8lQ
+" target="_blank"><img src="http://img.youtube.com/vi/-aAyHSWz8lQ/0.jpg"
 alt="A Day of Design, Development and collaboration!" width="240" height="180" border="10" /></a>
