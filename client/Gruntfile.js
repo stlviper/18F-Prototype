@@ -22,6 +22,8 @@ module.exports = function (grunt) {
           'node_modules/bootstrap/dist/css/bootstrap.min.css',
           'node_modules/bootstrap/dist/css/bootstrap-theme.min.css',
           'node_modules/leaflet/dist/leaflet.css',
+          'node_modules/jquery-ui/themes/base/minified/jquery-ui.min.css',
+          'node_modules/jquery-ui/themes/base/minified/jquery.ui.datepicker.min.css',
           'assets/css/d3/c3.min.css'
         ],
         dest: 'build/css/npm-lib.css'
