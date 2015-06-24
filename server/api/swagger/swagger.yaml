@@ -21,7 +21,7 @@ paths:
   /drug/event/search:
     get:
       x-swagger-router-controller: drugs
-      operationId: search
+      operationId: eventSearch
       description: Search field(s)
       parameters:
         - name: query
@@ -56,7 +56,7 @@ paths:
   /drug/event/rangecount:
     get:
       x-swagger-router-controller: drugs
-      operationId: rangecount
+      operationId: eventRangeCount
       description: Returns test fetch of a drugs query count
       parameters:
         - name: start
