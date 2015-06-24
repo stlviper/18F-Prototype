@@ -144,6 +144,6 @@ All work was tagged in our JIRA instance with components to help tell the story 
 
 We conducted a user demo mid-day Wednesday to test the application and gather one more round of feedback prior to the prototype delivery. The accelerated project timeline posed some challenges that we addressed using an Agile software development approach and staying lean across the team.
 
-(Figure 9: Mid Rlease Demo)
+(Figure 9: Mid Release Demo 1)
 
-![alt text](https://github.com/stlviper/18F-Prototype/blob/master/assets/process/midrelease1_snap.jpg "Mid Release Demo")
+![alt text](https://github.com/stlviper/18F-Prototype/blob/master/assets/process/MidRelease1_snap.jpg "Mid Release Demo 1")
