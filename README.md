@@ -146,4 +146,4 @@ We conducted a user demo mid-day Wednesday to test the application and gather on
 
 (Figure 9: Mid Release Demo 1)
 
-![alt text](https://github.com/stlviper/18F-Prototype/blob/master/assets/process/MidRelease1_snap.jpg "Mid Release Demo 1")
+![alt text](https://github.com/stlviper/18F-Prototype/blob/master/assets/process/MidRelease1_Snap.jpg "Mid Release Demo 1")
