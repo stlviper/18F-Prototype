@@ -40,6 +40,8 @@ paths:
           description: Limit the number of results
           required: false
           type: integer
+      produces:
+        - application/json
       responses:
         "200":
           description: Success
@@ -91,8 +93,11 @@ definitions:
         type: string
   ErrorResponse:
       required:
+        - code
         - message
       properties:
+        code:
+          type: integer
         message:
           type: string
 
