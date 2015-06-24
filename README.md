@@ -89,7 +89,7 @@ $ eb open
 
 You will now have a running version of the OpenFDAViz app. The eb open command will open the API in your browser.
 
-# ***** Summary of Team OGSystems Agile Development Methodology *****
+## *** Summary of Team OGSystems Agile Development Methodology ***git
 
 Team OGSystems used an interactive agile software development approach to create the FDA prototype. Team OGSystems operates as an agile shop and pooled resources from a variety of teams and shifted priorities in response to this RFQ.
 While some priorities were shifted for each team member, the process for responding and building the prototype remained business as usual for Team OGSystems.
@@ -105,11 +105,20 @@ With the initial design phase started, we engaged end customers in a collaborati
 
 (Figure 2: Customer Engagement)
 ![alt text](https://github.com/stlviper/18F-Prototype/blob/master/assets/design/18F-UserEngagementSession001.jpg "Customer Engagement")
-(Figure 2.1: Customer Suggestions)
+
+(Figure 2.1: Customer Engagement Session)
+
+<a href="http://www.youtube.com/watch?feature=player_embedded&v=myWMVXG98so" target="_blank"><img src="http://img.youtube.com/vi/myWMVXG98so/0.jpg"
+alt="A Day of Design, Development and collaboration!" width="240" height="180" border="10" /></a>
+
+(Figure 2.2: Customer Suggestions)
+
 ![alt text](https://github.com/stlviper/18F-Prototype/blob/master/assets/design/18F-UIMockUp004.jpg "Customer Suggestions")
+
 We also conducted a Persona Development brainstorming session and developed Personas to aid the design and prioritization process.
 
 (Figure 3: Persona Brainstorming)
+
 ![alt text](https://github.com/stlviper/18F-Prototype/blob/master/assets/design/18F-PersonaDevelopmentMindmap003.jpg "Persona MindMap")
 
 (Figure 4: Persona Development)
