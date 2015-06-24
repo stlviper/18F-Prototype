@@ -45,6 +45,17 @@ function getEventSearchData(req, callback) {
 }
 
 
+function getGeoDataFromSplashSearch(req, callback) {
+  // https://api.fda.gov/drug/event.json?search=patient.reaction.reactionmeddrapt:Hiccups[20100521+TO+20131203]&count=primarysourcecountry
+  // https://api.fda.gov/drug/event.json?
+  // search=patient.reaction.reactionmeddrapt:Hiccups[20100521+TO+20131203]
+  // &count=primarysourcecountry
+
+  var query = req.swagger.params.query.value;
+
+}
+
+
 function getDataFromFdaApi(fdaUrl, callback) {
   request.get({
     url: fdaUrl,

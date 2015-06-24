@@ -86,4 +86,28 @@ describe('Testing Drugs Controller.', function(){
   });
 
 
+  // Returns data by searching a field from all three categories (drug, food, devices)
+  describe('Should return array of search result objects with field set as value', function(){
+    it("Contains 11 valid result entries", function (done) {
+      var mockReq = this.mockReq;
+      mockReq.swagger.params.query = {value: "primarysourcecountry:us"};
+      mockReq.swagger.params.limit = {value: "11"};
+      mockReq.swagger.params.skip = {value: '20'};
+
+      drugs.tests.getEventSearchData(mockReq, function(data){
+        expect(data.length).to.equal(11);
+        expect(data[0]['@epoch']).to.exist;
+        expect(data[10]['@epoch']).to.exist;
+        var totalCorrectResults = 0;
+        for (var i = 0; i < data.length; i++){
+          if (data[i].primarysourcecountry.toLowerCase() == 'us') {
+            totalCorrectResults++;
+          }
+        }
+        expect(totalCorrectResults).to.equal(11);
+        done();
+      });
+    });
+  });
+
 });

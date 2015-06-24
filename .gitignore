@@ -31,6 +31,7 @@ npm-debug.log
 
 # intellij personal settings
 .idea
+*.iml
 
 /bin/uploads
 !/public/images/default.png
