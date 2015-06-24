@@ -102,31 +102,55 @@ The MindMap helped the PO and team create the initial backlog and begin to set p
 
 After the initial standup, the team began to self identify in roles that matched their experience and expertise. We started design development, built wireframes, designed architecture, and scheduled user engagement sessions.
 With the initial design phase started, we engaged end customers in a collaborative session to solicit feedback on initial design concepts. This session yielded additional design and development concepts and stories.
+
 (Figure 2: Customer Engagement)
 ![alt text](https://github.com/stlviper/18F-Prototype/blob/master/assets/design/18F-UserEngagementSession001.jpg "Customer Engagement")
 (Figure 2.1: Customer Suggestions)
 ![alt text](https://github.com/stlviper/18F-Prototype/blob/master/assets/design/18F-UIMockUp004.jpg "Customer Suggestions")
 We also conducted a Persona Development brainstorming session and developed Personas to aid the design and prioritization process.
+
 (Figure 3: Persona Brainstorming)
 ![alt text](https://github.com/stlviper/18F-Prototype/blob/master/assets/design/18F-PersonaDevelopmentMindmap003.jpg "Persona MindMap")
+
 (Figure 4: Persona Development)
+
 ![alt text](https://github.com/stlviper/18F-Prototype/blob/master/assets/design/27-EF-46UserPersonas-1506.jpg "Persona Development")
-Our first design priority was to swarm on the architectural runway and build out enough of the architecture. Nolan Hager led the devops decisions to get us up and running in AWS using Elastic Beanstalk to set us up to build a scalable web application that interfaces with the FDA api (Figure 2 Architecture Diagram).
+
+Our first design priority was to swarm on the architectural runway and build out enough of the architecture. Nolan Hager led the devops decisions to get us up and running in AWS using Elastic Beanstalk to set us up to build a scalable web application that interfaces with the FDA api.
 This architecture allows the app to scale up and load balance based on its server capacity and configuration.
-![alt text](https://github.com/stlviper/18F-Prototype/blob/master/assets/process/18fAWSArchitecture.png "OpenFDAVis Architecture")
+
 (Figure 5: OpenFDAVis Architecture)
+
+![alt text](https://github.com/stlviper/18F-Prototype/blob/master/assets/process/18fAWSArchitecture.png "OpenFDAVis Architecture")
+
 During the project we used several applications to facilitate the collaboration of remotely based teams (Saint Louis; Chantilly, VA). We used HipChat for day-to-day interactions and integrated it with our Atlassian Suite to receive notifications in our 18F chat room. We used Appear video chat capability.
 Very little email was generated during this period and collaboration via chat and video was continual. Using our Agile workflow in JIRA, each task was reviewed by two or more parties - we used Crucible to perform version controlled, user-story based reviews. We used GitHub for version control.
 Test Driven Development is a staple of our agile development approach. We used Mocha and Selenium to conduct unit tests and UI testing automatically at build. This helps ensure code quality and reduce cross browser inconstancies. We used a Kanban board to iterate through our stories and track the state of the prototype.
 We also set work in progress (WIP) limits in each of our swim lanes on the Kanban board to keep our team lean and allow us to complete more work with less delay.
+
 (Figure 6: Kanban Snapshot)
+
 ![alt text](https://github.com/stlviper/18F-Prototype/blob/master/assets/process/jira_snap.png "JIRA Snapshot")
+
 (Figure 7: HipChat Snapshot)
+
 ![alt text](https://github.com/stlviper/18F-Prototype/blob/master/assets/process/HipChat_snap.png "HipChat Snapshot")
+
 In our Kanban Snapshot, you can see we have a WIP limit alert in review. Using our lean process, we all focused on clearing out the review lane before proceeding to new work.
 All work was tagged in our JIRA instance with components to help tell the story of how we iterated over the design and development process to flush out the prototype.
+
 (Figure 8: Components Snapshot)
+
 ![alt text](https://github.com/stlviper/18F-Prototype/blob/master/assets/process/component_snap.png "Components Snapshot")
+
 We conducted a user demo mid-day Wednesday to test the application and gather one more round of feedback prior to the prototype delivery. The accelerated project timeline posed some challenges that we addressed using an Agile software development approach and staying lean across the team.
-(Figure 9: Mid Rlease Demo)
-![alt text](https://github.com/stlviper/18F-Prototype/blob/master/assets/process/release_snap.png "Mid Release Demo")
+
+(Figure 9: Mid Release Demo 1)
+
+![alt text](https://github.com/stlviper/18F-Prototype/blob/master/assets/process/MidRelease1_Snap.jpg "Mid Release Demo 1")
+
+(Figure 10: A Day of Design, Development and collaboration!)
+
+<a href="http://www.youtube.com/watch?feature=player_embedded&v=-aAyHSWz8lQ
+" target="_blank"><img src="http://img.youtube.com/vi/-aAyHSWz8lQ/0.jpg"
+alt="A Day of Design, Development and collaboration!" width="240" height="180" border="10" /></a>
