@@ -15,10 +15,12 @@ var convertDecimalDate = function (decimalDate) {
   return outputFormat(yearDate);
 };
 
-var gender = {'0': 'Unknown', '1': 'Male', '2': 'Female'};
 
-
-openfdaviz.directive("timeslider", ['$parse', function ($parse) {
+openfdaviz.directive("openfdavizTimeSlider", ['$parse', function ($parse) {
+  var _settings = {
+    minDate: 2014,
+    maxDate:2015
+  };
   return {
     restrict: 'AE',
     replace: true,
