@@ -87,4 +87,9 @@ $ eb create
 $ eb open
 ```
 
-You will now have a running version of the OpenFDAViz app. The eb open command will open the API in your browser. 
+You will now have a running version of the OpenFDAViz app. The eb open command will open the API in your browser.i
+
+******************************* Summary of Team OGSystems Agile Developemtn Methodology***********************************
+
+![alt text]https://github.com/stlviper/18F-Prototype/blob/master/assets/design/18F-Mindmap001.jpg
+
