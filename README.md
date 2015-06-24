@@ -87,4 +87,16 @@ $ eb create
 $ eb open
 ```
 
-You will now have a running version of the OpenFDAViz app. The eb open command will open the API in your browser. 
+You will now have a running version of the OpenFDAViz app. The eb open command will open the API in your browser.
+
+***** Summary of Team OGSystems Agile Development Methodology *****i
+
+Team OGSystems used an interactive agile software development approach to create the FDA prototype. Team OGSystems operates as an agile shop and pooled resources from a variety of teams and shifted priorities in response to this RFQ.
+While some priorities were shifted for each team member, the process for responding and building the prototype remained business as usual for Team OGSystems.
+We approached this as a short-term hackathon and swarmed many aspects of building out the prototype and process. We identified a sole Product Owner (PO), Chad Dalton to help set priorities and groom our backlog along the way.
+The PO was responsible for managing and prioritizing our agile JIRA workflow and lists. We established a multidisciplinary and collaborative team made up of seven of the labor categories out of both the design Pool One and development Pool Two.
+We conducted a team standup meeting, and as a team, we outlined our cadence to include a sprint demo, a release demo, and regularly scheduled standups. We used two daily standups to accommodate the accelerated pace and collaboration necessary to meet the delivery deadline.
+We immediately followed the kick-off meeting with our initial design phase and conducted a MindMapping exercise to drive the team to a singular vision and strategy.
+The MindMap helped the PO and team create the initial backlog and begin to set priorities, and provided a forum for us to brainstorm what we may want to do with the data and how we might drive the prototype forward. (Figure 1 MindMap)
+![alt text](https://github.com/stlviper/18F-Prototype/blob/master/assets/design/18F-Mindmap001.jpg "Mind Map Logo")
+

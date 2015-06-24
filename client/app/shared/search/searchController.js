@@ -1,13 +1,24 @@
 'use strict';
 
-openfdaviz.controller('SearchController', ['$scope', '$http', function($scope, $http){
+openfdaviz.controller('SearchController', ['$scope', '$http', '$stateParams', function ($scope, $http, $stateParams) {
+  var _settings = {
+    generalApiCall: ''
+  };
   $scope.activeTab = 'query';
+  $scope.results = {
+    drugs: [{message: 'test'}, {message: 'test two'}],
+    devices: [{message: 'test three'}, {message: 'test four'}],
+    foods: [{message: 'test five'}, {message: 'test six'}]
+  };
+
+  if ($stateParams.searchQuery) {
+    console.log('test: ' + $stateParams.searchQuery);
+  }
 
   angular.element(document).ready(function () {
-    console.log('These are not the droids you are looking for.')
   });
 
-  $scope.activateSearchTab = function(activeTab){
+  $scope.activateSearchTab = function (activeTab) {
     $scope.activeTab = activeTab;
   }
 }]);
