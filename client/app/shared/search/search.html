@@ -31,41 +31,56 @@
           <div class="resize"><span class="glyphicon glyphicon-resize-full"></span></div>
         </a>
         <ul class="nav nav-tabs" role="tablist">
-          <li role="presentation" class="active"><a href="default-search.html">Search</a></li>
-          <li role="presentation"><a href="default-results.html">Results</a></li>
+          <li role="presentation" class="active">
+            <a href="#search" aria-controls="profile" role="tab" data-toggle="tab" onclick="return false;">Search</a>
+          </li>
+          <li role="presentation">
+            <a href="#results" aria-controls="profile" role="tab" data-toggle="tab" onclick="return false;">Results</a>
+          </li>
         </ul>
-        <div class="details-container">
-          <h3>Search</h3>
+        <div class="tab-content">
+          <div role="tabpanel" class="tab-pane active" id="search">
+            <div class="details-container">
+              <h3>Search</h3>
 
-          <form class="form-horizontal">
-            <label class="drugs">Drugs</label>
-            <select class="form-control">
-              <option>1</option>
-              <option>2</option>
-              <option>3</option>
-              <option>4</option>
-            </select>
+              <form class="form-horizontal">
+                <label class="drugs">Drugs</label>
+                <select class="form-control">
+                  <option>1</option>
+                  <option>2</option>
+                  <option>3</option>
+                  <option>4</option>
+                </select>
 
-            <label class="devices">Devices</label>
-            <select class="form-control">
-              <option>1</option>
-              <option>2</option>
-              <option>3</option>
-              <option>4</option>
-            </select>
+                <label class="devices">Devices</label>
+                <select class="form-control">
+                  <option>1</option>
+                  <option>2</option>
+                  <option>3</option>
+                  <option>4</option>
+                </select>
 
-            <label class="foods">Foods</label>
-            <select class="form-control">
-              <option>1</option>
-              <option>2</option>
-              <option>3</option>
-              <option>4</option>
-            </select>
+                <label class="foods">Foods</label>
+                <select class="form-control">
+                  <option>1</option>
+                  <option>2</option>
+                  <option>3</option>
+                  <option>4</option>
+                </select>
 
-            <p class="text-center">
-              <button type="button" class="btn btn-primary btn-blue">Submit</button>
-            </p>
-          </form>
+                <p class="text-center">
+                  <button type="button" class="btn btn-primary btn-blue">Submit</button>
+                </p>
+              </form>
+            </div>
+          </div>
+          <div role="tabpanel" class="tab-pane" id="results">
+            <div class="details-container">
+              <h3>Results</h3>
+              <p>In Progress</p>
+            </div>
+          </div>
+
         </div>
       </div>
     </div>
