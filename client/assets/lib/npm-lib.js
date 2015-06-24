@@ -6,6 +6,7 @@
 
 //include jquery for bootstrap, also config so angular can use it instead
 window.jQuery = $ = jQuery = require('jquery/dist/jquery.min');
+require('jquery-ui/datepicker');
 
 require('angular/angular.min');
 require('angular-ui-router/release/angular-ui-router.min');
