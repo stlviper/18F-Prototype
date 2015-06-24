@@ -6,6 +6,7 @@ openfdaviz.directive('openfdavizMap', function(){
     templateUrl: '/app/components/map/mapView.html',
     link: function (scope, element, attrs) {
       // create a map in the "map" div, set the view to a given place and zoom
+      
       var map = L.map('map', {center: [38, 264], zoom: 4, minZoom: 2});
 
       L.Icon.Default.imagePath = scope.imagePath;
@@ -26,12 +27,6 @@ openfdaviz.directive('openfdavizMap', function(){
       heatmap.pushData(38.4623, 267.69799, map.getZoom()*4);
       heatmap.pushData(38.3, 267.69799, map.getZoom()*4);
       map.addLayer(heatmap);
-
-      map.on('zoomend', function() {
-        heatmap.clear();
-        heatmap.pushData(38.4623, 267.69799, map.getZoom()*4);
-        heatmap.pushData(38.3, 267.69799, map.getZoom()*4);
-      });
     }
   }
 });

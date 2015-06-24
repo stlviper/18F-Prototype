@@ -1,4 +1,4 @@
-<div class="container main-contents">
+<div class="container main-contents" ng-controller="SearchController">
   <div class="row">
     <div class="col-sm-7">
       <div x-openfdaviz-map></div>
@@ -7,24 +7,25 @@
         <form class="form-horizontal">
           <div class="input-group date pull-left" id="datetimepicker1">
             <input id="start-date" type="text" class="form-control" placeholder="Start date" data-format="yyyy-MM-dd"/>
-            <span class="input-group-addon">
+            <label for="start-date" class="input-group-addon">
                 <span class="glyphicon glyphicon-calendar"></span>
-            </span>
+            </label>
           </div>
           <div class="input-group date pull-right" id="datetimepicker2">
             <input id="end-date" type="text" class="form-control" placeholder="End date"/>
-            <span class="input-group-addon">
+            <label for="end-date" class="input-group-addon">
                 <span class="glyphicon glyphicon-calendar"></span>
-            </span>
+            </label>
           </div>
         </form>
       </div>
       <div class="map-slider">
         <div x-openfdaviz-time-slider min-date="2004-01-01" max-date="2015-01-01"
-             min-date-sltr="#start-date" max-date-sltr="#end-date"></div>
+             min-date-sltr="#start-date" max-date-sltr="#end-date">
+        </div>
       </div>
-
     </div>
+
     <div class="col-sm-5">
       <div class="details">
         <a href="#">
@@ -32,46 +33,21 @@
         </a>
         <ul class="nav nav-tabs" role="tablist">
           <li role="presentation" class="active">
-            <a href="#search" aria-controls="profile" role="tab" data-toggle="tab" onclick="return false;">Search</a>
+            <a href="" aria-controls="profile" role="tab" data-toggle="tab" ng-click="activateSearchTab('query')">Search</a>
           </li>
           <li role="presentation">
-            <a href="#results" aria-controls="profile" role="tab" data-toggle="tab" onclick="return false;">Results</a>
+            <a href="" aria-controls="profile" role="tab" data-toggle="tab" ng-click="activateSearchTab('results')">Results</a>
           </li>
         </ul>
         <div class="tab-content">
           <div role="tabpanel" class="tab-pane active" id="search">
-            <div class="details-container">
-              <h3>Search</h3>
-
-              <form class="form-horizontal">
-                <label class="drugs">Drugs</label>
-                <select class="form-control">
-                  <option>1</option>
-                  <option>2</option>
-                  <option>3</option>
-                  <option>4</option>
-                </select>
-
-                <label class="devices">Devices</label>
-                <select class="form-control">
-                  <option>1</option>
-                  <option>2</option>
-                  <option>3</option>
-                  <option>4</option>
-                </select>
-
-                <label class="foods">Foods</label>
-                <select class="form-control">
-                  <option>1</option>
-                  <option>2</option>
-                  <option>3</option>
-                  <option>4</option>
-                </select>
-
-                <p class="text-center">
-                  <button type="button" class="btn btn-primary btn-blue">Submit</button>
-                </p>
-              </form>
+            <div ng-switch="activeTab">
+              <div ng-switch-when="query">
+                <div ng-include src="'/app/shared/search/queryPane.html'"></div>
+              </div>
+              <div ng-switch-when="results">
+                <div ng-include src="'/app/shared/search/resultsPane.html'"></div>
+              </div>
             </div>
           </div>
           <div role="tabpanel" class="tab-pane" id="results">
