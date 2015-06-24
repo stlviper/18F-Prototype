@@ -2,7 +2,9 @@
 openfdaviz.directive("openfdavizTimeSlider", ['$parse', function ($parse) {
   var _settings = {
     minYear: 2014,
-    maxYear: 2015
+    maxYear: 2015,
+    $minDateSltr: '',
+    $maxDateSltr: ''
   };
 
   var _formatDateForQuery = function (date) {
@@ -44,6 +46,26 @@ openfdaviz.directive("openfdavizTimeSlider", ['$parse', function ($parse) {
     return DecimalDate;
   };
 
+  var _sliderControl = function () {
+    //NOTE(JNHager): In order to update the slider must destroy and rebuild if the dates change.
+    // This is a know bug in for d3.slider. Could use JQuery slider but would take a bit more
+    // work to get labels. Open for suggestions.
+    var dateSlider = d3.slider()
+      .axis(true)
+      .min(_settings.minYear)
+      .max(_settings.maxYear)
+      .value([_settings.minDefaultValue, _settings.maxDefaultValue])
+      .on("slideend", function (evt, value) {
+        var minDate = _convertDecimalDate(value[0]);
+        var maxDate = _convertDecimalDate(value[1]);
+        if (_settings.$minDateSltr && _settings.$maxDateSltr) {
+          _updateDateFields(_settings.$minDateSltr, minDate, _settings.$maxDateSltr, maxDate);
+        }
+      });
+    d3.select('#timesliderControl').html("");
+    d3.select('#timesliderControl').call(dateSlider);
+  };
+
   return {
     restrict: 'AE',
     replace: true,
@@ -51,39 +73,34 @@ openfdaviz.directive("openfdavizTimeSlider", ['$parse', function ($parse) {
     link: function (scope, element, attrs) {
       if (attrs.minDate && attrs.maxDate) {
         var maxDefaultDate = (new Date(attrs.maxDate));
-        maxDefaultDate = new Date(maxDefaultDate.getTime() + maxDefaultDate.getTimezoneOffset() *60*1000);
+        maxDefaultDate = new Date(maxDefaultDate.getTime() + maxDefaultDate.getTimezoneOffset() * 60 * 1000);
         var minDefaultDate = (new Date(attrs.minDate));
-        minDefaultDate = new Date(minDefaultDate.getTime() + maxDefaultDate.getTimezoneOffset() *60*1000);
+        minDefaultDate = new Date(minDefaultDate.getTime() + maxDefaultDate.getTimezoneOffset() * 60 * 1000);
 
-        _settings.maxYear = maxDefaultDate.getFullYear()+.01;
-        _settings.minYear = minDefaultDate.getFullYear()-.01;
+        _settings.maxYear = maxDefaultDate.getFullYear() + .01;
+        _settings.minYear = minDefaultDate.getFullYear() - .01;
         _settings.minDefaultValue = _convertDateToDecimal(minDefaultDate);
         _settings.maxDefaultValue = _convertDateToDecimal(maxDefaultDate);
       }
-      var $minDateSltr = null, $maxDateSltr = null;
       if (attrs.minDateSltr && attrs.maxDateSltr) {
-        $minDateSltr = $(attrs.minDateSltr);
-        $maxDateSltr = $(attrs.maxDateSltr);
+        _settings.$minDateSltr = $(attrs.minDateSltr);
+        _settings.$maxDateSltr = $(attrs.maxDateSltr);
 
-        _updateDateFields($minDateSltr, new Date(attrs.minDate),
-          $maxDateSltr, new Date(attrs.maxDate));
+        var dateChange = function () {
+          var maxValue = new Date(_settings.$maxDateSltr.val());
+          var minValue = new Date(_settings.$minDateSltr.val());
+          _settings.minDefaultValue = _convertDateToDecimal(minValue);
+          _settings.maxDefaultValue = _convertDateToDecimal(maxValue);
+          _sliderControl();
+
+        };
+        _settings.$minDateSltr.change(dateChange);
+        _settings.$maxDateSltr.change(dateChange);
+        _updateDateFields(_settings.$minDateSltr, new Date(attrs.minDate),
+          _settings.$maxDateSltr, new Date(attrs.maxDate));
       }
 
-      console.log(_convertDecimalDate(_convertDateToDecimal(new Date('2014-01-01'))));
-
-      var dateSlider = d3.select('#timesliderControl').call(d3.slider()
-          .axis(true)
-          .min(_settings.minYear)
-          .max(_settings.maxYear)
-          .value([_settings.minDefaultValue, _settings.maxDefaultValue])
-          .on("slideend", function (evt, value) {
-            var minDate = _convertDecimalDate(value[0]);
-            var maxDate = _convertDecimalDate(value[1]);
-            if ($minDateSltr && $maxDateSltr) {
-              _updateDateFields($minDateSltr, minDate, $maxDateSltr, maxDate);
-            }
-          }));
-      dateSlider.value([2006,2009]);
+      _sliderControl();
     }
   };
 }]);
