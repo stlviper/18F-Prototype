@@ -21,7 +21,6 @@ module.exports = {
         }
         for(var i = 0; i < global.geocodelist.length; i++) {
             if(global.geocodelist[i][10] === ccc.toUpperCase()) {
-                console.log(global.geocodelist[i]);
                 return global.geocodelist[i];
             }
         }

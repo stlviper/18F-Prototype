@@ -1,12 +1,27 @@
 'use strict';
 
+var config = null;
 openfdaviz.controller('LayoutController', ['$scope', '$http', function($scope, $http){
-  $scope.imagePath = '';
-  angular.element(document).ready(function () {
-    $http.get('/config.json').success(function(resp){
-      $scope.imagePath = resp.paths.images;
-      $('.site-wrapper').css('background', 'url(' + $scope.imagePath + 'splash.jpg) no-repeat center center fixed')
-    });
-  });
+  $scope.imagePath = null;
+
+  function init(){
+    $.ajax({
+      url: 'config.json',
+      async: false,
+      success: function(resp){
+        config = resp;
+        $scope.imagePath = config.paths.images;
+      }
+    })
+  }
+  //angular.element(document).ready(function () {
+  //  if(!config){
+  //    $http.get('config.json').success(function(resp){
+  //
+  //    });
+  //  }
+  //});
+
+  init();
 }]);
 

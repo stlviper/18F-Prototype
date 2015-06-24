@@ -3,26 +3,39 @@
 window.openfdaviz = angular.module('openfdaviz', ['ui.router']);
 
 
-window.openfdaviz.config(function ($stateProvider, $urlRouterProvider) {
+window.openfdaviz.config(['$stateProvider', '$urlRouterProvider', function ($stateProvider, $urlRouterProvider) {
 
-  $urlRouterProvider.otherwise('/home');
+  $urlRouterProvider.otherwise('/');
 
   $stateProvider
-    .state('home', {
+    .state('default', {
       url: '/',
-      templateUrl: '/app/partial-homepage.html'
-    })
-    .state('timeline', {
-      url: '/timeline',
-      templateUrl: '/app/partial-timeline.html'
-    })
-    .state('map', {
-      url: '/map',
-      templateUrl: '/app/partial-map.html'
+      views: {
+        'nav': {
+          templateUrl: '/app/components/nav/homepage.html'
+        },
+        'content': {
+          templateUrl: '/app/shared/home/home.html',
+          controller: 'HomeController'
+        },
+        'footer': {
+          templateUrl: '/app/components/footer/homepage.html'
+        }
+      }
     })
     .state('search', {
       url: '/search',
-      templateUrl: '/app/partial-search.html'
+      views: {
+        'nav': {
+          templateUrl: '/app/components/nav/standard.html'
+        },
+        'content': {
+          templateUrl: '/app/shared/search/search.html'
+        },
+        'footer': {
+          templateUrl: '/app/components/footer/standard.html'
+        }
+      }
     });
 
-});
+}]);

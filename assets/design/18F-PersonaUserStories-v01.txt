@@ -1,0 +1,21 @@
+Mike:
+Mike's area of interest is national health issues.
+He wants to improve his research methods and communications practices.
+openFDA Visualizer gives him quick, simple, and visualized access to data he needs.
+It also gives him visualized data that he can share with his stakeholders.
+
+Zoe:
+Zoe wants to know as much as possible about her son's condition.
+She needs an easier, faster way to search for the data she cares about.
+openFDA Visualizer puts the data that Zoe needs at her fingertips.
+It also continaully refreshes with the latest statistics, giving Zoe a persistent, one-stop-shop for the data she needs.
+
+Brian:
+Brian conducts research in the areas of Food, Drugs, and Devices.
+He needs a better, faster way to mine large databases for the data he needs.
+openFDA Visualizer is a streamlined search engine that focuses only on the data sets that Brian needs, decreasing search time and increasing the usability of the search results.
+
+Betsy:
+Betsy identifies requirements for new products at her pharmaceutical company.
+She needs every advantage she can find to stay on the forefront of the country's needs.
+openFDA Visualizer provides search and visualization capability for the latest, publically-available Food, Drug, and Device datasets.

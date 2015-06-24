@@ -46,3 +46,4 @@ client/config.json
 client/build
 client/css
 client/index.html
+mocha.json
