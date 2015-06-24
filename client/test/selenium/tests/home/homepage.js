@@ -10,11 +10,11 @@ describe('OpenFDAViz app homepage', function() {
     expect(browser.findElement(titleElement).getText()).toEqual('FDA Visualizer');
   });
 
-  it('should show a content region with a learn more button', function() {
-    //detailed selector to test structure of view
-    var learnMoreElement = by.css('div[ui-view="content"] .inner.cover p.lead a[href="#/search"]');
-    expect(browser.findElement(learnMoreElement).getText()).toEqual('Learn more');
-  });
+  //it('should show a content region with a learn more button', function() {
+  //  //detailed selector to test structure of view
+  //  var learnMoreElement = by.css('div[ui-view="content"] .inner.cover p.lead a[href="#/search"]');
+  //  expect(browser.findElement(learnMoreElement).getText()).toEqual('Learn more');
+  //});
 
   it('should have a link to the OpenFDA webpage', function() {
     var fdaPageNavItem = by.css('ul.nav.masthead-nav li > a[href="http://open.fda.gov/api/reference/"]');
