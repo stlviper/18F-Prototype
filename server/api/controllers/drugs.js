@@ -6,36 +6,55 @@ var request = require('request');
 
 
 module.exports = {
-      rangecount: eventRangeCount,
-      search: eventSearch
+
+  eventSearch: function (req, res) {
+    getEventSearchData(req, function(data){
+      res.json(data);
+    });
+  },
+
+  eventRangeCount: function (req, res) {
+    getRangeCountData(req, function(data){
+      res.json(data);
+    });
+  },
+
+  tests: {
+    getRangeCountData: getRangeCountData,
+    getEventSearchData: getEventSearchData
+  }
+
 }
 
-function eventRangeCount (req, res) {
+
+function getRangeCountData(req, callback) {
   var fdaUrl = 'https://api.fda.gov/drug/event.json?search=receivedate:[' + req.swagger.params.start.value + '+TO+' + req.swagger.params.end.value + ']&count=' + req.swagger.params.field.value;
-  getDataFromFdaApi(fdaUrl, function(data){
-    res.json(data);
+  getDataFromFdaApi(fdaUrl, function (data) {
+    callback(data);
   });
 }
 
-function eventSearch(req, res) {
-
+function getEventSearchData(req, callback) {
   var limit = req.swagger.params.limit.value || 100;
   var start = req.swagger.params.skip.value || 0;
-  var fdaUrl = 'https://api.fda.gov/drug/event.json?search='+req.swagger.params.query.value+'&limit='+limit+'&skip='+start;
+  var fdaUrl = 'https://api.fda.gov/drug/event.json?search=' + req.swagger.params.query.value + '&limit=' + limit + '&skip=' + start;
 
-  getDataFromFdaApi(fdaUrl, function(data){
-    res.json(data);
+  getDataFromFdaApi(fdaUrl, function (data) {
+    callback(data);
   });
 }
 
 
 function getDataFromFdaApi(fdaUrl, callback) {
-  request.get(
-    fdaUrl,
-    {json: true},
+  request.get({
+    url: fdaUrl,
+    json: true
+    },
     function (error, response, body) {
-      if (!error && response.statusCode == 200) {
-        callback(body.results);
+      if (!error && (response.statusCode == 200 || 404)) {
+        callback(response.statusCode == 404 ? body : body.results);
+      } else {
+        callback({error: 'Request Failed'});
       }
     }
   );
