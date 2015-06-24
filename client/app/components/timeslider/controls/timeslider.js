@@ -34,7 +34,7 @@ openfdaviz.directive("openfdavizTimeSlider", ['$parse', function ($parse) {
   };
 
   var _convertDateToDecimal = function (date) {
-    var DecimalDate = date.getFullYear();
+    var DecimalDate = parseFloat(date.getFullYear());
     var start = new Date(date.getFullYear(), 0, 0);
     var diff = date - start;
     var oneDay = 1000 * 60 * 60 * 24;
@@ -50,10 +50,15 @@ openfdaviz.directive("openfdavizTimeSlider", ['$parse', function ($parse) {
     template: '<div id="timesliderControl"></div>',
     link: function (scope, element, attrs) {
       if (attrs.minDate && attrs.maxDate) {
-        _settings.maxYear = (new Date(attrs.maxDate)).getFullYear();
-        _settings.minYear = (new Date(attrs.minDate)).getFullYear();
-        _settings.minDefaultValue = 2012;
-        _settings.maxDefaultValue = 2013;
+        var maxDefaultDate = (new Date(attrs.maxDate));
+        maxDefaultDate = new Date(maxDefaultDate.getTime() + maxDefaultDate.getTimezoneOffset() *60*1000);
+        var minDefaultDate = (new Date(attrs.minDate));
+        minDefaultDate = new Date(minDefaultDate.getTime() + maxDefaultDate.getTimezoneOffset() *60*1000);
+
+        _settings.maxYear = maxDefaultDate.getFullYear()+.01;
+        _settings.minYear = minDefaultDate.getFullYear()-.01;
+        _settings.minDefaultValue = _convertDateToDecimal(minDefaultDate);
+        _settings.maxDefaultValue = _convertDateToDecimal(maxDefaultDate);
       }
       var $minDateSltr = null, $maxDateSltr = null;
       if (attrs.minDateSltr && attrs.maxDateSltr) {
