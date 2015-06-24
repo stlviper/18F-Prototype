@@ -71,7 +71,7 @@ openfdaviz.directive("openfdavizTimeSlider", ['$parse', function ($parse) {
 
       console.log(_convertDecimalDate(_convertDateToDecimal(new Date('2014-01-01'))));
 
-      d3.select('#timesliderControl').call(d3.slider()
+      var dateSlider = d3.select('#timesliderControl').call(d3.slider()
           .axis(true)
           .min(_settings.minYear)
           .max(_settings.maxYear)
@@ -82,8 +82,8 @@ openfdaviz.directive("openfdavizTimeSlider", ['$parse', function ($parse) {
             if ($minDateSltr && $maxDateSltr) {
               _updateDateFields($minDateSltr, minDate, $maxDateSltr, maxDate);
             }
-          })
-      );
+          }));
+      dateSlider.value([2006,2009]);
     }
   };
 }]);
