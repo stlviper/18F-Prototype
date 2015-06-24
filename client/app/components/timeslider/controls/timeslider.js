@@ -99,6 +99,10 @@ openfdaviz.directive("openfdavizTimeSlider", ['$parse', function ($parse) {
         };
         _settings.$minDateSltr.change(dateChange);
         _settings.$maxDateSltr.change(dateChange);
+
+        _settings.$minDateSltr.datepicker();
+        _settings.$maxDateSltr.datepicker();
+
         _updateDateFields(_settings.$minDateSltr, new Date(attrs.minDate),
           _settings.$maxDateSltr, new Date(attrs.maxDate));
       }
