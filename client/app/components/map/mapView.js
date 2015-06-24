@@ -20,6 +20,12 @@ openfdaviz.directive('openfdavizMap', function(){
         .bindPopup('A pretty CSS3 popup. <br> Easily customizable.')
         .openPopup();
 
+      // testing the heatmap
+      var heatmap = new L.TileLayer.HeatCanvas("Heat Canvas", map, {},
+        {step:0.3, degree:HeatCanvas.QUAD, opacity:0.7});
+      heatmap.pushData(51.5, -0.09, 100);
+      heatmap.pushData(51.49, -0.09, 100);
+      map.addLayer(heatmap);
     }
   }
 });

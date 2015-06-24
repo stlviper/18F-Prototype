@@ -39,6 +39,10 @@ module.exports = function (grunt) {
       vendor: {
         src: 'assets/js/**/*.js',
         dest: 'build/js/vendor.js'
+      },
+      heatcanvas: {
+        src: 'assets/js/heatcanvas/heatcanvas-worker.js',
+        dest: 'build/js/heatcanvas-worker.js'
       }
     },
     copy: {
