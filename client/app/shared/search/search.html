@@ -6,13 +6,13 @@
       <div class="map-dates">
         <form class="form-horizontal">
           <div class="input-group date pull-left" id="datetimepicker1">
-            <input type="text" class="form-control" placeholder="Start date" data-format="yyyy-MM-dd"/>
+            <input id="start-date" type="text" class="form-control" placeholder="Start date" data-format="yyyy-MM-dd"/>
             <span class="input-group-addon">
                 <span class="glyphicon glyphicon-calendar"></span>
             </span>
           </div>
           <div class="input-group date pull-right" id="datetimepicker2">
-            <input type="text" class="form-control" placeholder="End date"/>
+            <input id="end-date" type="text" class="form-control" placeholder="End date"/>
             <span class="input-group-addon">
                 <span class="glyphicon glyphicon-calendar"></span>
             </span>
@@ -20,7 +20,8 @@
         </form>
       </div>
       <div class="map-slider">
-       <div  x-openfdaviz-time-slider></div>
+        <div x-openfdaviz-time-slider min-date="2014-01-01" max-date="2015-01-01"
+             min-date-sltr="#start-date" max-date-sltr="#end-date"></div>
       </div>
 
     </div>
