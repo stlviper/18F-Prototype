@@ -24,6 +24,11 @@ SwaggerExpress.create(config, function(err, swaggerExpress) {
 
   app.use('/docs', express.static(__dirname + '/swagger-ui'));
 
+  app.use(function(err, req, res, next) {
+    console.error(err.stack);
+    res.status(500).send(err);
+  });
+
   // install middleware
   swaggerExpress.register(app);
 

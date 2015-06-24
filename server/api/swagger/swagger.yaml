@@ -24,18 +24,14 @@ paths:
       operationId: search
       description: Search field(s)
       parameters:
-        - name: field
+        - name: query
           in: query
-          description: Field to search on.
+          description: Field and Value to search on separated by a colon ( field:value ). query string should be in quotes. Format example= primarysourcecountry:us
           required: true
           type: string
-        - name: value
-          in: query
-          description: Value to search on.
-          required: true
-          type: string
-        - name: start
-          description: Start Index to return at
+          collectionFormat: multi
+        - name: skip
+          description: Number of items to skip and start results from
           in: query
           required: false
           type: integer
@@ -44,6 +40,8 @@ paths:
           description: Limit the number of results
           required: false
           type: integer
+      produces:
+        - application/json
       responses:
         "200":
           description: Success
@@ -54,7 +52,7 @@ paths:
         default:
           description: Error
           schema:
-            $ref: "#/definitions/Error"
+            $ref: "#/definitions/ErrorResponse"
   /drug/event/rangecount:
     get:
       x-swagger-router-controller: drugs
@@ -86,21 +84,20 @@ paths:
         default:
           description: Error
           schema:
-            $ref: "#/definitions/Error"
+            $ref: "#/definitions/ErrorResponse"
 # complex objects have schema definitions
 definitions:
   Generic:
     properties:
       message:
         type: string
-  Error:
-    required:
-      - code
-      - message
-    properties:
-      code:
-        type: integer
-        format: int32
-      message:
-        type: string
+  ErrorResponse:
+      required:
+        - code
+        - message
+      properties:
+        code:
+          type: integer
+        message:
+          type: string
 
