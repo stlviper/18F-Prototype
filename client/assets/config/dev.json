@@ -1,6 +1,7 @@
 {
   "paths": {
-    "images": "build/img"
+    "images": "build/img",
+    "js": "build/js"
   },
   "resources": {
 

@@ -38,11 +38,7 @@ module.exports = function (grunt) {
       },
       vendor: {
         src: 'assets/js/**/*.js',
-        dest: 'build/js/vendor.js'
-      },
-      heatcanvas: {
-        src: 'assets/js/heatcanvas/heatcanvas-worker.js',
-        dest: 'build/js/heatcanvas-worker.js'
+        dest: 'build/js/vendor-lib.js'
       }
     },
     copy: {
@@ -121,6 +117,19 @@ module.exports = function (grunt) {
           dest: 'build/fonts',
           expand: true
         }]
+      },
+      //special case for plugin, since it is loaded with html5 workers
+      heatcanvasDev: {
+        files: [{
+          src: [ 'assets/js/heatcanvas/heatcanvas-worker.js' ],
+          dest: 'build/js/heatcanvas-worker.js'
+        }]
+      },
+      heatcanvasProd: {
+        files: [{
+          src: [ 'assets/js/heatcanvas/heatcanvas-worker.js' ],
+          dest: '../dist/client/js/heatcanvas-worker.js'
+        }]
       }
     },
     jshint: {
@@ -190,7 +199,7 @@ module.exports = function (grunt) {
           {
             expand: true,
             cwd: './build/js/',
-            src: ['*.js', '!npm-lib.js'],
+            src: ['*.js', '!npm-lib.js', '!heatcanvas-worker.js'],
             dest: '../dist/client/js/',
             ext: '.min.js'
           }
@@ -224,8 +233,8 @@ module.exports = function (grunt) {
   grunt.registerTask('test', ['mochaTest:client']);
   grunt.registerTask('selenium', ['protractor_webdriver', 'protractor:run']);
   grunt.registerTask('default', ['build']);
-  grunt.registerTask('build', ['sass:dev', 'concat', 'browserify', 'copy:vendorCss', 'copy:devConfig', 'copy:devImages', 'copy:devFonts', 'copy:devIndex', 'ngtemplates', 'test']);
-  grunt.registerTask('build:prod', ['build', 'sass:dist', 'uglify', 'copy:npmLib', 'copy:prodConfig', 'copy:prodImages', 'copy:prodFonts', 'copy:prodIndex']);
+  grunt.registerTask('build', ['sass:dev', 'concat', 'browserify', 'copy:vendorCss', 'copy:devConfig', 'copy:devImages', 'copy:devFonts', 'copy:devIndex', 'copy:heatcanvasDev', 'ngtemplates', 'test']);
+  grunt.registerTask('build:prod', ['build', 'sass:dist', 'uglify', 'copy:npmLib', 'copy:prodConfig', 'copy:prodImages', 'copy:prodFonts', 'copy:prodIndex', 'copy:heatcanvasProd']);
   grunt.registerTask('deploy', ['clean', 'build:prod']);
 
 };
