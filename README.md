@@ -89,7 +89,7 @@ $ eb open
 
 You will now have a running version of the OpenFDAViz app. The eb open command will open the API in your browser.
 
-***** Summary of Team OGSystems Agile Development Methodology *****i
+***** Summary of Team OGSystems Agile Development Methodology *****
 
 Team OGSystems used an interactive agile software development approach to create the FDA prototype. Team OGSystems operates as an agile shop and pooled resources from a variety of teams and shifted priorities in response to this RFQ.
 While some priorities were shifted for each team member, the process for responding and building the prototype remained business as usual for Team OGSystems.
@@ -98,5 +98,14 @@ The PO was responsible for managing and prioritizing our agile JIRA workflow and
 We conducted a team standup meeting, and as a team, we outlined our cadence to include a sprint demo, a release demo, and regularly scheduled standups. We used two daily standups to accommodate the accelerated pace and collaboration necessary to meet the delivery deadline.
 We immediately followed the kick-off meeting with our initial design phase and conducted a MindMapping exercise to drive the team to a singular vision and strategy.
 The MindMap helped the PO and team create the initial backlog and begin to set priorities, and provided a forum for us to brainstorm what we may want to do with the data and how we might drive the prototype forward. (Figure 1 MindMap)
-![alt text](https://github.com/stlviper/18F-Prototype/blob/master/assets/design/18F-Mindmap001.jpg "Mind Map Logo")
+![alt text](https://github.com/stlviper/18F-Prototype/blob/master/assets/design/18F-Mindmap001.jpg "Mind Map")
 
+After the initial standup, the team began to self identify in roles that matched their experience and expertise. We started design development, built wireframes, designed architecture, and scheduled user engagement sessions.
+With the initial design phase started, we engaged end customers in a collaborative session to solicit feedback on initial design concepts. This session yielded additional design and development concepts and stories.
+(Figure 2: Customer Engagement)
+![alt text](https://github.com/stlviper/18F-Prototype/blob/master/assets/design/18F-UserEngagementSession001.jpg "Customer Engagement")
+We also conducted a Persona Development brainstorming session and developed Personas to aid the design and prioritization process.
+(Figure 3: Persona Brainstorming)
+![alt text](https://github.com/stlviper/18F-Prototype/blob/master/assets/design/18F-PersonaDevelopmentMindmap003.jpg "Persona MindMap")
+(Figure 4: Persona Development)
+![alt text](https://github.com/stlviper/18F-Prototype/blob/master/assets/design/27-EF-46UserPersonas-1506.pdf "Persona Development")
