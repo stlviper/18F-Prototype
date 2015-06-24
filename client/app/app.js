@@ -15,7 +15,7 @@ window.openfdaviz.config(['$stateProvider', '$urlRouterProvider', function ($sta
           templateUrl: '/app/components/nav/homepage.html'
         },
         'content': {
-          templateUrl: '/app/partial-homepage.html',
+          templateUrl: '/app/shared/home/home.html',
           controller: 'HomeController'
         },
         'footer': {
@@ -26,9 +26,15 @@ window.openfdaviz.config(['$stateProvider', '$urlRouterProvider', function ($sta
     .state('search', {
       url: '/search',
       views: {
-        'nav': {templateUrl: '/app/components/nav/standard.html'},
-        'content': {templateUrl: '/app/shared/search/search.html'},
-        'footer': {templateUrl: '/app/components/footer/standard.html'}
+        'nav': {
+          templateUrl: '/app/components/nav/standard.html'
+        },
+        'content': {
+          templateUrl: '/app/shared/search/search.html'
+        },
+        'footer': {
+          templateUrl: '/app/components/footer/standard.html'
+        }
       }
     });
 

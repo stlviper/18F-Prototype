@@ -8,7 +8,8 @@
   "license": "",
   "main": "app.js",
   "scripts":{
-    "start": "grunt start"
+    "start": "grunt start",
+    "bamboo": "node node_modules/mocha/bin/mocha test/test.js -R mocha-bamboo-reporter"
   },
   "dependencies": {
     "express": "^4.12.3",
@@ -26,6 +27,7 @@
     "grunt-shell": "1.1.2",
     "mocha": "^2.2.5",
     "should": "^5.2.0",
-    "supertest": "^0.15.0"
+    "supertest": "^0.15.0",
+    "mocha-bamboo-reporter": "*"
   }
 }
