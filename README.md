@@ -91,5 +91,5 @@ You will now have a running version of the OpenFDAViz app. The eb open command w
 
 ******************************* Summary of Team OGSystems Agile Developemtn Methodology***********************************
 
-![alt text]https://github.com/stlviper/18F-Prototype/blob/master/assets/design/18F-Mindmap001.jpg
+![alt text](https://github.com/stlviper/18F-Prototype/blob/master/assets/design/18F-Mindmap001.jpg "Mind Map Logo")
 
