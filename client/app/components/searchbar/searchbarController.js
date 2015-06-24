@@ -4,7 +4,8 @@ openfdaviz.controller('SearchBarController', ['$scope', '$location', function($s
 
   $scope.sendSearch = function($event){
     $event.stopPropagation();
-    console.log('test');
+    var $searchTermTxt = $('#fdaSearch');
+    console.log('Value:'+$searchTermTxt.val());
   };
 
 }]);
