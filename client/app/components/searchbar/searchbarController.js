@@ -1,11 +1,9 @@
 'use strict';
 
-openfdaviz.controller('SearchBarController', ['$scope', '$location', function($scope, $location){
-
-  $scope.sendSearch = function($event){
+openfdaviz.controller('SearchBarController', ['$scope', '$state', function ($scope, $state) {
+  $scope.sendSearch = function ($event) {
     $event.stopPropagation();
     var $searchTermTxt = $('#fdaSearch');
-    console.log('Value:'+$searchTermTxt.val());
+    $state.go('search', {searchQuery: $searchTermTxt.val()});
   };
-
 }]);

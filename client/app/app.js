@@ -24,7 +24,7 @@ window.openfdaviz.config(['$stateProvider', '$urlRouterProvider', function ($sta
       }
     })
     .state('search', {
-      url: '/search',
+      url: '/search?searchQuery',
       views: {
         'nav': {
           templateUrl: '/app/components/nav/standard.html'
