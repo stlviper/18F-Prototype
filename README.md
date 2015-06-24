@@ -108,4 +108,4 @@ We also conducted a Persona Development brainstorming session and developed Pers
 (Figure 3: Persona Brainstorming)
 ![alt text](https://github.com/stlviper/18F-Prototype/blob/master/assets/design/18F-PersonaDevelopmentMindmap003.jpg "Persona MindMap")
 (Figure 4: Persona Development)
-![alt text](https://github.com/stlviper/18F-Prototype/blob/master/assets/design/27-EF-46UserPersonas-1506.pdf "Persona Development")
+![alt text](https://github.com/stlviper/18F-Prototype/blob/master/assets/design/27-EF-46UserPersonas-1506.jpg "Persona Development")
