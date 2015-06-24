@@ -11,16 +11,18 @@ describe('OpenFDAViz app homepage', function() {
   });
 
   it('should show a content region with a learn more button', function() {
-
+    //detailed selector to test structure of view
+    var learnMoreElement = by.css('div[ui-view="content"] .inner.cover p.lead a[href="#/search"]');
+    expect(browser.findElement(learnMoreElement).getText()).toEqual('Learn more');
   });
 
   it('should have a link to the OpenFDA webpage', function() {
-
+    var fdaPageNavItem = by.css('ul.nav.masthead-nav li > a[href="http://open.fda.gov/api/reference/"]');
+    expect(browser.findElement(fdaPageNavItem).getText()).toEqual('OpenFDA');
   });
 
   it('should have a link to the OGSystems webpage', function() {
-
+    var ogsPageNavItem = by.css('ul.nav.masthead-nav li > a[href="http://www.ogsystems.com/"]');
+    expect(browser.findElement(ogsPageNavItem).getText()).toEqual('OGSystems');
   });
-
-
 });
