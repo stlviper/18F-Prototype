@@ -2,13 +2,14 @@ openfdaviz.directive('openfdavizMap', function(){
   return{
     restrict: 'AE',
     replace: 'true',
+    scope: false,
     templateUrl: '/app/components/map/mapView.html',
     link: function (scope, element, attrs) {
       // create a map in the "map" div, set the view to a given place and zoom
       var map = L.map('map').setView([51.505, -0.09], 13);
       map.panTo(new L.LatLng(38.8750, -77.4025));
 
-      L.Icon.Default.imagePath = '/node_modules/leaflet/dist/images';
+      L.Icon.Default.imagePath = scope.imagePath;
 
       // add an OpenStreetMap tile layer
       L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {
