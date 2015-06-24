@@ -214,6 +214,13 @@ a .resize:hover {
 	width: auto;
 }
 
+.search-lg input.form-control {
+  font-size: 20px;
+  height: 50px;
+}
+
+
+
 /* Responsive overrides */
 @media only screen and (max-width: 480px) {
 	.navbar-brand {
