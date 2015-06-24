@@ -18,13 +18,13 @@ var convertDecimalDate = function (decimalDate) {
 var gender = {'0': 'Unknown', '1': 'Male', '2': 'Female'};
 
 
-openfdaviz.directive("pieChart", ['$parse', function ($parse) {
+openfdaviz.directive("timeslider", ['$parse', function ($parse) {
   return {
     restrict: 'AE',
     replace: true,
-    template: '<div id="dateSlider"></div>',
+    template: '<div id="timesliderControl"></div>',
     link: function (scope, element, attrs) {
-      d3.select('#dateSlider').call(d3.slider()
+      d3.select('#timesliderControl').call(d3.slider()
           .axis(true)
           .min(_settings.minDate)
           .max(_settings.maxDate)
@@ -32,7 +32,6 @@ openfdaviz.directive("pieChart", ['$parse', function ($parse) {
           .on("slideend", function (evt, value) {
             var minDate = convertDecimalDate(value[0]);
             var maxDate = convertDecimalDate(value[1]);
-            updatePieData(minDate, maxDate);
           })
       );
     }
