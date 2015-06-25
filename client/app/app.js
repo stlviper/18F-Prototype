@@ -1,6 +1,6 @@
 'use strict';
 
-window.openfdaviz = angular.module('openfdaviz', ['ui.router']);
+window.openfdaviz = angular.module('openfdaviz', ['ui.router', 'leaflet-directive']);
 
 window.openfdaviz.config(['$stateProvider', '$urlRouterProvider', function ($stateProvider, $urlRouterProvider) {
 

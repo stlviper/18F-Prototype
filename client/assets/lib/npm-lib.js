@@ -12,6 +12,8 @@ require('angular/angular.min');
 require('angular-ui-router/release/angular-ui-router.min');
 require('bootstrap/dist/js/bootstrap');
 require('leaflet/dist/leaflet');
-require('angular-leaflet-directive/dist/');
+require('angular-leaflet-directive/dist/angular-leaflet-directive.js');
+require('leaflet.heat/dist/leaflet-heat.js');
+
 window.d3 = require('d3/d3.min');
 window.c3 = require('c3/c3.min');
