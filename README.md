@@ -160,8 +160,18 @@ We conducted a user demo mid-day Wednesday to test the application and gather on
 
 ![alt text](https://github.com/stlviper/18F-Prototype/blob/master/assets/process/MidRelease1_Snap.jpg "Mid Release Demo 1")
 
+<div style="float:left">
 (Figure 10: A Day of Design, Development and collaboration!)
 
-<a href="http://www.youtube.com/watch?feature=player_embedded&v=-aAyHSWz8lQ
-" target="_blank"><img src="http://img.youtube.com/vi/-aAyHSWz8lQ/0.jpg"
+<a href="http://www.youtube.com/watch?feature=player_embedded&v=DCriHbQ_XuI
+" target="_blank"><img src="http://img.youtube.com/vi/DCriHbQ_XuI/0.jpg"
 alt="A Day of Design, Development and collaboration!" width="240" height="180" border="10" /></a>
+</div>
+
+<div style="float:right">
+(Figure 11: Pair Programing)
+
+<a href="http://www.youtube.com/watch?feature=player_embedded&v=fxIfn7O_GT0
+" target="_blank"><img src="http://img.youtube.com/vi/fxIfn7O_GT0/0.jpg"
+alt="A Day of Design, Development and collaboration!" width="240" height="180" border="10" /></a>
+</div>
