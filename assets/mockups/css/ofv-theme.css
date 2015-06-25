@@ -115,6 +115,14 @@ h1, h2, h3, h4, h5 {
 	border-radius: 2px;
 }
 
+/* Primary color palette */
+.blue { color: #00509a; }
+.blue-bkgd { background-color: #00509a; }
+.ltgray { color: #aeb0b5; }
+.ltgray-bkgd { background-color: #aeb0b5; }
+.dkgray { color: #5c5f5b; }
+.dkgray-bkgd { background-color: #5c5f5b; }
+
 /* Categories color palette */
 .drugs { color:#7e9909; }
 .drugs-bkgd { background-color:#7e9909; }
@@ -197,6 +205,13 @@ a .resize:hover {
 	background-color: #bfc0c1;
 	font-size: 22px;
 	padding-top: 0px;
+}
+.error-face {
+	font-size: 130px;
+	margin-bottom: 0;
+}
+.error-message {
+	font-size: 20px;
 }
 
 /* Other theme styles */
