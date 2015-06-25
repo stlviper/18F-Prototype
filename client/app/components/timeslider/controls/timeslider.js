@@ -46,29 +46,37 @@ openfdaviz.directive("openfdavizTimeSlider", ['$parse', function ($parse) {
     return DecimalDate;
   };
 
+  var dateSlider = null;
   var _sliderControl = function () {
     //NOTE(JNHager): In order to update the slider must destroy and rebuild if the dates change.
     // This is a know bug in for d3.slider. Could use JQuery slider but would take a bit more
     // work to get labels. Open for suggestions.
-    var dateSlider = d3.slider()
+    dateSlider = d3.slider()
       .axis(true)
       .min(_settings.minYear)
       .max(_settings.maxYear)
       .value([_settings.minDefaultValue, _settings.maxDefaultValue])
-      .on("slideend", function (evt, value) {
-        var minDate = _convertDecimalDate(value[0]);
-        var maxDate = _convertDecimalDate(value[1]);
-        if (_settings.$minDateSltr && _settings.$maxDateSltr) {
-          _updateDateFields(_settings.$minDateSltr, minDate, _settings.$maxDateSltr, maxDate);
-        }
-      });
+
     d3.select('#timesliderControl').html("");
     d3.select('#timesliderControl').call(dateSlider);
+  };
+
+  var _bindSliderEvents = function(scope){
+    dateSlider.on("slideend", function (evt, value) {
+      var minDate = _convertDecimalDate(value[0]);
+      var maxDate = _convertDecimalDate(value[1]);
+      if (_settings.$minDateSltr && _settings.$maxDateSltr) {
+        _updateDateFields(_settings.$minDateSltr, minDate, _settings.$maxDateSltr, maxDate);
+      }
+
+      scope.$broadcast('dateChange', { minDate: minDate, maxDate: maxDate });
+    });
   };
 
   return {
     restrict: 'AE',
     replace: true,
+    scope: false,
     template: '<div id="timesliderControl"></div>',
     link: function (scope, element, attrs) {
       if (attrs.minDate && attrs.maxDate) {
@@ -87,15 +95,19 @@ openfdaviz.directive("openfdavizTimeSlider", ['$parse', function ($parse) {
         _settings.$maxDateSltr = $(attrs.maxDateSltr);
 
         var dateChange = function () {
-          var maxValue = _convertDateToDecimal(new Date(_settings.$maxDateSltr.val()));
-          var minValue = _convertDateToDecimal(new Date(_settings.$minDateSltr.val()));
+          var minDate = new Date(_settings.$minDateSltr.val());
+          var maxDate = new Date(_settings.$maxDateSltr.val());
+          var minValue = _convertDateToDecimal(minDate);
+          var maxValue = _convertDateToDecimal(maxDate);
 
           _settings.minDefaultValue = minValue > _settings.minYear ? minValue : _settings.minYear;
 
           _settings.maxDefaultValue = maxValue < _settings.maxYear ? maxValue : _settings.maxYear;
 
-          _sliderControl();
+          scope.$broadcast('dateChange', { minDate: minDate, maxDate: maxDate });
 
+          _sliderControl();
+          _bindSliderEvents(scope);
         };
         _settings.$minDateSltr.change(dateChange);
         _settings.$maxDateSltr.change(dateChange);
@@ -107,7 +119,9 @@ openfdaviz.directive("openfdavizTimeSlider", ['$parse', function ($parse) {
           _settings.$maxDateSltr, new Date(attrs.maxDate));
       }
 
+
       _sliderControl();
+      _bindSliderEvents(scope);
     }
   };
 }]);
