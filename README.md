@@ -1,3 +1,5 @@
+OpenFDAViz URL: http://s3.amazonaws.com/openfdaviz/client/index.html
+
 # OpenFDAViz
 
 OpenFDAViz is a cloud based viewer for the OpenFDA Api Data
