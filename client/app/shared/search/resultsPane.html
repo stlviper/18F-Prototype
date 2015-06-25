@@ -8,14 +8,15 @@
     <div class="panel-body">
       <ul ng-repeat="result in results.drugs">
         <li>
-          <h5>{{result.product_description}}</h5>
+          <h5>Reactions</h5>
+          <ul ng-repeat="reacts in result.patient.reaction">
+            <li>{{reacts.reactionmeddrapt}}</li>
+          </ul>
           <dl>
-            <dt>Recall Date</dt>
-            <dd>{{recall_initiation_date}}</dd>
-            <dt>Reason</dt>
-            <dd>{{reason_for_recall}}</dd>
-            <dt>Code</dt>
-            <dd>{{code_info}}</dd>
+            <dt>Sender</dt>
+            <dd>{{results.sender.senderorganization}}</dd>
+            <dt>Primary Source Country</dt>
+            <dd>{{result.primarysourcecountry}}</dd>
           </dl>
         </li>
       </ul>
@@ -53,7 +54,7 @@
           <h5>{{result.product_description}}</h5>
           <dl>
             <dt>Recall Date</dt>
-            <dd>{{recall_initiation_date}}</dd>
+            <dd>{{primarysourcecountry}}</dd>
             <dt>Reason</dt>
             <dd>{{reason_for_recall}}</dd>
             <dt>Code</dt>
