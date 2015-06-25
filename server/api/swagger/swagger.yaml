@@ -145,7 +145,7 @@ paths:
           description: Error
           schema:
             $ref: "#/definitions/ErrorResponse"
-  /device/event/rangecount:
+  /device/event/search:
     get:
       x-swagger-router-controller: fda_api
       operationId: deviceEventRangeCount
