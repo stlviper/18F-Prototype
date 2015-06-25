@@ -172,6 +172,21 @@ h1, h2, h3, h4, h5 {
 	padding: 20px 15px 1px 15px;
 	background-color: #fff;
 }
+.details-results {
+	padding: 15px;
+	background-color: #fff;
+}
+.details-results ul li {
+	list-style: none;
+	margin-left: -40px;
+}
+.details-results ul li h5 {
+	margin-bottom: 5px;
+}
+.details-results ul li dl dt,
+.details-results ul li dl dd {
+	font-size: 13px;
+}
 .details-container .date, 
 .map-dates .date {
 	margin-bottom: 10px;
