@@ -1,15 +1,28 @@
-OpenFDAViz URL: http://s3.amazonaws.com/openfdaviz/client/index.html
+openFDAViz URL: http://s3.amazonaws.com/openfdaviz/client/index.html
 
-# OpenFDAViz
+# openFDAViz
 
-OpenFDAViz is a cloud based viewer for the OpenFDA Api Data
+openFDAViz is a cloud based viewer for the openFDA Api Data
 
-### Installation for local Testing
+### Prerequisites
 
-This project consist of two parts. One is the Server Side API that makes calls to OpenFDA API and pre-processes the results while also caching certain values. The second is the User Interface. The server side API code is in the /server/ folder and the UI is in the /client/ folder. Both are managed by npm package manager. To get started you must run npm install in the root, client and server folders. The final production code is also designed to run on Amazon Elastic Beanstalk for the server API and S3/Cloudfront CDN for the User Interface. Neither are required to run locally but you will need to create an empty aws.json credentials file for the build to succeed. Once those commands are entered you can start the API node server and visit the interface. The commands are listed below.
+openFDAViz is a node.js application that has several Prerequisites. These include, node.js, grunt and npm, you will also need git installed to checkout the application from github. On a new installation of linux the following commands will setup your environment.
+
+```
+$ sudo su - 
+$ curl -sL https://rpm.nodesource.com/setup | bash -
+$ yum install -y gcc-c++ make nodejs git
+$ exit
+$ sudo npm install -g grunt-cli
+```
+
+
+### Installation for local Testing / Development
+
+This project consist of two parts. One is the Server Side API that makes calls to openFDA API and pre-processes the results while also caching certain values. The second is the User Interface. The server side API code is in the /server/ folder and the UI is in the /client/ folder. Both are managed by npm package manager. The final production code is also designed to run on Amazon Elastic Beanstalk for the server API and S3/Cloudfront CDN for the User Interface. Neither are required to run locally but you will need to create an empty aws.json credentials file for the build to succeed. Once those commands are entered you can start the API node server and a lightweight client server locally and visit the interface. The commands are listed below.
 
 ```sh
-$ git clone https://github.com/stlviper/18F-Prototype.git 18F-Prototype
+$ git clone https://github.com/stlviper/18F-Prototype.git
 $ cd 18F-Prototype
 $ echo {} > aws.json
 $ npm install
@@ -25,7 +38,7 @@ $ grunt deploy:prod
 
 ### Running Mocha unit tests
 
-Mocha tests are automatically run on a grunt build, which is run on the grunt deploy job as above
+Mocha tests are automatically run on a grunt build, which is run on the grunt deploy job as above.
 
 ###
 
@@ -56,7 +69,7 @@ Or run node mockserver.js in a separate terminal window without the &
 ###
 
 
-### Local Development using OpenFDA Fake Server
+### Local Development using openFDA Fake Server
 
 ```sh
 $ cd fake-api
@@ -64,7 +77,7 @@ $ npm install
 $ cd ..
 $ PORT=3001 node fake-api/bin/www
 ```
-Above will run a fake OpenFDA server for testing. You can view it at 
+Above will run a fake openFDA server for testing. You can view it at 
     http://localhost:3001/healthcheck/
 
 ### Deploying OpenFDAVizAPI Server on AWS Resources
