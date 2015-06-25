@@ -1,4 +1,4 @@
-describe('OpenFDAViz app homepage', function() {
+describe('openFDAViz app homepage', function() {
   beforeEach(function(){
     browser.get('http://localhost:8001/#/');
   });
@@ -16,7 +16,7 @@ describe('OpenFDAViz app homepage', function() {
   //  expect(browser.findElement(learnMoreElement).getText()).toEqual('Learn more');
   //});
 
-  it('should have a link to the OpenFDA webpage', function() {
+  it('should have a link to the openFDA webpage', function() {
     var fdaPageNavItem = by.css('ul.nav.masthead-nav li > a[href="http://open.fda.gov/api/reference/"]');
     expect(browser.findElement(fdaPageNavItem).getText()).toEqual('OpenFDA');
   });

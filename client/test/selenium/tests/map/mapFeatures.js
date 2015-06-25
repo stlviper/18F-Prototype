@@ -1,4 +1,4 @@
-describe('The OpenFDAViz app map', function () {
+describe('The openFDAViz app map', function () {
   beforeEach(function () {
     browser.get('http://localhost:8000/#/search');
   });

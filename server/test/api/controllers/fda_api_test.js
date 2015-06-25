@@ -1,5 +1,5 @@
 var expect = require('chai').expect;
-var drugs = require('../../../api/controllers/drugs');
+var drugs = require('../../../api/controllers/fda_api');
 
 describe('Testing Drugs Controller.', function(){
 

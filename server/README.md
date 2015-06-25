@@ -1,4 +1,4 @@
-# OpenFDAViz Server Side API
+# openFDAViz Server Side API
 
 # Building
 ```sh

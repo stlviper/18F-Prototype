@@ -1,4 +1,4 @@
-describe('OpenFDAViz app navigation functionality', function() {
+describe('openFDAViz app navigation functionality', function() {
   beforeEach(function(){
     browser.get('http://localhost:8001/');
   });

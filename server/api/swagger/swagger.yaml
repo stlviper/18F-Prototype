@@ -18,10 +18,34 @@ consumes:
 produces:
   - application/json
 paths:
+  /search/splash:
+    get:
+      x-swagger-router-controller: fda_api
+      operationId: aggregateSplashSearch
+      description: Aggregated search for the splash page
+      parameters:
+        - name: value
+          in: query
+          description: Value to search on in hardcoded FDA endpoint for the sites splash page
+          required: true
+          type: string
+      produces:
+        - application/json
+      responses:
+        "200":
+          description: Success
+          schema:
+            # a pointer to a definition
+            $ref: "#/definitions/Generic"
+        # responses may fall through to errors
+        default:
+          description: Error
+          schema:
+            $ref: "#/definitions/ErrorResponse"
   /drug/event/search:
     get:
-      x-swagger-router-controller: drugs
-      operationId: eventSearch
+      x-swagger-router-controller: fda_api
+      operationId: drugEventSearch
       description: Search field(s)
       parameters:
         - name: query
@@ -55,8 +79,8 @@ paths:
             $ref: "#/definitions/ErrorResponse"
   /drug/event/rangecount:
     get:
-      x-swagger-router-controller: drugs
-      operationId: eventRangeCount
+      x-swagger-router-controller: fda_api
+      operationId: drugEventRangeCount
       description: Returns test fetch of a drugs query count
       parameters:
         - name: start
