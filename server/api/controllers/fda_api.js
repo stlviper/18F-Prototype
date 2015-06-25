@@ -25,15 +25,18 @@ var FDA_END_TYPES = {
 
 function getAggregateSplashSearchData(req, res) {
   async.parallel([
+
       function (callback) {
         var fdaUrl = FDA_DRUG_EVENT + 'event.json?limit=100&search=patient.drug.openfda.brand_name:"' + req.swagger.params.value.value + '"+patient.drug.openfda.brand_name:"' + req.swagger.params.value.value + '"';
         getDataFromFdaApi(fdaUrl, function (data) {
           callback(null, {key: 'drug', value: data});
         });
       },
+
       function (callback) {
         callback(null, {key: 'food', value: []});
       },
+
       function (callback) {
         callback(null, {key: 'device', value: []});
       }
