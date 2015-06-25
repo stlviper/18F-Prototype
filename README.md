@@ -80,9 +80,9 @@ $ PORT=3001 node fake-api/bin/www
 Above will run a fake openFDA server for testing. You can view it at 
     http://localhost:3001/healthcheck/
 
-### Deploying OpenFDAVizAPI Server on AWS Resources
+### Deploying openFDAVizAPI Server on AWS Resources
 
-There is configuration available to deploy all resources to Amazon Web Services, when ready to deploy OpenFDAViz to your Amazon instance follow the steps below.
+There is configuration available to deploy all resources to Amazon Web Services, when ready to deploy openFDAViz to your Amazon instance follow the steps below.
 *** WARNING ***
 Executing the commands below will cost you money as it will start 1 EC2 instance with autoscaling turned on and push objects to S3.
 
@@ -102,7 +102,7 @@ $ eb create
 $ eb open
 ```
 
-You will now have a running version of the OpenFDAViz app. The eb open command will open the API in your browser.
+You will now have a running version of the openFDAViz app. The eb open command will open the API in your browser.
 
 ## *** Summary of Team OGSystems Agile Development Methodology ***git
 
@@ -143,9 +143,9 @@ We also conducted a Persona Development brainstorming session and developed Pers
 Our first design priority was to swarm on the architectural runway and build out enough of the architecture. Nolan Hager led the devops decisions to get us up and running in AWS using Elastic Beanstalk to set us up to build a scalable web application that interfaces with the FDA api.
 This architecture allows the app to scale up and load balance based on its server capacity and configuration.
 
-(Figure 5: OpenFDAVis Architecture)
+(Figure 5: openFDAViz Architecture)
 
-![alt text](https://github.com/stlviper/18F-Prototype/blob/master/assets/process/18fAWSArchitecture.png "OpenFDAVis Architecture")
+![alt text](https://github.com/stlviper/18F-Prototype/blob/master/assets/process/18fAWSArchitecture.png "openFDAViz Architecture")
 
 During the project we used several applications to facilitate the collaboration of remotely based teams (Saint Louis; Chantilly, VA). We used HipChat for day-to-day interactions and integrated it with our Atlassian Suite to receive notifications in our 18F chat room. We used Appear video chat capability.
 Very little email was generated during this period and collaboration via chat and video was continual. Using our Agile workflow in JIRA, each task was reviewed by two or more parties - we used Crucible to perform version controlled, user-story based reviews. We used GitHub for version control.

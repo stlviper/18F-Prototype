@@ -1,4 +1,4 @@
-The OpenFDA Visualizer searches the FDA database and visualizes the results.
+The openFDA Visualizer searches the FDA database and visualizes the results.
 Search for any combination of Drugs, Devices, or Foods.
 View your results on a map. Further refine your search results using a timeline.
 
