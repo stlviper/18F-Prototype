@@ -11,8 +11,8 @@ This project consist of two parts. One is the Server Side API that makes calls t
 ```sh
 $ git clone https://github.com/stlviper/18F-Prototype.git 18F-Prototype
 $ cd 18F-Prototype
-$ npm install
 $ echo {} > aws.json
+$ npm install
 $ npm run-script startDev
 ```
 
