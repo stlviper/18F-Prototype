@@ -11,7 +11,6 @@ var FDA_DEVICE_EVENT = 'https://api.fda.gov/device/';
 var FDA_FOOD_EVENT = 'https://api.fda.gov/food/';
 
 
-
 var FDA_END_POINTS = {
   device: 'https://api.fda.gov/device/',
   drug: 'https://api.fda.gov/drug/',
@@ -32,11 +31,16 @@ function getAggregateSplashSearchData(req, res) {
           callback(null, {key: 'drug', value: data});
         });
       },
-
+      function (callback) {
+        callback(null, {key: 'food', value: []});
+      },
+      function (callback) {
+        callback(null, {key: 'device', value: []});
+      }
     ],
     function (err, data) {
       var returnData = {};
-      for(var idx in data){
+      for (var idx in data) {
         returnData[data[idx].key] = data[idx].value;
       }
       res.json(returnData);
