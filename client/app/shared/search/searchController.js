@@ -59,13 +59,13 @@ openfdaviz.controller('SearchController', ['$scope', '$http', '$stateParams', fu
     });
   });
 
-  $scope.performQuery = function () {
+  $scope.runQuery = function () {
     $.when.apply($, [queryDrugs(), queryFoods(), queryDevices()]).done(updateHeatmap);
   };
 
   function queryDrugs() {
     var deferred = $.Deferred();
-    $http.get(config.resources.drugs + '?query=' + query)
+    $http.get(config.resources.drugs + '?query=' + $scope.query)
       .success(function (resp) {
         $scope.results.drugs = resp;
         deferred.resolve();
@@ -78,7 +78,7 @@ openfdaviz.controller('SearchController', ['$scope', '$http', '$stateParams', fu
 
   function queryFoods() {
     var deferred = $.Deferred();
-    $http.get(config.resources.foods + '?query=' + query)
+    $http.get(config.resources.foods + '?query=' + $scope.query)
       .success(function (resp) {
         $scope.results.foods = resp;
         deferred.resolve();
@@ -91,7 +91,7 @@ openfdaviz.controller('SearchController', ['$scope', '$http', '$stateParams', fu
 
   function queryDevices() {
     var deferred = $.Deferred();
-    $http.get(config.resources.devices + '?query=' + query)
+    $http.get(config.resources.devices + '?query=' + $scope.query)
       .success(function (resp) {
         $scope.results.devices = resp;
         deferred.resolve();
