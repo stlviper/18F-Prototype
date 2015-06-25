@@ -34,11 +34,17 @@ function getAggregateSplashSearchData(req, res) {
       },
 
       function (callback) {
-        callback(null, {key: 'food', value: []});
+        //var fdaUrl = FDA_FOOD_EVENT + 'event.json?limit=100&search=patient.drug.openfda.brand_name:"' + req.swagger.params.value.value + '"+patient.drug.openfda.brand_name:"' + req.swagger.params.value.value + '"';
+        //getDataFromFdaApi(fdaUrl, function (data) {
+          callback(null, {key: 'food', value: []});
+        //});
       },
 
       function (callback) {
-        callback(null, {key: 'device', value: []});
+        var fdaUrl = FDA_DEVICE_EVENT + 'event.json?limit=100&search=device.brand_name:"' + req.swagger.params.value.value + '"+device.generic_name:"' + req.swagger.params.value.value + '"+device.manufacturer_d_name:"' + req.swagger.params.value.value + '"';
+        getDataFromFdaApi(fdaUrl, function (data) {
+          callback(null, {key: 'device', value: data});
+        });
       }
     ],
     function (err, data) {
