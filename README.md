@@ -6,6 +6,9 @@ openFDAViz is a cloud based viewer for the openFDA Api Data
 
 ### Prerequisites
 
+* Node
+* Grunt-cli
+
 openFDAViz is a node.js application that has several Prerequisites. These include, node.js, grunt and npm, you will also need git installed to checkout the application from github. On a new installation of linux the following commands will setup your environment.
 
 ```
@@ -16,6 +19,15 @@ $ exit
 $ sudo npm install -g grunt-cli
 ```
 
+or if you are running ubunu,
+
+```
+$ sudo apt-get update
+$ sudo apt-get -y install nodejs npm git
+$ sudo npm install -g grunt-cli 
+```
+
+If you get an error about not being able to find node you may need to symlink /usr/bin/nodejs to /usr/bin/node
 
 ### Installation for local Testing / Development
 
@@ -178,3 +190,33 @@ We conducted a user demo mid-day Wednesday to test the application and gather on
 <a href="http://www.youtube.com/watch?feature=player_embedded&v=-aAyHSWz8lQ
 " target="_blank"><img src="http://img.youtube.com/vi/-aAyHSWz8lQ/0.jpg"
 alt="A Day of Design, Development and collaboration!" width="240" height="180" border="10" /></a>
+
+### Included Libraries / Projects
+Client Side
+[angular](http://angularjs.org/) - [MIT](http://opensource.org/licenses/MIT)
+[angular-leaflet-directive](https://github.com/tombatossals/angular-leaflet-directive) - [MIT](http://opensource.org/licenses/MIT)
+[angular-route](https://github.com/angular/angular.js) - [MIT](http://opensource.org/licenses/MIT)
+[angular-ui-router](https://github.com/angular-ui/ui-router) - [MIT](http://opensource.org/licenses/MIT)
+[body-parser](https://github.com/expressjs/body-parser) - [MIT](http://opensource.org/licenses/MIT)
+[bootstrap](https://github.com/twbs/bootstrap) - [MIT](http://opensource.org/licenses/MIT)
+[c3](https://github.com/masayuki0812/c3) - [MIT](http://opensource.org/licenses/MIT)
+[cookie-parser](https://github.com/expressjs/cookie-parser) - [MIT](http://opensource.org/licenses/MIT)
+[d3](https://github.com/mbostock/d3) - [BSD](http://opensource.org/licenses/BSD-2-Clause)
+[debug](https://github.com/visionmedia/debug) - [MIT](http://opensource.org/licenses/MIT)
+[express](https://github.com/strongloop/express) - [MIT](http://opensource.org/licenses/MIT)
+[hbs](https://github.com/donpark/hbs) - [MIT](http://opensource.org/licenses/MIT)
+[jade](https://github.com/jadejs/jade) - [MIT](http://opensource.org/licenses/MIT)
+[jquery](https://github.com/jquery/jquery) - [MIT](http://opensource.org/licenses/MIT)
+[jquery-ui](https://github.com/jquery/jquery-ui) - [MIT](http://opensource.org/licenses/MIT)
+[leaflet](https://github.com/Leaflet/Leaflet) - [BSD](http://opensource.org/licenses/BSD-2-Clause)
+[leaflet.heat](https://github.com/Leaflet/Leaflet.heat) - [BSD](http://opensource.org/licenses/BSD-2-Clause)
+[moment](https://github.com/moment/moment) - [MIT](http://opensource.org/licenses/MIT)
+[morgan](https://github.com/expressjs/morgan) - [MIT](http://opensource.org/licenses/MIT)
+[requirejs](https://github.com/jrburke/r.js) - [BSD](http://opensource.org/licenses/BSD-2-Clause)
+[serve-favicon](https://github.com/expressjs/serve-favicon) - [MIT](http://opensource.org/licenses/MIT)
+
+Server Side API
+[async](https://github.com/nodejitsu/forever) - ?
+[express](https://github.com/strongloop/express) - [MIT](http://opensource.org/licenses/MIT)
+[request](https://github.com/request/request) - [Apache-2.0](http://opensource.org/licenses/Apache-2.0)
+[swagger-express-mw](https://github.com/apigee-127/swagger-express) - [MIT](http://opensource.org/licenses/MIT)
