@@ -36,16 +36,16 @@ openfdaviz.controller('SearchController', ['$scope', '$http', '$stateParams', fu
   };
 
 
-  $scope.activeTab = 'query';
+  $scope.activeTab = 'results';
 
   var minYear = '';
   var maxYear = '';
-  var query = $stateParams.searchQuery;
+  $scope.query = $stateParams.searchQuery;
 
   $scope.results = {
-    drugs: [{message: 'test'}, {message: 'test two'}],
-    devices: [{message: 'test three'}, {message: 'test four'}],
-    foods: [{message: 'test five'}, {message: 'test six'}]
+    drugs: [],
+    devices: [],
+    foods: []
   };
 
   $scope.activateSearchTab = function (activeTab) {
@@ -59,16 +59,15 @@ openfdaviz.controller('SearchController', ['$scope', '$http', '$stateParams', fu
     });
   });
 
-  $scope.performQuery = function () {
+  $scope.runQuery = function () {
     $.when.apply($, [queryDrugs(), queryFoods(), queryDevices()]).done(updateHeatmap);
   };
 
   function queryDrugs() {
     var deferred = $.Deferred();
-    $http.get(config.resources.drugs + '?query=' + query)
+    $http.get(config.resources.drugs + '?query=' + $scope.query)
       .success(function (resp) {
-        //update scope.results.drugs object
-        console.log("drugs response: " + resp);
+        $scope.results.drugs = resp;
         deferred.resolve();
       })
       .error(function () {
@@ -79,10 +78,9 @@ openfdaviz.controller('SearchController', ['$scope', '$http', '$stateParams', fu
 
   function queryFoods() {
     var deferred = $.Deferred();
-    $http.get(config.resources.foods + '?query=' + query)
+    $http.get(config.resources.foods + '?query=' + $scope.query)
       .success(function (resp) {
-        //update scope.results.foods object
-        console.log("foods response: " + resp);
+        $scope.results.foods = resp;
         deferred.resolve();
       })
       .error(function () {
@@ -93,10 +91,9 @@ openfdaviz.controller('SearchController', ['$scope', '$http', '$stateParams', fu
 
   function queryDevices() {
     var deferred = $.Deferred();
-    $http.get(config.resources.devices + '?query=' + query)
+    $http.get(config.resources.devices + '?query=' + $scope.query)
       .success(function (resp) {
-        //update scope.results.devices object
-        console.log("devices response: " + resp);
+        $scope.results.devices = resp;
         deferred.resolve();
       })
       .error(function () {

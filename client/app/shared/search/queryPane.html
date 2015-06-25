@@ -1,33 +1,20 @@
-<div class="details-container">
-  <h3>Search</h3>
-
-  <form class="form-horizontal">
-    <label class="drugs">Drugs</label>
+<div>
+  <div class="faceted-search">
+    <input class="form-control" type="text" value={{query}} placeholder="Enter an item to search for...">
+    <div style="margin-bottom:10px;"><label>Status:</label>&nbsp;&nbsp;
+      <input type="radio" name="RadioGroup1" value="radio" id="RadioGroup1_0"> Ongoing &nbsp;&nbsp;
+      <input type="radio" name="RadioGroup1" value="radio" id="RadioGroup1_1"> Ended
+    </div>
+    <label>Affected states:</label>
     <select class="form-control">
+      <option>Nationwide</option>
       <option>1</option>
       <option>2</option>
       <option>3</option>
-      <option>4</option>
     </select>
-
-    <label class="devices">Devices</label>
-    <select class="form-control">
-      <option>1</option>
-      <option>2</option>
-      <option>3</option>
-      <option>4</option>
-    </select>
-
-    <label class="foods">Foods</label>
-    <select class="form-control">
-      <option>1</option>
-      <option>2</option>
-      <option>3</option>
-      <option>4</option>
-    </select>
-
-    <p class="text-center">
-      <button type="button" ng-click="performQuery()" class="btn btn-primary btn-blue">Submit</button>
-    </p>
-  </form>
+    <input class="form-control" type="text" placeholder="Company name">
+  </div>
+  <p class="text-center">
+    <button type="button" ng-click="runQuery()" class="btn btn-primary btn-blue">Submit</button>
+  </p>
 </div>
