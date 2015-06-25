@@ -25,34 +25,12 @@
              min-date-sltr="#start-date" max-date-sltr="#end-date">
         </div>
       </div>
+      <div ng-include src="'/app/shared/search/queryPane.html'"></div>
     </div>
 
     <div class="col-sm-5">
       <div class="details">
-        <a href="#">
-          <div class="resize"><span class="glyphicon glyphicon-resize-full"></span></div>
-        </a>
-        <ul class="nav nav-tabs" role="tablist">
-          <li role="presentation" class="active">
-            <a href="" aria-controls="profile" role="tab" data-toggle="tab"
-               ng-click="activateSearchTab('query')">Search</a>
-          </li>
-          <li role="presentation">
-            <a href="" aria-controls="profile" role="tab" data-toggle="tab" ng-click="activateSearchTab('results')">Results</a>
-          </li>
-        </ul>
-        <div class="tab-content">
-          <div role="tabpanel" class="tab-pane active" id="search">
-            <div ng-switch="activeTab">
-              <div ng-switch-when="query">
-                <div ng-include src="'/app/shared/search/queryPane.html'"></div>
-              </div>
-              <div ng-switch-when="results">
-                <div ng-include src="'/app/shared/search/resultsPane.html'"></div>
-              </div>
-            </div>
-          </div>
-        </div>
+        <div ng-include src="'/app/shared/search/resultsPane.html'"></div>
       </div>
     </div>
   </div>

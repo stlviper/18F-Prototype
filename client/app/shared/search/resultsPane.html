@@ -1,16 +1,24 @@
 <div class="details-container">
-  <h3>Results</h3>
+  <h3>Search Results</h3>
 
   <div class="panel panel-default">
     <div class="panel-heading">
       <h3 class="panel-title drugs">Drugs</h3>
     </div>
     <div class="panel-body">
-      <table ng-repeat="o in results.drugs">
-        <tr>
-          <td>{{o.message}}</td>
-        </tr>
-      </table>
+      <ul ng-repeat="result in results.drugs">
+        <li>
+          <h5>{{result.product_description}}</h5>
+          <dl>
+            <dt>Recall Date</dt>
+            <dd>{{recall_initiation_date}}</dd>
+            <dt>Reason</dt>
+            <dd>{{reason_for_recall}}</dd>
+            <dt>Code</dt>
+            <dd>{{code_info}}</dd>
+          </dl>
+        </li>
+      </ul>
     </div>
   </div>
 
@@ -19,11 +27,19 @@
       <h3 class="panel-title devices">Devices</h3>
     </div>
     <div class="panel-body">
-      <table ng-repeat="o in results.devices">
-        <tr>
-          <td>{{o.message}}</td>
-        </tr>
-      </table>
+      <ul ng-repeat="result : results.devices">
+        <li>
+          <h5>{{result.product_description}}</h5>
+          <dl>
+            <dt>Recall Date</dt>
+            <dd>{{recall_initiation_date}}</dd>
+            <dt>Reason</dt>
+            <dd>{{reason_for_recall}}</dd>
+            <dt>Code</dt>
+            <dd>{{code_info}}</dd>
+          </dl>
+        </li>
+      </ul>
     </div>
   </div>
 
@@ -32,11 +48,19 @@
       <h3 class="panel-title foods">Foods</h3>
     </div>
     <div class="panel-body">
-      <table ng-repeat="o in results.foods">
-        <tr>
-          <td>{{o.message}}</td>
-        </tr>
-      </table>
+      <ul ng-repeat="result : results.foods">
+        <li>
+          <h5>{{result.product_description}}</h5>
+          <dl>
+            <dt>Recall Date</dt>
+            <dd>{{recall_initiation_date}}</dd>
+            <dt>Reason</dt>
+            <dd>{{reason_for_recall}}</dd>
+            <dt>Code</dt>
+            <dd>{{code_info}}</dd>
+          </dl>
+        </li>
+      </ul>
     </div>
   </div>
 </div>

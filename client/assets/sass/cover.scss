@@ -53,12 +53,6 @@ html, body{
   height: 100%;
 }
 
-body {
-  color: #fff;
-  text-align: center;
-  text-shadow: 0 1px 3px rgba(0,0,0,.5);
-}
-
 /* Extra markup and styles for table-esque vertical and horizontal centering */
 .site-wrapper {
   display: table;
@@ -75,6 +69,10 @@ body {
 .cover-container {
   margin-right: auto;
   margin-left: auto;
+
+  color: #fff;
+  text-align: center;
+  text-shadow: 0 1px 3px rgba(0,0,0,.5);
 }
 
 /* Padding for spacing */
