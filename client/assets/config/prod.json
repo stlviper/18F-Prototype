@@ -4,6 +4,8 @@
     "js": "js"
   },
   "resources": {
-
+    "drugs": "http://openfdavizapi.cloudogsystems.com/drug/event/search",
+    "foods": "http://openfdavizapi.cloudogsystems.com/food/event/search",
+    "devices": "http://openfdavizapi.cloudogsystems.com/devices/event/search"
   }
 }
