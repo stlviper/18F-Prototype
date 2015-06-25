@@ -110,7 +110,7 @@ function getDataFromFdaApi(fdaUrl, callback) {
 var FDA_END_POINTS = {
   device: 'https://api.fda.gov/device/',
   drug: 'https://api.fda.gov/drug/',
-  good: 'https://api.fda.gov/food/'
+  food: 'https://api.fda.gov/food/'
 };
 var FDA_END_TYPES = {
   event: 'event.json',
@@ -121,7 +121,7 @@ var FDA_END_TYPES = {
 var getAPIData = function (endPointBase, typeOfEngPoint, req, callback) {
   var limit = req.swagger.params.limit.value || 100;
   var start = req.swagger.params.skip.value || 0;
-  var fdaUrl = FDA_END_POINTS[endPointBase] + FDA_END_TYPES[typeOfEngPoint] + '?search=' + req.swagger.params.query.value + '&limit=' + limit + '&skip=' + start;
+  var fdaUrl = FDA_END_POINTS[endPointBase] + '/' + FDA_END_TYPES[typeOfEngPoint] + '?search=' + req.swagger.params.query.value + '&limit=' + limit + '&skip=' + start;
   getDataFromFdaApi(fdaUrl, callback);
 };
 
