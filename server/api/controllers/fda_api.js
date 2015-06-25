@@ -29,25 +29,25 @@ module.exports = {
   },
 
   deviceEventSearch: function (req, res) {
-    getAPIData(FDA_END_POINTS.device, FDA_END_TYPES.event, req, function (data) {
+    getAPIData('device', 'event', req, function (data) {
       res.json(data);
     });
   },
 
   deviceRangeCount: function (req, res) {
-    getRangeCountData(FDA_END_POINTS.device, FDA_END_TYPES.event, 'receivedate', req, function (data) {
+    getAPIRangeData('device', 'event', 'receivedate', req, function (data) {
       res.json(data);
     });
   },
 
   foodEventSearch: function (req, res) {
-    getAPIData(FDA_END_POINTS.device, FDA_END_TYPES.event, req, function (data) {
+    getAPIData('food', 'enforcement', req, function (data) {
       res.json(data);
     });
   },
 
   foodRangeCount: function (req, res) {
-    getRangeCountData(FDA_END_POINTS.food, FDA_END_TYPES.enforcement, 'receivedate', req, function (data) {
+    getAPIRangeData('food', 'enforcement', 'receivedate', req, function (data) {
       res.json(data);
     });
   },
@@ -125,7 +125,7 @@ var getAPIData = function (endPointBase, typeOfEngPoint, req, callback) {
   getDataFromFdaApi(fdaUrl, callback);
 };
 
-var getRangeCountData = function (endPointBase, typeOfEngPoint, datefield, req, callback) {
+var getAPIRangeData = function (endPointBase, typeOfEngPoint, datefield, req, callback) {
   var fdaUrl = FDA_END_POINTS[endPointBase] + FDA_END_TYPES[typeOfEngPoint] + "?search=" + datefield
     + ':[' + req.swagger.params.start.value + '+TO+' + req.swagger.params.end.value + ']&count=' + req.swagger.params.field.value;
   getDataFromFdaApi(fdaUrl, callback);
