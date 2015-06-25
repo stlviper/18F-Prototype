@@ -55,10 +55,21 @@ openfdaviz.directive("openfdavizTimeSlider", ['$parse', function ($parse) {
       .axis(true)
       .min(_settings.minYear)
       .max(_settings.maxYear)
-      .value([_settings.minDefaultValue, _settings.maxDefaultValue])
+      .value([_settings.minDefaultValue, _settings.maxDefaultValue]);
+      //.classed("svg-content-responsive", true);
 
-    d3.select('#timesliderControl').html("");
-    d3.select('#timesliderControl').call(dateSlider);
+    //debugger;
+    //var x = d3.dateSlider.linear().domain([0,23]).range([margin,width-margin]);
+    d3.select(window).on('resize', function(){
+      redrawSlider();
+    });
+
+    function redrawSlider(){
+      d3.select('#timesliderControl').html("");
+      d3.select('#timesliderControl').call(dateSlider);
+    }
+
+    redrawSlider();
   };
 
   var _bindSliderEvents = function(scope){
