@@ -54,7 +54,11 @@ module.exports = {
 
   tests: {
     getRangeCountData: getRangeCountData,
-    getEventSearchData: getEventSearchData
+    getEventSearchData: getEventSearchData,
+    FDA_END_POINTS: FDA_END_POINTS,
+    FDA_END_TYPES: FDA_END_TYPES,
+    getAPIData: getAPIData,
+    getAPIRangeData: getAPIRangeData
   }
 
 };
@@ -121,7 +125,7 @@ var FDA_END_TYPES = {
 var getAPIData = function (endPointBase, typeOfEngPoint, req, callback) {
   var limit = req.swagger.params.limit.value || 100;
   var start = req.swagger.params.skip.value || 0;
-  var fdaUrl = FDA_END_POINTS[endPointBase]  + FDA_END_TYPES[typeOfEngPoint] + '?search=' + req.swagger.params.query.value + '&limit=' + limit + '&skip=' + start;
+  var fdaUrl = FDA_END_POINTS[endPointBase] + FDA_END_TYPES[typeOfEngPoint] + '?search=' + req.swagger.params.query.value + '&limit=' + limit + '&skip=' + start;
   getDataFromFdaApi(fdaUrl, callback);
 };
 
