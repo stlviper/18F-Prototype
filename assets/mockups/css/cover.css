@@ -28,8 +28,16 @@ a:hover {
 }
 
 .cover .btn-lg {
+	margin-top: 10px;
 }
-
+.splash-keyword {
+	width: 60%;
+	float:left;
+	margin-right:10px;
+}
+.splash-dropdown {
+	width: 35%;
+}
 
 /*
  * Base structure
