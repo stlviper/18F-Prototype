@@ -199,21 +199,6 @@ h1, h2, h3, h4, h5 {
   margin-bottom: 10px;
 }
 
-.map {
-  border: solid 1px #bfc0c1;
-  border-radius: 2px;
-  height: 400px;
-  box-shadow: 0 1px 5px rgba(0, 0, 0, .1);
-  margin-bottom: 10px;
-  background-color: #fff;
-}
-
-.map-dates {
-  width: 100%;
-  height: 34px;
-  margin-bottom: 10px;
-}
-
 .details {
   border: solid 1px #bfc0c1;
   border-radius: 2px;
@@ -229,16 +214,6 @@ h1, h2, h3, h4, h5 {
 .details-container {
   padding: 20px 15px 1px 15px;
   background-color: #fff;
-}
-
-.details-container .date,
-.map-dates .date {
-  margin-bottom: 10px;
-  width: 48%;
-}
-
-.map-slider {
-  margin-bottom: 10px;
 }
 
 .details-container .btn-blue {

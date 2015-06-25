@@ -1,0 +1,47 @@
+#timesliderControl{
+  width:100%;
+  > svg {
+    width: calc(100% + 50px);
+  }
+}
+
+#mapPanel{
+  margin-bottom: 30px;
+
+  > div:first-of-type{
+    border: solid 1px #bfc0c1;
+    border-radius: 2px;
+    box-shadow: 0 1px 5px rgba(0, 0, 0, 0.1);
+    background-color: #f7f7f8;
+  }
+
+  > div{
+    margin-bottom: 10px;
+  }
+}
+
+.map {
+  border: solid 1px #bfc0c1;
+  border-radius: 2px;
+  height: 400px;
+  box-shadow: 0 1px 5px rgba(0, 0, 0, .1);
+  background-color: #fff;
+}
+
+.map-dates {
+  width: 100%;
+  height: 34px;
+}
+
+.map-dates, .details-container{
+  .date {
+    margin-bottom: 10px;
+    width: 48%;
+  }
+}
+
+#map-slider {
+  margin-bottom: 10px;
+  padding-left: 10px;
+  padding-right: 10px;
+}
