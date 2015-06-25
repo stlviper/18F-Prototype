@@ -109,6 +109,141 @@ paths:
           description: Error
           schema:
             $ref: "#/definitions/ErrorResponse"
+
+  /device/event/search:
+    get:
+      x-swagger-router-controller: fda_api
+      operationId: deviceEventSearch
+      description: Search field(s)
+      parameters:
+        - name: query
+          in: query
+          description: Field and Value to search on separated by a colon ( field:value ). query string should be in quotes. Format example= primarysourcecountry:us
+          required: true
+          type: string
+          collectionFormat: multi
+        - name: skip
+          description: Number of items to skip and start results from
+          in: query
+          required: false
+          type: integer
+        - name: limit
+          in: query
+          description: Limit the number of results
+          required: false
+          type: integer
+      produces:
+        - application/json
+      responses:
+        "200":
+          description: Success
+          schema:
+            # a pointer to a definition
+            $ref: "#/definitions/Generic"
+        # responses may fall through to errors
+        default:
+          description: Error
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+  /device/event/rangecount:
+    get:
+      x-swagger-router-controller: fda_api
+      operationId: deviceEventRangeCount
+      description: Returns test fetch of a drugs query count
+      parameters:
+        - name: start
+          in: query
+          description: Start day in format YYYYMMDD (ex 20040101)
+          required: true
+          type: string
+        - name: end
+          in: query
+          description: End day in format YYYYMMDD (ex 20150101)
+          required: true
+          type: string
+        - name: field
+          in: query
+          description: path of field to count (ex patient.patientsex)
+          required: true
+          type: string
+      responses:
+        "200":
+          description: Success
+          schema:
+            # a pointer to a definition
+            $ref: "#/definitions/Generic"
+        # responses may fall through to errors
+        default:
+          description: Error
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+
+  /foodd/event/rangecount:
+      get:
+        x-swagger-router-controller: fda_api
+        operationId: foodEvent
+        description: Returns test fetch of a drugs query count
+        parameters:
+          - name: start
+            in: query
+            description: Start day in format YYYYMMDD (ex 20040101)
+            required: true
+            type: string
+          - name: end
+            in: query
+            description: End day in format YYYYMMDD (ex 20150101)
+            required: true
+            type: string
+          - name: field
+            in: query
+            description: path of field to count (ex patient.patientsex)
+            required: true
+            type: string
+        responses:
+          "200":
+            description: Success
+            schema:
+              # a pointer to a definition
+              $ref: "#/definitions/Generic"
+          # responses may fall through to errors
+          default:
+            description: Error
+            schema:
+              $ref: "#/definitions/ErrorResponse"
+
+  /food/event/rangecount:
+      get:
+        x-swagger-router-controller: fda_api
+        operationId: foodEventRangeCount
+        description: Returns test fetch of a drugs query count
+        parameters:
+          - name: start
+            in: query
+            description: Start day in format YYYYMMDD (ex 20040101)
+            required: true
+            type: string
+          - name: end
+            in: query
+            description: End day in format YYYYMMDD (ex 20150101)
+            required: true
+            type: string
+          - name: field
+            in: query
+            description: path of field to count (ex patient.patientsex)
+            required: true
+            type: string
+        responses:
+          "200":
+            description: Success
+            schema:
+              # a pointer to a definition
+              $ref: "#/definitions/Generic"
+          # responses may fall through to errors
+          default:
+            description: Error
+            schema:
+              $ref: "#/definitions/ErrorResponse"
+
 # complex objects have schema definitions
 definitions:
   Generic:
