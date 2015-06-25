@@ -2,7 +2,6 @@
 
 window.openfdaviz = angular.module('openfdaviz', ['ui.router']);
 
-
 window.openfdaviz.config(['$stateProvider', '$urlRouterProvider', function ($stateProvider, $urlRouterProvider) {
 
   $urlRouterProvider.otherwise('/');
