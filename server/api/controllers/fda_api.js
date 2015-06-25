@@ -34,7 +34,7 @@ module.exports = {
     });
   },
 
-  deviceRangeCount: function (req, res) {
+  deviceEventRangeCount: function (req, res) {
     getAPIRangeData('device', 'event', 'receivedate', req, function (data) {
       res.json(data);
     });
@@ -46,8 +46,8 @@ module.exports = {
     });
   },
 
-  foodRangeCount: function (req, res) {
-    getAPIRangeData('food', 'enforcement', 'receivedate', req, function (data) {
+  foodEventRangeCount: function (req, res) {
+    getAPIRangeData('food', 'enforcement', 'recall_initiation_date', req, function (data) {
       res.json(data);
     });
   },
@@ -121,7 +121,7 @@ var FDA_END_TYPES = {
 var getAPIData = function (endPointBase, typeOfEngPoint, req, callback) {
   var limit = req.swagger.params.limit.value || 100;
   var start = req.swagger.params.skip.value || 0;
-  var fdaUrl = FDA_END_POINTS[endPointBase] + '/' + FDA_END_TYPES[typeOfEngPoint] + '?search=' + req.swagger.params.query.value + '&limit=' + limit + '&skip=' + start;
+  var fdaUrl = FDA_END_POINTS[endPointBase]  + FDA_END_TYPES[typeOfEngPoint] + '?search=' + req.swagger.params.query.value + '&limit=' + limit + '&skip=' + start;
   getDataFromFdaApi(fdaUrl, callback);
 };
 
