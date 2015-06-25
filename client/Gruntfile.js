@@ -132,6 +132,14 @@ module.exports = function (grunt) {
           src: [ 'assets/js/heatcanvas/heatcanvas-worker.js' ],
           dest: '../dist/client/js/heatcanvas-worker.js'
         }]
+      },
+      htmlresourcesProd: {
+        files: [{
+          cwd: 'assets/html/error-pages',
+          src: '**/*.*',
+          dest: '../dist/client/error-pages',
+          expand: true
+        }]
       }
     },
     jshint: {
@@ -236,7 +244,7 @@ module.exports = function (grunt) {
   grunt.registerTask('selenium', ['protractor_webdriver', 'protractor:run']);
   grunt.registerTask('default', ['build']);
   grunt.registerTask('build', ['sass:dev', 'concat', 'browserify', 'copy:vendorCss', 'copy:devConfig', 'copy:devImages', 'copy:devFonts', 'copy:devIndex', 'copy:heatcanvasDev', 'ngtemplates', 'test']);
-  grunt.registerTask('build:prod', ['build', 'sass:dist', 'uglify', 'copy:npmLib', 'copy:prodConfig', 'copy:prodImages', 'copy:prodFonts', 'copy:prodIndex', 'copy:heatcanvasProd']);
+  grunt.registerTask('build:prod', ['build', 'sass:dist', 'uglify', 'copy:npmLib', 'copy:prodConfig', 'copy:prodImages', 'copy:prodFonts', 'copy:prodIndex', 'copy:heatcanvasProd', 'copy:htmlresourcesProd']);
   grunt.registerTask('deploy', ['clean', 'build:prod']);
 
 };
