@@ -43,11 +43,13 @@ openfdaviz.controller('SearchController', ['$scope', '$http', '$stateParams', fu
   $scope.query = $stateParams.query;
   $scope.queryInProgress = false;
 
-  $scope.results = {
+  var emptyResults = {
     drugs: [],
     devices: [],
     foods: []
   };
+
+  $scope.results = emptyResults;
 
   $scope.activateResultsTab = function (activeTab) {
     $scope.activeResultsTab = activeTab;
@@ -61,19 +63,22 @@ openfdaviz.controller('SearchController', ['$scope', '$http', '$stateParams', fu
   });
 
   $scope.runQuery = function () {
-    $.when.apply($, [generalQuery(), queryDrugs(), queryFoods(), queryDevices()]).done(updateHeatmap);
+    $scope.queryInProgress = true;
+    $scope.results = emptyResults;
+    $.when.apply($, [queryDrugs(), queryFoods(), queryDevices()]).done(updateHeatmap);
   };
 
   var generalQuery = function () {
     var deferred = $.Deferred();
     $scope.queryInProgress = true;
+    $scope.results = emptyResults;
     $http.get(config.resources.general + '?value=' + $scope.query)
       .success(function (resp) {
         $scope.results.drugs = resp.drug || [];
         $scope.results.devices = resp.device || [];
         $scope.results.foods = resp.food || [];
         deferred.resolve();
-        $scope.queryInProgress = false;
+        updateHeatmap();
       })
       .error(function () {
         console.log("error requesting drugs");
@@ -81,26 +86,31 @@ openfdaviz.controller('SearchController', ['$scope', '$http', '$stateParams', fu
     return deferred;
   };
   generalQuery();
-  updateHeatmap();
 
   function queryDrugs() {
     var deferred = $.Deferred();
     $http.get(config.resources.drugs + '?query=' + $scope.query)
       .success(function (resp) {
-        $scope.results.drugs = resp;
+        if(!resp.error){
+          $scope.results.drugs = resp;
+        }
         deferred.resolve();
       })
       .error(function () {
         console.log("error requesting drugs");
       });
     return deferred;
+    // current: status: '' || []
+    // ideal: status: '', drug: [], food: [], device: []
   }
 
   function queryFoods() {
     var deferred = $.Deferred();
     $http.get(config.resources.foods + '?query=' + $scope.query)
       .success(function (resp) {
-        $scope.results.foods = resp;
+        if(!resp.error){
+          $scope.results.foods = resp;
+        }
         deferred.resolve();
       })
       .error(function () {
@@ -113,7 +123,9 @@ openfdaviz.controller('SearchController', ['$scope', '$http', '$stateParams', fu
     var deferred = $.Deferred();
     $http.get(config.resources.devices + '?query=' + $scope.query)
       .success(function (resp) {
-        $scope.results.devices = resp;
+        if(!resp.error){
+          $scope.results.devices = resp;
+        }
         deferred.resolve();
       })
       .error(function () {
@@ -123,6 +135,7 @@ openfdaviz.controller('SearchController', ['$scope', '$http', '$stateParams', fu
   }
 
   function updateHeatmap() {
+    $scope.queryInProgress = false;
     $scope.results.devices
   }
 }]);
