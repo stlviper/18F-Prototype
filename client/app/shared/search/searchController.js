@@ -1,9 +1,11 @@
 'use strict';
 
-openfdaviz.controller('SearchController', ['$scope', '$http', '$stateParams', function ($scope, $http, $stateParams) {
+openfdaviz.controller('SearchController', ['$scope', '$http', '$stateParams', "leafletData", function ($scope, $http, $stateParams, leafletData) {
 
   //Setting up the Leaflet Directive
   var mapZoom = 4;
+  var dataPoints = [];
+
   $scope.fdaVizMapCenter = {
     lat: 38,
     lng: -96,
@@ -21,35 +23,37 @@ openfdaviz.controller('SearchController', ['$scope', '$http', '$stateParams', fu
       heat: {
         name: 'Heat Map',
         type: 'heat',
-        data: [
-          [38.3, -92],
-          [38.4623, -92]
-        ],
+        data: dataPoints,
         layerOptions: {
-          radius: 20,
-          blur: 10
+          radius: 6,
+          blur: 2,
+          minOpacity: 0.6
         },
-        visible: true
+        visible: true,
+        doRefresh: true
       }
     }
 
   };
 
 
-  $scope.activeTab = 'results';
+  $scope.activeResultsTab = 'drugs';
 
   var minYear = '';
   var maxYear = '';
-  $scope.query = $stateParams.searchQuery;
+  $scope.query = $stateParams.query;
+  $scope.queryInProgress = false;
 
-  $scope.results = {
+  var emptyResults = {
     drugs: [],
     devices: [],
     foods: []
   };
 
-  $scope.activateSearchTab = function (activeTab) {
-    $scope.activeTab = activeTab;
+  $scope.results = emptyResults;
+
+  $scope.activateResultsTab = function (activeTab) {
+    $scope.activeResultsTab = activeTab;
   };
 
   angular.element(document).ready(function () {
@@ -60,11 +64,17 @@ openfdaviz.controller('SearchController', ['$scope', '$http', '$stateParams', fu
   });
 
   $scope.runQuery = function () {
-    $.when.apply($, [generalQuery(), queryDrugs(), queryFoods(), queryDevices()]).done(updateHeatmap);
+    $stateParams.query = $scope.query;
+    $scope.queryInProgress = true;
+    $scope.results = emptyResults;
+    $.when.apply($, [queryDrugs(), queryFoods(), queryDevices()]).done(updateHeatmap);
   };
 
   var generalQuery = function () {
+    $stateParams.query = $scope.query;
     var deferred = $.Deferred();
+    $scope.queryInProgress = true;
+    $scope.results = emptyResults;
     $http.get(config.resources.general + '?value=' + $scope.query)
       .success(function (resp) {
         $scope.results.drugs = resp.drug || [];
@@ -77,27 +87,32 @@ openfdaviz.controller('SearchController', ['$scope', '$http', '$stateParams', fu
       });
     return deferred;
   };
-  generalQuery();
-  updateHeatmap();
+  $.when(generalQuery()).done(updateHeatmap);
 
   function queryDrugs() {
     var deferred = $.Deferred();
     $http.get(config.resources.drugs + '?query=' + $scope.query)
       .success(function (resp) {
-        $scope.results.drugs = resp;
+        if(!resp.error){
+          $scope.results.drugs = resp;
+        }
         deferred.resolve();
       })
       .error(function () {
         console.log("error requesting drugs");
       });
     return deferred;
+    // current: status: '' || []
+    // ideal: status: '', drug: [], food: [], device: []
   }
 
   function queryFoods() {
     var deferred = $.Deferred();
     $http.get(config.resources.foods + '?query=' + $scope.query)
       .success(function (resp) {
-        $scope.results.foods = resp;
+        if(!resp.error){
+          $scope.results.foods = resp;
+        }
         deferred.resolve();
       })
       .error(function () {
@@ -110,7 +125,9 @@ openfdaviz.controller('SearchController', ['$scope', '$http', '$stateParams', fu
     var deferred = $.Deferred();
     $http.get(config.resources.devices + '?query=' + $scope.query)
       .success(function (resp) {
-        $scope.results.devices = resp;
+        if(!resp.error){
+          $scope.results.devices = resp;
+        }
         deferred.resolve();
       })
       .error(function () {
@@ -120,6 +137,32 @@ openfdaviz.controller('SearchController', ['$scope', '$http', '$stateParams', fu
   }
 
   function updateHeatmap() {
-    $scope.results.devices
+    $scope.queryInProgress = false;
+    // Plot food geodata points
+    if (typeof $scope.results.foods != 'undefined') {
+      for (var i in $scope.results.foods) {
+        if (typeof $scope.results.foods[i].GeoLocation != 'undefined') {
+          if (typeof $scope.results.foods[i].GeoLocation.lat != 'undefined' &&
+              typeof $scope.results.foods[i].GeoLocation.lng != 'undefined') {
+            var lat = $scope.results.foods[i].GeoLocation.lat;
+            var lng = $scope.results.foods[i].GeoLocation.lng;
+            $scope.layers.overlays.heat.data.push([lat, lng]);
+          }
+        }
+      }
+    }
+    // Plot drug geodata points
+    if (typeof $scope.results.drugs != 'undefined') {
+      for (var i in $scope.results.drugs) {
+        if (typeof $scope.results.drugs[i].GeoLocation != 'undefined') {
+          if (typeof $scope.results.drugs[i].GeoLocation.lat != 'undefined' &&
+            typeof $scope.results.drugs[i].GeoLocation.lng != 'undefined') {
+            var lat = $scope.results.drugs[i].GeoLocation.lat;
+            var lng = $scope.results.drugs[i].GeoLocation.lng;
+            $scope.layers.overlays.heat.data.push([lat, lng]);
+          }
+        }
+      }
+    }
   }
 }]);

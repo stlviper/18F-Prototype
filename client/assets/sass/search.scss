@@ -49,3 +49,28 @@
   padding-left: 10px;
   padding-right: 10px;
 }
+
+.leaflet-top, .leaflet-bottom{
+  z-index: 0;
+}
+
+.footer{
+  z-index: 10;
+}
+
+#resultsPanel{
+  margin-bottom: 25px;
+
+  .panel-body{
+    height: 645px;
+    overflow: scroll;
+  }
+
+  .details-container{
+    height: 750px;
+  }
+
+  .nav.nav-tabs > li.active > a{
+    border: 1px solid #ddd;
+  }
+}

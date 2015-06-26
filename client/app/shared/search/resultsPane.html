@@ -1,67 +1,89 @@
 <div class="details-container">
   <h3>Search Results</h3>
 
-  <div class="panel panel-default">
-    <div class="panel-heading">
-      <h3 class="panel-title drugs">Drugs</h3>
-    </div>
-    <div class="panel-body">
-      <ul ng-repeat="result in results.drugs">
-        <li>
-          <h5>Reactions</h5>
-          <ul ng-repeat="reacts in result.patient.reaction">
-            <li>{{reacts.reactionmeddrapt}}</li>
+  <ul class="nav nav-tabs" role="tablist">
+    <li role="presentation" class="active">
+      <a href="" aria-controls="profile" role="tab" data-toggle="tab" ng-click="activateResultsTab('drugs')">Drugs ({{results.drugs.length}})</a>
+    </li>
+    <li role="presentation">
+      <a href="" aria-controls="profile" role="tab" data-toggle="tab" ng-click="activateResultsTab('foods')">Foods ({{results.foods.length}})</a>
+    </li>
+    <li role="presentation">
+      <a href="" aria-controls="profile" role="tab" data-toggle="tab" ng-click="activateResultsTab('devices')">Devices ({{results.devices.length}})</a>
+    </li>
+  </ul>
+
+  <div ng-switch="activeResultsTab">
+    <div ng-switch-when="drugs">
+      <div class="panel panel-default">
+        <div class="panel-body">
+          <p ng-if="results.drugs.length == 0 && !queryInProgress">No Results Found</p>
+          <p ng-if="queryInProgress">Loading...</p>
+          <ul ng-if="results.drugs.length > 0" ng-repeat="result in results.drugs">
+            <li>
+              <h5>Reactions:</h5>
+              <ul ng-repeat="reacts in result.patient.reaction">
+                <li>{{reacts.reactionmeddrapt}}</li>
+              </ul>
+              <dl>
+                <dt>Brand Name:</dt>
+                <dd>{{patient.drug[0].medicinalproduct}}</dd>
+                <dt>Sender:</dt>
+                <dd>{{result.sender.senderorganization}}</dd>
+              </dl>
+            </li>
           </ul>
-          <dl>
-            <dt>Sender</dt>
-            <dd>{{result.sender.senderorganization}}</dd>
-            <dt>Primary Source Country</dt>
-            <dd>{{result.primarysourcecountry}}</dd>
-          </dl>
-        </li>
-      </ul>
+        </div>
+      </div>
     </div>
-  </div>
 
-  <div class="panel panel-default">
-    <div class="panel-heading">
-      <h3 class="panel-title devices">Devices</h3>
+    <div ng-switch-when="devices">
+      <div class="panel panel-default">
+        <div class="panel-body">
+          <p ng-if="results.devices.length == 0 && !queryInProgress">No Results Found</p>
+          <p ng-if="queryInProgress">Loading...</p>
+          <ul ng-if="results.devices.length > 0" ng-repeat="result in results.devices">
+            <li>
+              <h5>{{result.product_description}}</h5>
+              <dl>
+                <dt>Device Name:</dt>
+                <dd>{{device.brand_name}}</dd>
+                <dt>Brand Name:</dt>
+                <dd>{{device.generic_name}}</dd>
+                <dt>Manufacturer:</dt>
+                <dd>{{device.manufacturer_d_name}}</dd>
+                <dt>Recall Date:</dt>
+                <dd>{{recall_initiation_date}}</dd>
+                <dt>Reason:</dt>
+                <dd>{{reason_for_recall}}</dd>
+                <dt>Code:</dt>
+                <dd>{{code_info}}</dd>
+              </dl>
+            </li>
+          </ul>
+        </div>
+      </div>
     </div>
-    <div class="panel-body">
-      <ul ng-repeat="result : results.devices">
-        <li>
-          <h5>{{result.product_description}}</h5>
-          <dl>
-            <dt>Recall Date</dt>
-            <dd>{{recall_initiation_date}}</dd>
-            <dt>Reason</dt>
-            <dd>{{reason_for_recall}}</dd>
-            <dt>Code</dt>
-            <dd>{{code_info}}</dd>
-          </dl>
-        </li>
-      </ul>
-    </div>
-  </div>
 
-  <div class="panel panel-default">
-    <div class="panel-heading">
-      <h3 class="panel-title foods">Foods</h3>
+    <div ng-switch-when="foods">
+      <div class="panel panel-default">
+        <div class="panel-body">
+          <p ng-if="results.foods.length == 0 && !queryInProgress">No Results Found</p>
+          <p ng-if="queryInProgress">Loading...</p>
+          <ul ng-if="results.foods.length > 0" ng-repeat="result in results.foods">
+            <li>
+              <h5>{{result.product_description}}</h5>
+              <dl>
+                <dt>Recall Date</dt>
+                <dd>{{primarysourcecountry}}</dd>
+                <dt>Reason</dt>
+                <dd>{{reason_for_recall}}</dd>
+                <dt>Code</dt>
+                <dd>{{code_info}}</dd>
+              </dl>
+            </li>
+          </ul>
+        </div>
+      </div>
     </div>
-    <div class="panel-body">
-      <ul ng-repeat="result : results.foods">
-        <li>
-          <h5>{{result.product_description}}</h5>
-          <dl>
-            <dt>Recall Date</dt>
-            <dd>{{primarysourcecountry}}</dd>
-            <dt>Reason</dt>
-            <dd>{{reason_for_recall}}</dd>
-            <dt>Code</dt>
-            <dd>{{code_info}}</dd>
-          </dl>
-        </li>
-      </ul>
-    </div>
-  </div>
 </div>
