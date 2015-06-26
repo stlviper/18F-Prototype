@@ -1,9 +1,11 @@
 'use strict';
 
-openfdaviz.controller('SearchController', ['$scope', '$http', '$stateParams', function ($scope, $http, $stateParams) {
+openfdaviz.controller('SearchController', ['$scope', '$http', '$stateParams', "leafletData", function ($scope, $http, $stateParams, leafletData) {
 
   //Setting up the Leaflet Directive
   var mapZoom = 4;
+  var dataPoints = [];
+
   $scope.fdaVizMapCenter = {
     lat: 38,
     lng: -96,
@@ -21,15 +23,14 @@ openfdaviz.controller('SearchController', ['$scope', '$http', '$stateParams', fu
       heat: {
         name: 'Heat Map',
         type: 'heat',
-        data: [
-          [38.3, -92],
-          [38.4623, -92]
-        ],
+        data: dataPoints,
         layerOptions: {
-          radius: 20,
-          blur: 10
+          radius: 6,
+          blur: 2,
+          minOpacity: 0.6
         },
-        visible: true
+        visible: true,
+        doRefresh: true
       }
     }
 
@@ -78,14 +79,13 @@ openfdaviz.controller('SearchController', ['$scope', '$http', '$stateParams', fu
         $scope.results.devices = resp.device || [];
         $scope.results.foods = resp.food || [];
         deferred.resolve();
-        updateHeatmap();
       })
       .error(function () {
         console.log("error requesting drugs");
       });
     return deferred;
   };
-  generalQuery();
+  $.when(generalQuery()).done(updateHeatmap);
 
   function queryDrugs() {
     var deferred = $.Deferred();
@@ -136,6 +136,31 @@ openfdaviz.controller('SearchController', ['$scope', '$http', '$stateParams', fu
 
   function updateHeatmap() {
     $scope.queryInProgress = false;
-    $scope.results.devices
+    // Plot food geodata points
+    if (typeof $scope.results.foods != 'undefined') {
+      for (var i in $scope.results.foods) {
+        if (typeof $scope.results.foods[i].GeoLocation != 'undefined') {
+          if (typeof $scope.results.foods[i].GeoLocation.lat != 'undefined' &&
+              typeof $scope.results.foods[i].GeoLocation.lng != 'undefined') {
+            var lat = $scope.results.foods[i].GeoLocation.lat;
+            var lng = $scope.results.foods[i].GeoLocation.lng;
+            $scope.layers.overlays.heat.data.push([lat, lng]);
+          }
+        }
+      }
+    }
+    // Plot drug geodata points
+    if (typeof $scope.results.drugs != 'undefined') {
+      for (var i in $scope.results.drugs) {
+        if (typeof $scope.results.drugs[i].GeoLocation != 'undefined') {
+          if (typeof $scope.results.drugs[i].GeoLocation.lat != 'undefined' &&
+            typeof $scope.results.drugs[i].GeoLocation.lng != 'undefined') {
+            var lat = $scope.results.drugs[i].GeoLocation.lat;
+            var lng = $scope.results.drugs[i].GeoLocation.lng;
+            $scope.layers.overlays.heat.data.push([lat, lng]);
+          }
+        }
+      }
+    }
   }
 }]);
