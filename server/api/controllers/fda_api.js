@@ -116,7 +116,7 @@ function getAggregateSplashSearchData(req, res) {
       function (callback) {
         var fdaUrl = FDA_DEVICE_EVENT + 'event.json?limit=100&search=device.brand_name:"' + req.swagger.params.value.value + '"+device.generic_name:"' + req.swagger.params.value.value + '"+device.manufacturer_d_name:"' + req.swagger.params.value.value + '"';
         getDataFromFdaApi(fdaUrl, function (data) {
-          geoCodeDeviceData(data, callback);
+          callback(null, {key: 'drug', value: data});
         });
       }
     ],
