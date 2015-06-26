@@ -28,7 +28,7 @@ function getAggregateSplashSearchData(req, res) {
   async.parallel([
 
       function (callback) {
-        var fdaUrl = FDA_DRUG_EVENT + 'event.json?limit=100&search=patient.drug.openfda.brand_name:"' + req.swagger.params.value.value + '"+patient.drug.openfda.brand_name:"' + req.swagger.params.value.value + '"';
+        var fdaUrl = FDA_DRUG_EVENT + 'event.json?limit=100&search=patient.drug.openfda.brand_name:"' + req.swagger.params.value.value + '"+patient.drug.openfda.manufacturer_name:"' + req.swagger.params.value.value + '"';
         getDataFromFdaApi(fdaUrl, function (data) {
           callback(null, {key: 'drug', value: data});
         });
@@ -73,7 +73,7 @@ function getAggregateSplashSearchData(req, res) {
       },
 
       function (callback) {
-        var fdaUrl = FDA_DEVICE_EVENT + 'event.json?limit=100&search=device.brand_name:"' + req.swagger.params.value.value + '"+device.generic_name:"' + req.swagger.params.value.value + '"+device.manufacturer_d_name:"' + req.swagger.params.value.value + '"';
+        var fdaUrl = FDA_DEVICE_EVENT + 'event.json?limit=100&search="' + req.swagger.params.value.value + '"';
         getDataFromFdaApi(fdaUrl, function (data) {
 
           callback(null, {key: 'device', value: data});
