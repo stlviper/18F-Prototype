@@ -1,5 +1,6 @@
 'use strict';
 var request = require('request'),
+  geoCoder = require('../helpers/geoCoder'),
   async = require('async');
 
 //'https://api.fda.gov/drug/event.json?search=receivedate:[20040101+TO+20150101]&count=patient.patientsex',
@@ -34,15 +35,44 @@ function getAggregateSplashSearchData(req, res) {
       },
 
       function (callback) {
-        //var fdaUrl = FDA_FOOD_EVENT + 'event.json?limit=100&search=patient.drug.openfda.brand_name:"' + req.swagger.params.value.value + '"+patient.drug.openfda.brand_name:"' + req.swagger.params.value.value + '"';
-        //getDataFromFdaApi(fdaUrl, function (data) {
-          callback(null, {key: 'food', value: []});
-        //});
+        var fdaUrl = FDA_FOOD_EVENT + 'event.json?limit=100&search=product_description:"' + req.swagger.params.value.value + '"+reason_for_recall:"' + req.swagger.params.value.value + '"';
+        getDataFromFdaApi(fdaUrl, function (data) {
+          var geoKeys = [];
+          data.map(function (item) {
+            /*var key = '';
+             if (item.city && item.city.length > 0) {
+             key += item.city;
+             if (item.state && item.state.length > 0) {
+             key += ' ' + item.state;
+             }
+             if (item.country && item.country.length > 0) {
+             key += ' ' + item.city;
+             }
+             geoKeys.push(key.trim());
+             }
+            else*/
+            if (item.state && item.state.length > 0) {
+              item.GeoLocation = geoCoder.geoCodeState(item.state);
+            }
+            else if (item.country && item.country.length > 0) {
+              item.GeoLocation = geoCoder.geoCodeCountry(item.country);
+            }
+          });
+
+          geoCoder.geoCodeString(geoKeys, function (err, data) {
+            if (data) {
+
+            }
+          });
+
+          callback(null, {key: 'food', value: data});
+        });
       },
 
       function (callback) {
         var fdaUrl = FDA_DEVICE_EVENT + 'event.json?limit=100&search=device.brand_name:"' + req.swagger.params.value.value + '"+device.generic_name:"' + req.swagger.params.value.value + '"+device.manufacturer_d_name:"' + req.swagger.params.value.value + '"';
         getDataFromFdaApi(fdaUrl, function (data) {
+
           callback(null, {key: 'device', value: data});
         });
       }

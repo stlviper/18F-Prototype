@@ -5,13 +5,19 @@ var fs = require('fs'),
 
 
 global.geocodelist = null;
+var _stateGeoCodeList = null;
 
-function loadGeocoder() {
-  console.log("Loading Geocoder");
+function loadCountryGeocoder() {
   var res = fs.readFileSync('./api/helpers/countries_geocoded.json');
   global.geocodelist = JSON.parse(res).data;
   return global.geocodelist;
 }
+
+var _loadStateGeoCoder =  function (){
+  var res = fs.readFileSync('./api/helpers/state_latlon.json');
+  _stateGeoCodeList = JSON.parse(res).data;
+  return _stateGeoCodeList;
+};
 
 module.exports = {
 
@@ -21,7 +27,7 @@ module.exports = {
     }
 
     if (global.geocodelist == null) {
-      loadGeocoder();
+      loadCountryGeocoder();
     }
     for (var i = 0; i < global.geocodelist.length; i++) {
       if (global.geocodelist[i][10] === ccc.toUpperCase()) {
@@ -36,7 +42,7 @@ module.exports = {
     }
 
     if (global.geocodelist == null) {
-      loadGeocoder();
+      loadCountryGeocoder();
     }
     for (var i = 0; i < global.geocodelist.length; i++) {
       if (global.geocodelist[i][9] === cc.toUpperCase()) {
@@ -45,7 +51,23 @@ module.exports = {
     }
   },
 
-  geoCodeString: function(information, callback){
+  geoCodeCountry: function(country){
+    if(country.length === 2){
+      this.geoCodeByISO2(country);
+    }
+    else if (country.length === 3){
+      this.geoCodeByISO3(country);
+    }
+    else {
+      return "Country Code format not supported"
+    };
+  },
+
+  geoCodeState: function(state){
+
+  },
+
+  geoCodeString2: function(information, callback){
     /*
      * NOTE: Information can be a string or an Array of strings for batch geocoding.
      * for more information see:  https://github.com/nchaulet/node-geocoder

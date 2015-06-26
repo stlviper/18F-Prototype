@@ -190,5 +190,4 @@ describe('Testing Drugs Controller.', function () {
       });
     });
   });
-
 });
