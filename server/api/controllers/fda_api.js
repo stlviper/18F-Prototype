@@ -38,36 +38,43 @@ function getAggregateSplashSearchData(req, res) {
         var fdaUrl = FDA_FOOD_EVENT + 'enforcement.json?limit=100&search=product_description:"' + req.swagger.params.value.value + '"+reason_for_recall:"' + req.swagger.params.value.value + '"';
         getDataFromFdaApi(fdaUrl, function (data) {
           var geoKeys = [];
-          data.map(function (item, index, array) {
-            /*var key = '';
-             if (item.city && item.city.length > 0) {
-             key += item.city;
-             if (item.state && item.state.length > 0) {
-             key += ' ' + item.state;
-             }
-             if (item.country && item.country.length > 0) {
-             key += ' ' + item.city;
-             }
-             geoKeys.push(key.trim());
-             }
-             else*/
-            if (item.state && item.state.length > 0) {
-              array[index].GeoLocation = geoCoder.geoCodeState(item.state);
-            }
-            else if (item.country && item.country.length > 0) {
-              array[index].GeoLocation = geoCoder.geoCodeCountry(item.country);
-            }
-          });
 
-          if (geoKeys.length > 0) {
-            geoCoder.geoCodeString(geoKeys, function (err, data) {
-              if (data) {
-
+          if (data) {
+            data.map(function (item, index, array) {
+              /*var key = '';
+               if (item.city && item.city.length > 0) {
+               key += item.city;
+               if (item.state && item.state.length > 0) {
+               key += ' ' + item.state;
+               }
+               if (item.country && item.country.length > 0) {
+               key += ' ' + item.city;
+               }
+               geoKeys.push(key.trim());
+               }
+               else*/
+              if (item.state && item.state.length > 0) {
+                array[index].GeoLocation = geoCoder.geoCodeState(item.state);
+              }
+              else if (item.country && item.country.length > 0) {
+                array[index].GeoLocation = geoCoder.geoCodeCountry(item.country);
               }
             });
-          } else {
 
-            callback(null, {key: 'food', value: data});
+            if (geoKeys.length > 0) {
+              geoCoder.geoCodeString(geoKeys, function (err, data) {
+                if (data) {
+
+                }
+              });
+            } else {
+
+              callback(null, {key: 'food', value: data});
+            }
+          }
+          else{
+
+            callback(null, {key: 'food', value: []});
           }
         });
       },
