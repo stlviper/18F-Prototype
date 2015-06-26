@@ -40,7 +40,7 @@ openfdaviz.controller('SearchController', ['$scope', '$http', '$stateParams', fu
 
   var minYear = '';
   var maxYear = '';
-  $scope.query = $stateParams.searchQuery;
+  $scope.query = $stateParams.query;
 
   $scope.results = {
     drugs: [],

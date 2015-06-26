@@ -49,3 +49,11 @@
   padding-left: 10px;
   padding-right: 10px;
 }
+
+.leaflet-top, .leaflet-bottom{
+  z-index: 0;
+}
+
+.footer{
+  z-index: 10;
+}
