@@ -56,7 +56,18 @@ var geoCodeDeviceData = function (data, callback) {
 };
 
 var geoCodeDrugData = function (data, callback) {
-  callback(null, {key: 'drug', value: data});
+  var processedData = [];
+  if(data && data instanceof Array){
+    data.map(function (item, index, array) {
+      if(item.primarysourcecountry){
+        array[index].GeoLocation = geoCoder.geoCodeCountry(item.primarysourcecountry);
+      }
+    });
+    callback(null, {key: 'drug', value: data})
+  }
+  else {
+    callback(null, {key: 'drug', value: []});
+  }
 };
 
 

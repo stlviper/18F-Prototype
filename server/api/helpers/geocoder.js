@@ -47,17 +47,17 @@ module.exports = {
     }
     for (var i = 0; i < global.geocodelist.length; i++) {
       if (global.geocodelist[i][9] === cc.toUpperCase()) {
-        return global.geocodelist[i];
+        return {lat: global.geocodelist[i][12], lng: global.geocodelist[i][13]};
       }
     }
   },
 
   geoCodeCountry: function (country) {
     if (country.length === 2) {
-      this.geoCodeByISO2(country);
+      return this.geoCodeByISO2(country);
     }
     else if (country.length === 3) {
-      this.geoCodeByISO3(country);
+      return this.geoCodeByISO3(country);
     }
     else {
       return "Country Code format not supported"
