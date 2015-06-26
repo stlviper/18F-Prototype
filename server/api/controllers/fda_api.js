@@ -82,9 +82,9 @@ var geoCodeDeviceData = function (data, callback) {
 
 var geoCodeDrugData = function (data, callback) {
   var processedData = [];
-  if(data && data instanceof Array){
+  if (data && data instanceof Array) {
     data.map(function (item, index, array) {
-      if(item.primarysourcecountry){
+      if (item.primarysourcecountry) {
         array[index].GeoLocation = geoCoder.geoCodeCountry(item.primarysourcecountry);
       }
     });
@@ -116,7 +116,7 @@ function getAggregateSplashSearchData(req, res) {
       function (callback) {
         var fdaUrl = FDA_DEVICE_EVENT + 'event.json?limit=100&search="' + req.swagger.params.value.value + '"';
         getDataFromFdaApi(fdaUrl, function (data) {
-          callback(null, {key: 'drug', value: data});
+          callback(null, {key: 'device', value: data});
         });
       }
     ],
@@ -125,6 +125,11 @@ function getAggregateSplashSearchData(req, res) {
       for (var idx in data) {
         returnData[data[idx].key] = data[idx].value;
       }
+      var statusMessage = '';
+      statusMessage += returnData.drug.length > 0 ? returnData.drug.length + ' drug records, ' : 'No drug data, ';
+      statusMessage += returnData.food.length > 0 ? returnData.food.length + ' food records, ' : 'No food data, ';
+      statusMessage += returnData.device.length > 0 ? returnData.device.length + ' device records, ' : 'No device data ';
+      returnData.status = statusMessage;
       res.json(returnData);
     }
   );
