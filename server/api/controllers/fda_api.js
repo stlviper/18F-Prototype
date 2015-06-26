@@ -1,5 +1,6 @@
 'use strict';
 var request = require('request'),
+  geoCoder = require('../helpers/geocoder'),
   async = require('async');
 
 //'https://api.fda.gov/drug/event.json?search=receivedate:[20040101+TO+20150101]&count=patient.patientsex',
@@ -9,6 +10,136 @@ var request = require('request'),
 var FDA_DRUG_EVENT = 'https://api.fda.gov/drug/';
 var FDA_DEVICE_EVENT = 'https://api.fda.gov/device/';
 var FDA_FOOD_EVENT = 'https://api.fda.gov/food/';
+
+
+var FDA_END_POINTS = {
+  device: 'https://api.fda.gov/device/',
+  drug: 'https://api.fda.gov/drug/',
+  food: 'https://api.fda.gov/food/'
+};
+var FDA_END_TYPES = {
+  event: 'event.json',
+  enforcement: 'enforcement.json',
+  label: 'label.json'
+};
+
+var geoCodeFoodData = function (data, callback) {
+  var geoKeys = [];
+
+  if (data && data instanceof Array) {
+    data.map(function (item, index, array) {
+      if (item.state && item.state.length > 0) {
+        array[index].GeoLocation = geoCoder.geoCodeState(item.state);
+      }
+      else if (item.country && item.country.length > 0) {
+        array[index].GeoLocation = geoCoder.geoCodeCountry(item.country);
+      }
+    });
+
+    if (geoKeys.length > 0) {
+      geoCoder.geoCodeString(geoKeys, function (err, data) {
+        if (data) {
+
+        }
+      });
+    } else {
+
+      callback(null, {key: 'food', value: data});
+    }
+  }
+  else {
+    callback(null, {key: 'food', value: []});
+  }
+};
+var geoCodeDeviceData = function (data, callback) {
+  callback(null, {key: 'device', value: data});
+};
+
+var geoCodeDrugData = function (data, callback) {
+  callback(null, {key: 'drug', value: data});
+};
+
+
+function getAggregateSplashSearchData(req, res) {
+  async.parallel([
+
+      function (callback) {
+        var fdaUrl = FDA_DRUG_EVENT + 'event.json?limit=100&search=patient.drug.openfda.brand_name:"' + req.swagger.params.value.value + '"+patient.drug.openfda.brand_name:"' + req.swagger.params.value.value + '"';
+        getDataFromFdaApi(fdaUrl, function (data) {
+          geoCodeDrugData(data, callback);
+        });
+      },
+
+      function (callback) {
+        var fdaUrl = FDA_FOOD_EVENT + 'enforcement.json?limit=100&search=product_description:"' + req.swagger.params.value.value + '"+reason_for_recall:"' + req.swagger.params.value.value + '"';
+        getDataFromFdaApi(fdaUrl, function (data) {
+          geoCodeFoodData(data, callback);
+        });
+      },
+
+      function (callback) {
+        var fdaUrl = FDA_DEVICE_EVENT + 'event.json?limit=100&search=device.brand_name:"' + req.swagger.params.value.value + '"+device.generic_name:"' + req.swagger.params.value.value + '"+device.manufacturer_d_name:"' + req.swagger.params.value.value + '"';
+        getDataFromFdaApi(fdaUrl, function (data) {
+          geoCodeDeviceData(data, callback);
+        });
+      }
+    ],
+    function (err, data) {
+      var returnData = {};
+      for (var idx in data) {
+        returnData[data[idx].key] = data[idx].value;
+      }
+      res.json(returnData);
+    }
+  );
+}
+
+function getRangeCountData(req, callback) {
+  var fdaUrl = FDA_DRUG_EVENT + 'event.json?search=receivedate:[' + req.swagger.params.start.value + '+TO+' + req.swagger.params.end.value + ']&count=' + req.swagger.params.field.value;
+  getDataFromFdaApi(fdaUrl, function (data) {
+    callback(data);
+  });
+}
+
+function getEventSearchData(req, callback) {
+  var limit = req.swagger.params.limit.value || 100;
+  var start = req.swagger.params.skip.value || 0;
+  var fdaUrl = FDA_DRUG_EVENT + 'event.json?search=' + req.swagger.params.query.value + '&limit=' + limit + '&skip=' + start;
+
+  getDataFromFdaApi(fdaUrl, function (data) {
+    callback(data);
+  });
+}
+
+var getAPIData = function (endPointBase, typeOfEngPoint, req, callback) {
+  var limit = req.swagger.params.limit.value || 100;
+  var start = req.swagger.params.skip.value || 0;
+  var fdaUrl = FDA_END_POINTS[endPointBase] + FDA_END_TYPES[typeOfEngPoint] + '?search=' + req.swagger.params.query.value + '&limit=' + limit + '&skip=' + start;
+  getDataFromFdaApi(fdaUrl, callback);
+};
+
+var getAPIRangeData = function (endPointBase, typeOfEngPoint, datefield, req, callback) {
+  var fdaUrl = FDA_END_POINTS[endPointBase] + FDA_END_TYPES[typeOfEngPoint] + "?search=" + datefield
+    + ':[' + req.swagger.params.start.value + '+TO+' + req.swagger.params.end.value + ']&count=' + req.swagger.params.field.value;
+  getDataFromFdaApi(fdaUrl, callback);
+};
+
+
+function getDataFromFdaApi(fdaUrl, callback) {
+  request.get({
+      url: encodeURI(fdaUrl),
+      json: true
+    },
+    function (error, response, body) {
+      if (!error && (response.statusCode == 200 || 404)) {
+        callback(response.statusCode == 404 ? body : body.results);
+      } else {
+        callback({error: 'Request Failed'});
+      }
+    }
+  );
+}
+
 
 module.exports = {
 
@@ -54,81 +185,11 @@ module.exports = {
 
   tests: {
     getRangeCountData: getRangeCountData,
-    getEventSearchData: getEventSearchData
+    getEventSearchData: getEventSearchData,
+    FDA_END_POINTS: FDA_END_POINTS,
+    FDA_END_TYPES: FDA_END_TYPES,
+    getAPIData: getAPIData,
+    getAPIRangeData: getAPIRangeData
   }
 
 };
-
-function getAggregateSplashSearchData(req, res) {
-  async.parallel([
-      function (callback) {
-        var fdaUrl = FDA_DRUG_EVENT + 'event.json?limit=2&search=patient.drug.openfda.brand_name:"' + req.swagger.params.value.value + '"+patient.drug.openfda.brand_name:"' + req.swagger.params.value.value + '"';
-        getDataFromFdaApi(fdaUrl, function (data) {
-          callback(null, data);
-        });
-      }
-    ],
-    function (err, data) {
-      res.json(data)
-    }
-  );
-}
-
-function getRangeCountData(req, callback) {
-  var fdaUrl = FDA_DRUG_EVENT + 'event.json?search=receivedate:[' + req.swagger.params.start.value + '+TO+' + req.swagger.params.end.value + ']&count=' + req.swagger.params.field.value;
-  getDataFromFdaApi(fdaUrl, function (data) {
-    callback(data);
-  });
-}
-
-function getEventSearchData(req, callback) {
-  var limit = req.swagger.params.limit.value || 100;
-  var start = req.swagger.params.skip.value || 0;
-  var fdaUrl = FDA_DRUG_EVENT + 'event.json?search=' + req.swagger.params.query.value + '&limit=' + limit + '&skip=' + start;
-
-  getDataFromFdaApi(fdaUrl, function (data) {
-    callback(data);
-  });
-}
-
-function getDataFromFdaApi(fdaUrl, callback) {
-  request.get({
-      url: encodeURI(fdaUrl),
-      json: true
-    },
-    function (error, response, body) {
-      if (!error && (response.statusCode == 200 || 404)) {
-        callback(response.statusCode == 404 ? body : body.results);
-      } else {
-        callback({error: 'Request Failed'});
-      }
-    }
-  );
-}
-
-
-var FDA_END_POINTS = {
-  device: 'https://api.fda.gov/device/',
-  drug: 'https://api.fda.gov/drug/',
-  food: 'https://api.fda.gov/food/'
-};
-var FDA_END_TYPES = {
-  event: 'event.json',
-  enforcement: 'enforcement.json',
-  label: 'label.json'
-};
-
-var getAPIData = function (endPointBase, typeOfEngPoint, req, callback) {
-  var limit = req.swagger.params.limit.value || 100;
-  var start = req.swagger.params.skip.value || 0;
-  var fdaUrl = FDA_END_POINTS[endPointBase]  + FDA_END_TYPES[typeOfEngPoint] + '?search=' + req.swagger.params.query.value + '&limit=' + limit + '&skip=' + start;
-  getDataFromFdaApi(fdaUrl, callback);
-};
-
-var getAPIRangeData = function (endPointBase, typeOfEngPoint, datefield, req, callback) {
-  var fdaUrl = FDA_END_POINTS[endPointBase] + FDA_END_TYPES[typeOfEngPoint] + "?search=" + datefield
-    + ':[' + req.swagger.params.start.value + '+TO+' + req.swagger.params.end.value + ']&count=' + req.swagger.params.field.value;
-  getDataFromFdaApi(fdaUrl, callback);
-};
-
-

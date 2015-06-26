@@ -60,8 +60,25 @@ openfdaviz.controller('SearchController', ['$scope', '$http', '$stateParams', fu
   });
 
   $scope.runQuery = function () {
-    $.when.apply($, [queryDrugs(), queryFoods(), queryDevices()]).done(updateHeatmap);
+    $.when.apply($, [generalQuery(), queryDrugs(), queryFoods(), queryDevices()]).done(updateHeatmap);
   };
+
+  var generalQuery = function () {
+    var deferred = $.Deferred();
+    $http.get(config.resources.general + '?value=' + $scope.query)
+      .success(function (resp) {
+        $scope.results.drugs = resp.drug || [];
+        $scope.results.devices = resp.device || [];
+        $scope.results.foods = resp.food || [];
+        deferred.resolve();
+      })
+      .error(function () {
+        console.log("error requesting drugs");
+      });
+    return deferred;
+  };
+  generalQuery();
+  updateHeatmap();
 
   function queryDrugs() {
     var deferred = $.Deferred();
@@ -103,6 +120,6 @@ openfdaviz.controller('SearchController', ['$scope', '$http', '$stateParams', fu
   }
 
   function updateHeatmap() {
-
+    $scope.results.devices
   }
 }]);
