@@ -39,20 +39,8 @@ function getAggregateSplashSearchData(req, res) {
         getDataFromFdaApi(fdaUrl, function (data) {
           var geoKeys = [];
 
-          if (data) {
+          if (data && data instanceof Array) {
             data.map(function (item, index, array) {
-              /*var key = '';
-               if (item.city && item.city.length > 0) {
-               key += item.city;
-               if (item.state && item.state.length > 0) {
-               key += ' ' + item.state;
-               }
-               if (item.country && item.country.length > 0) {
-               key += ' ' + item.city;
-               }
-               geoKeys.push(key.trim());
-               }
-               else*/
               if (item.state && item.state.length > 0) {
                 array[index].GeoLocation = geoCoder.geoCodeState(item.state);
               }

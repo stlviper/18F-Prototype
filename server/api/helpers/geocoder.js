@@ -8,14 +8,14 @@ global.geocodelist = null;
 var _stateGeoCodeList = null;
 
 function loadCountryGeocoder() {
-  var res = fs.readFileSync('./server/api/helpers/countries_geocoded.json');
+  var res = fs.readFileSync('./api/helpers/countries_geocoded.json');
   global.geocodelist = JSON.parse(res).data;
   return global.geocodelist;
 }
 
 var _loadStateGeoCoder = function () {
   console.log(process.cwd());
-  var res = fs.readFileSync('./server/api/helpers/state_latlon.json');
+  var res = fs.readFileSync('./api/helpers/state_latlon.json');
   _stateGeoCodeList = JSON.parse(res);
   return _stateGeoCodeList;
 };
