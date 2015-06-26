@@ -23,6 +23,42 @@ var FDA_END_TYPES = {
   label: 'label.json'
 };
 
+var geoCodeFoodData = function (data, callback) {
+  var geoKeys = [];
+
+  if (data && data instanceof Array) {
+    data.map(function (item, index, array) {
+      if (item.state && item.state.length > 0) {
+        array[index].GeoLocation = geoCoder.geoCodeState(item.state);
+      }
+      else if (item.country && item.country.length > 0) {
+        array[index].GeoLocation = geoCoder.geoCodeCountry(item.country);
+      }
+    });
+
+    if (geoKeys.length > 0) {
+      geoCoder.geoCodeString(geoKeys, function (err, data) {
+        if (data) {
+
+        }
+      });
+    } else {
+
+      callback(null, {key: 'food', value: data});
+    }
+  }
+  else {
+    callback(null, {key: 'food', value: []});
+  }
+};
+var geoCodeDeviceData = function (data, callback) {
+  callback(null, {key: 'device', value: data});
+};
+
+var geoCodeDrugData = function (data, callback) {
+  callback(null, {key: 'drug', value: data});
+};
+
 
 function getAggregateSplashSearchData(req, res) {
   async.parallel([
@@ -30,48 +66,21 @@ function getAggregateSplashSearchData(req, res) {
       function (callback) {
         var fdaUrl = FDA_DRUG_EVENT + 'event.json?limit=100&search=patient.drug.openfda.brand_name:"' + req.swagger.params.value.value + '"+patient.drug.openfda.brand_name:"' + req.swagger.params.value.value + '"';
         getDataFromFdaApi(fdaUrl, function (data) {
-          callback(null, {key: 'drug', value: data});
+          geoCodeDrugData(data, callback);
         });
       },
 
       function (callback) {
         var fdaUrl = FDA_FOOD_EVENT + 'enforcement.json?limit=100&search=product_description:"' + req.swagger.params.value.value + '"+reason_for_recall:"' + req.swagger.params.value.value + '"';
         getDataFromFdaApi(fdaUrl, function (data) {
-          var geoKeys = [];
-
-          if (data && data instanceof Array) {
-            data.map(function (item, index, array) {
-              if (item.state && item.state.length > 0) {
-                array[index].GeoLocation = geoCoder.geoCodeState(item.state);
-              }
-              else if (item.country && item.country.length > 0) {
-                array[index].GeoLocation = geoCoder.geoCodeCountry(item.country);
-              }
-            });
-
-            if (geoKeys.length > 0) {
-              geoCoder.geoCodeString(geoKeys, function (err, data) {
-                if (data) {
-
-                }
-              });
-            } else {
-
-              callback(null, {key: 'food', value: data});
-            }
-          }
-          else{
-
-            callback(null, {key: 'food', value: []});
-          }
+          geoCodeFoodData(data, callback);
         });
       },
 
       function (callback) {
         var fdaUrl = FDA_DEVICE_EVENT + 'event.json?limit=100&search=device.brand_name:"' + req.swagger.params.value.value + '"+device.generic_name:"' + req.swagger.params.value.value + '"+device.manufacturer_d_name:"' + req.swagger.params.value.value + '"';
         getDataFromFdaApi(fdaUrl, function (data) {
-
-          callback(null, {key: 'device', value: data});
+          geoCodeDeviceData(data, callback);
         });
       }
     ],
