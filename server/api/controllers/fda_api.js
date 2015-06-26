@@ -35,10 +35,10 @@ function getAggregateSplashSearchData(req, res) {
       },
 
       function (callback) {
-        var fdaUrl = FDA_FOOD_EVENT + 'event.json?limit=100&search=product_description:"' + req.swagger.params.value.value + '"+reason_for_recall:"' + req.swagger.params.value.value + '"';
+        var fdaUrl = FDA_FOOD_EVENT + 'enforcement.json?limit=100&search=product_description:"' + req.swagger.params.value.value + '"+reason_for_recall:"' + req.swagger.params.value.value + '"';
         getDataFromFdaApi(fdaUrl, function (data) {
           var geoKeys = [];
-          data.map(function (item) {
+          data.map(function (item, index, array) {
             /*var key = '';
              if (item.city && item.city.length > 0) {
              key += item.city;
@@ -50,22 +50,25 @@ function getAggregateSplashSearchData(req, res) {
              }
              geoKeys.push(key.trim());
              }
-            else*/
+             else*/
             if (item.state && item.state.length > 0) {
-              item.GeoLocation = geoCoder.geoCodeState(item.state);
+              array[index].GeoLocation = geoCoder.geoCodeState(item.state);
             }
             else if (item.country && item.country.length > 0) {
-              item.GeoLocation = geoCoder.geoCodeCountry(item.country);
+              array[index].GeoLocation = geoCoder.geoCodeCountry(item.country);
             }
           });
 
-          geoCoder.geoCodeString(geoKeys, function (err, data) {
-            if (data) {
+          if (geoKeys.length > 0) {
+            geoCoder.geoCodeString(geoKeys, function (err, data) {
+              if (data) {
 
-            }
-          });
+              }
+            });
+          } else {
 
-          callback(null, {key: 'food', value: data});
+            callback(null, {key: 'food', value: data});
+          }
         });
       },
 
