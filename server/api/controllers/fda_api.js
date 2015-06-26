@@ -52,11 +52,47 @@ var geoCodeFoodData = function (data, callback) {
   }
 };
 var geoCodeDeviceData = function (data, callback) {
-  callback(null, {key: 'device', value: data});
+  var geoKeys = [];
+
+  if (data && data instanceof Array) {
+    data.map(function (item, index, array) {
+      if (item.state && item.state.length > 0) {
+        array[index].GeoLocation = geoCoder.geoCodeState(item.state);
+      }
+      else if (item.country && item.country.length > 0) {
+        array[index].GeoLocation = geoCoder.geoCodeCountry(item.country);
+      }
+    });
+
+    if (geoKeys.length > 0) {
+      geoCoder.geoCodeString(geoKeys, function (err, data) {
+        if (data) {
+
+        }
+      });
+    } else {
+
+      callback(null, {key: 'food', value: data});
+    }
+  }
+  else {
+    callback(null, {key: 'food', value: []});
+  }
 };
 
 var geoCodeDrugData = function (data, callback) {
-  callback(null, {key: 'drug', value: data});
+  var processedData = [];
+  if(data && data instanceof Array){
+    data.map(function (item, index, array) {
+      if(item.primarysourcecountry){
+        array[index].GeoLocation = geoCoder.geoCodeCountry(item.primarysourcecountry);
+      }
+    });
+    callback(null, {key: 'drug', value: data})
+  }
+  else {
+    callback(null, {key: 'drug', value: []});
+  }
 };
 
 

@@ -18,8 +18,8 @@ describe('US latitude,longitude', function() {
    it('should be', function() {
       assert.doesNotThrow(function() {
           var res = geocoder.geoCodeByISO2('US');
-          assert.equal(res[12], 38);
-          assert.equal(res[13], -97);
+          assert.equal(res.lat, 38);
+          assert.equal(res.lng, -97);
       });
    });
 });
@@ -28,8 +28,8 @@ describe('AF latitude,longitude', function() {
     it('should be', function() {
         assert.doesNotThrow(function() {
             var res = geocoder.geoCodeByISO2('AF');
-            assert.equal(res[12], 33);
-            assert.equal(res[13], 65);
+            assert.equal(res.lat, 33);
+            assert.equal(res.lng, 65);
         });
     });
 });
@@ -45,8 +45,8 @@ describe('USA latitude,longitude', function() {
     it('should be', function(done) {
         assert.doesNotThrow(function() {
             var res = geocoder.geoCodeByISO3('USA');
-            assert.equal(res[12], 38);
-            assert.equal(res[13], -97);
+            assert.equal(res.lat, 38);
+            assert.equal(res.lng, -97);
             done();
         });
     });
