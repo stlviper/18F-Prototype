@@ -64,12 +64,14 @@ openfdaviz.controller('SearchController', ['$scope', '$http', '$stateParams', "l
   });
 
   $scope.runQuery = function () {
+    $stateParams.query = $scope.query;
     $scope.queryInProgress = true;
     $scope.results = emptyResults;
     $.when.apply($, [queryDrugs(), queryFoods(), queryDevices()]).done(updateHeatmap);
   };
 
   var generalQuery = function () {
+    $stateParams.query = $scope.query;
     var deferred = $.Deferred();
     $scope.queryInProgress = true;
     $scope.results = emptyResults;
