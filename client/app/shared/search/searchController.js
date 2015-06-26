@@ -41,6 +41,7 @@ openfdaviz.controller('SearchController', ['$scope', '$http', '$stateParams', fu
   var minYear = '';
   var maxYear = '';
   $scope.query = $stateParams.query;
+  $scope.queryInProgress = false;
 
   $scope.results = {
     drugs: [],
@@ -65,12 +66,14 @@ openfdaviz.controller('SearchController', ['$scope', '$http', '$stateParams', fu
 
   var generalQuery = function () {
     var deferred = $.Deferred();
+    $scope.queryInProgress = true;
     $http.get(config.resources.general + '?value=' + $scope.query)
       .success(function (resp) {
         $scope.results.drugs = resp.drug || [];
         $scope.results.devices = resp.device || [];
         $scope.results.foods = resp.food || [];
         deferred.resolve();
+        $scope.queryInProgress = false;
       })
       .error(function () {
         console.log("error requesting drugs");
