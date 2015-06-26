@@ -108,20 +108,20 @@ describe('Testing Drugs Controller.', function () {
   });
 
 
-  /*describe('Should return an array of search results for Food events', function () {
+  describe('Should return an array of search results for Food events', function () {
     it('Should', function (done) {
       var mockReq = this.mockReq;
       mockReq.swagger.params.query = {value: "state:mo"};
       mockReq.swagger.params.limit = {value: "5"};
       mockReq.swagger.params.skip = {value: '20'};
 
-      drugs.tests.getAPIData('food', 'event', mockReq, function (data) {
+      drugs.tests.getAPIData('food', 'enforcement', mockReq, function (data) {
         expect(data.length).to.equal(5);
         expect(data[0]['@epoch']).to.exist;
         expect(data[3]['@epoch']).to.exist;
         var totalCorrectResults = 0;
         for (var i = 0; i < data.length; i++) {
-          if (data[i].state.toLowerCase() == 'us') {
+          if (data[i].state.toLowerCase() == 'mo') {
             totalCorrectResults++;
           }
         }
@@ -131,7 +131,7 @@ describe('Testing Drugs Controller.', function () {
     });
   });
 
-   describe('Should return an array of counts for a Range of records in Food Events', function () {
+   /*describe('Should return an array of counts for a Range of records in Food Events', function () {
    });
 
    describe('Should return an array of search results for Device events', function () {
