@@ -36,7 +36,7 @@ openfdaviz.controller('SearchController', ['$scope', '$http', '$stateParams', fu
   };
 
 
-  $scope.activeTab = 'results';
+  $scope.activeResultsTab = 'drugs';
 
   var minYear = '';
   var maxYear = '';
@@ -48,8 +48,8 @@ openfdaviz.controller('SearchController', ['$scope', '$http', '$stateParams', fu
     foods: []
   };
 
-  $scope.activateSearchTab = function (activeTab) {
-    $scope.activeTab = activeTab;
+  $scope.activateResultsTab = function (activeTab) {
+    $scope.activeResultsTab = activeTab;
   };
 
   angular.element(document).ready(function () {
