@@ -1,6 +1,6 @@
 'use strict';
 var request = require('request'),
-  geoCoder = require('../helpers/geoCoder'),
+  geoCoder = require('../helpers/geocoder'),
   async = require('async');
 
 //'https://api.fda.gov/drug/event.json?search=receivedate:[20040101+TO+20150101]&count=patient.patientsex',
