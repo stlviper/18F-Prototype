@@ -32,7 +32,7 @@ module.exports = {
     }
     for (var i = 0; i < global.geocodelist.length; i++) {
       if (global.geocodelist[i][10] === ccc.toUpperCase()) {
-        return global.geocodelist[i];
+        return {lat: global.geocodelist[i][12], lng: global.geocodelist[i][13]};
       }
     }
   },
