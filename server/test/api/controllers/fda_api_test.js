@@ -109,7 +109,7 @@ describe('Testing Drugs Controller.', function () {
 
 
   describe('Should return an array of search results for Food events', function () {
-    it('Should', function (done) {
+    it('Contain an array of objects reflecting a group of food enforcement reports', function (done) {
       var mockReq = this.mockReq;
       mockReq.swagger.params.query = {value: "state:mo"};
       mockReq.swagger.params.limit = {value: "5"};
@@ -131,14 +131,64 @@ describe('Testing Drugs Controller.', function () {
     });
   });
 
-   /*describe('Should return an array of counts for a Range of records in Food Events', function () {
-   });
+  describe('Should return an array of counts for a Range of records in Food Events', function () {
+    it('Contain an array of enforcement reports for a time range', function (done) {
+      var mockReq = this.mockReq;
+      mockReq.swagger.params.query = {value: "state:ca"};
+      mockReq.swagger.params.limit = {value: "5"};
+      mockReq.swagger.params.skip = {value: '0'};
 
-   describe('Should return an array of search results for Device events', function () {
+      drugs.tests.getAPIData('device', 'enforcement', mockReq, function (data) {
+        expect(data.length).to.equal(5);
+        expect(data[0]['@epoch']).to.exist;
+        expect(data[3]['@epoch']).to.exist;
+        var totalCorrectResults = 0;
+        for (var i = 0; i < data.length; i++) {
+          if (data[i].state.toLowerCase() == 'ca') {
+            totalCorrectResults++;
+          }
+        }
+        expect(totalCorrectResults).to.equal(5);
+        done();
+      });
+    });
+  });
 
-   });
+  describe('Should return an array of search results for Device events', function () {
+    it('Contain an array of Device enforcement events', function (done) {
+      var mockReq = this.mockReq;
+      mockReq.swagger.params.query = {value: "state:mo"};
+      mockReq.swagger.params.limit = {value: "5"};
+      mockReq.swagger.params.skip = {value: '20'};
 
-   describe('Should return an array of counts for a Range of records in Device Events', function () {
-   });*/
+      drugs.tests.getAPIData('food', 'enforcement', mockReq, function (data) {
+        expect(data.length).to.equal(5);
+        expect(data[0]['@epoch']).to.exist;
+        expect(data[3]['@epoch']).to.exist;
+        var totalCorrectResults = 0;
+        for (var i = 0; i < data.length; i++) {
+          if (data[i].state.toLowerCase() == 'mo') {
+            totalCorrectResults++;
+          }
+        }
+        expect(totalCorrectResults).to.equal(5);
+        done();
+      });
+    });
+  });
+
+  describe('Should return an array of counts for a Range of records in Device Events', function () {
+    it('Contain an array of device enforcement events for a time range', function (done) {
+      var mockReq = this.mockReq;
+      mockReq.swagger.params.start = {value: "20100521"};
+      mockReq.swagger.params.end = {value: "20150410"};
+      mockReq.swagger.params.field = {value: 'state'};
+      drugs.tests.getAPIRangeData('device', 'enforcement', 'recall_initiation_date', mockReq, function (data) {
+        expect(data[0]).to.exist;
+        expect(data[0].count).to.exist;
+        done();
+      });
+    });
+  });
 
 });
