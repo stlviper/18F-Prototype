@@ -4,4 +4,4 @@ languages:
 exclude_paths:
  - "assets/**/*"
  - "client/assets/js/**/*"
- - "server/swagger-ui/**/*"
+ - "server/swagger-ui//**/*"

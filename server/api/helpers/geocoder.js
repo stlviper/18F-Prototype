@@ -27,7 +27,7 @@ module.exports = {
       return "Country code must only be three characters long";
     }
 
-    if (global.geocodelist == null) {
+    if (global.geocodelist === null) {
       loadCountryGeocoder();
     }
     for (var i = 0; i < global.geocodelist.length; i++) {
@@ -42,7 +42,7 @@ module.exports = {
       return "Country code must only be two characters long";
     }
 
-    if (global.geocodelist == null) {
+    if (global.geocodelist === null) {
       loadCountryGeocoder();
     }
     for (var i = 0; i < global.geocodelist.length; i++) {
@@ -60,13 +60,12 @@ module.exports = {
       return this.geoCodeByISO3(country);
     }
     else {
-      return "Country Code format not supported"
+      return "Country Code format not supported";
     }
-    ;
   },
 
   geoCodeState: function (state) {
-    if (_stateGeoCodeList == null) {
+    if (_stateGeoCodeList === null) {
       _loadStateGeoCoder();
     }
     for (var i = 0; i < _stateGeoCodeList.length; i++) {
