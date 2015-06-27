@@ -144,8 +144,8 @@ openfdaviz.controller('SearchController', ['$scope', '$http', '$stateParams', "l
         if (typeof $scope.results.foods[i].GeoLocation != 'undefined') {
           if (typeof $scope.results.foods[i].GeoLocation.lat != 'undefined' &&
               typeof $scope.results.foods[i].GeoLocation.lng != 'undefined') {
-            var lat = $scope.results.foods[i].GeoLocation.lat;
-            var lng = $scope.results.foods[i].GeoLocation.lng;
+            var lat = Number($scope.results.foods[i].GeoLocation.lat);
+            var lng = Number($scope.results.foods[i].GeoLocation.lng);
             $scope.layers.overlays.heat.data.push([lat, lng]);
           }
         }
@@ -157,8 +157,8 @@ openfdaviz.controller('SearchController', ['$scope', '$http', '$stateParams', "l
         if (typeof $scope.results.drugs[i].GeoLocation != 'undefined') {
           if (typeof $scope.results.drugs[i].GeoLocation.lat != 'undefined' &&
             typeof $scope.results.drugs[i].GeoLocation.lng != 'undefined') {
-            var lat = $scope.results.drugs[i].GeoLocation.lat;
-            var lng = $scope.results.drugs[i].GeoLocation.lng;
+            var lat = Number($scope.results.drugs[i].GeoLocation.lat);
+            var lng = Number($scope.results.drugs[i].GeoLocation.lng);
             $scope.layers.overlays.heat.data.push([lat, lng]);
           }
         }
