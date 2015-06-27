@@ -3,7 +3,7 @@
 openfdaviz.controller('SearchController', ['$scope', '$http', '$stateParams', "leafletData", function ($scope, $http, $stateParams, leafletData) {
 
   //Setting up the Leaflet Directive
-  var mapZoom = 4;
+  var mapZoom = 3;
   var dataPoints = [];
 
   $scope.fdaVizMapCenter = {
@@ -25,8 +25,8 @@ openfdaviz.controller('SearchController', ['$scope', '$http', '$stateParams', "l
         type: 'heat',
         data: dataPoints,
         layerOptions: {
-          radius: 6,
-          blur: 2,
+          radius: 12,
+          blur: 6,
           minOpacity: 0.6
         },
         visible: true,
