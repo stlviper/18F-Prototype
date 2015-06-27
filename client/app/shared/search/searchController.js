@@ -142,52 +142,36 @@ openfdaviz.controller('SearchController', ['$scope', '$http', '$stateParams', "l
 
   function updateHeatmap() {
     $scope.queryInProgress = false;
-    var perturbRadius = 0.004;
     // Plot food geodata points
     if (typeof $scope.results.foods != 'undefined') {
-      for (var i in $scope.results.foods) {
-        if (typeof $scope.results.foods[i].GeoLocation != 'undefined') {
-          if (typeof $scope.results.foods[i].GeoLocation.lat != 'undefined' &&
-              typeof $scope.results.foods[i].GeoLocation.lng != 'undefined') {
-            var lat = Number($scope.results.foods[i].GeoLocation.lat);
-            var lng = Number($scope.results.foods[i].GeoLocation.lng);
-            var latLng = [lat, lng];
-            // Since the heatmap doesn't change when there are duplicate points,
-            // perturb duplicate points a little so there is a visible difference
-            // in the heatmap
-            for (var j=0; j<$scope.layers.overlays.heat.data.length; j++) {
-              if (latLng[0] === $scope.layers.overlays.heat.data[j][0] &&
-                latLng[1] === $scope.layers.overlays.heat.data[j][1]) {
-                latLng = _perturbPoints(latLng, perturbRadius);
-                break;
-              }
-            }
-            $scope.layers.overlays.heat.data.push(latLng);
-          }
-        }
-      }
+      _addPointsToHeatmap($scope.results.foods);
     }
     // Plot drug geodata points
     if (typeof $scope.results.drugs != 'undefined') {
-      for (var i in $scope.results.drugs) {
-        if (typeof $scope.results.drugs[i].GeoLocation != 'undefined') {
-          if (typeof $scope.results.drugs[i].GeoLocation.lat != 'undefined' &&
-            typeof $scope.results.drugs[i].GeoLocation.lng != 'undefined') {
-            var lat = Number($scope.results.drugs[i].GeoLocation.lat);
-            var lng = Number($scope.results.drugs[i].GeoLocation.lng);
-            var latLng = [lat, lng];
-            // Since the heatmap doesn't change when there are duplicate points,
-            // perturb duplicate points a little so there is a visible difference
-            // in the heatmap
-            for (var j=0; j<$scope.layers.overlays.heat.data.length; j++) {
-              if (latLng[0] === $scope.layers.overlays.heat.data[j][0] &&
-                  latLng[1] === $scope.layers.overlays.heat.data[j][1]) {
-                latLng = _perturbPoints(latLng, perturbRadius);
-                break;
-              }
+      _addPointsToHeatmap($scope.results.drugs);
+    }
+  }
+
+  function _addPointsToHeatmap(category) {
+    var perturbRadius = 0.004;
+    for (var i in category) {
+      if (typeof category[i].GeoLocation != 'undefined') {
+        if (typeof category[i].GeoLocation.lat != 'undefined' &&
+          typeof category[i].GeoLocation.lng != 'undefined') {
+          var lat = Number(category[i].GeoLocation.lat);
+          var lng = Number(category[i].GeoLocation.lng);
+          var latLng = [lat, lng];
+          // Since the heatmap doesn't change when there are duplicate points,
+          // perturb duplicate points a little so there is a visible difference
+          // in the heatmap
+          for (var j = 0; j < $scope.layers.overlays.heat.data.length; j++) {
+            if (latLng[0] === $scope.layers.overlays.heat.data[j][0] &&
+              latLng[1] === $scope.layers.overlays.heat.data[j][1]) {
+              latLng = _perturbPoints(latLng, perturbRadius);
+              break;
             }
-            $scope.layers.overlays.heat.data.push(latLng);
           }
+          $scope.layers.overlays.heat.data.push(latLng);
         }
       }
     }
