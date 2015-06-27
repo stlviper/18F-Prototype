@@ -11,6 +11,10 @@ openfdaviz.controller('SearchController', ['$scope', '$http', '$stateParams', "l
     lng: -96,
     zoom: mapZoom
   };
+  $scope.defaults = {
+    maxZoom: 10,
+    minZoom: 1
+  },
   $scope.layers = {
     baselayers: {
       xyz: {
@@ -25,9 +29,9 @@ openfdaviz.controller('SearchController', ['$scope', '$http', '$stateParams', "l
         type: 'heat',
         data: dataPoints,
         layerOptions: {
-          radius: 12,
-          blur: 6,
-          minOpacity: 0.6
+          radius: 8,
+          blur: 5,
+          minOpacity: 0.7
         },
         visible: true,
         doRefresh: true
@@ -159,6 +163,20 @@ openfdaviz.controller('SearchController', ['$scope', '$http', '$stateParams', "l
             typeof $scope.results.drugs[i].GeoLocation.lng != 'undefined') {
             var lat = Number($scope.results.drugs[i].GeoLocation.lat);
             var lng = Number($scope.results.drugs[i].GeoLocation.lng);
+            // Since the heatmap doesn't change when there are duplicate points,
+            // perturb duplicate points a little so there is a visible difference
+            // in the heatmap
+            for (var j=0; j<$scope.layers.overlays.heat.data.length; j++) {
+              if (lat === $scope.layers.overlays.heat.data[j][0] &&
+                  lng === $scope.layers.overlays.heat.data[j][1]) {
+                // Spread duplicate points in a small circle around the point
+                var angle = 2*Math.PI*Math.random();
+                var spreadRadius = 0.004;
+                lat += spreadRadius*Math.sin(angle);
+                lng += spreadRadius*Math.cos(angle);
+                break;
+              }
+            }
             $scope.layers.overlays.heat.data.push([lat, lng]);
           }
         }
