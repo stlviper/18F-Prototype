@@ -43,41 +43,11 @@ var geoCodeFoodData = function (data, callback) {
         }
       });
     } else {
-
-      callback(null, {key: 'food', value: data});
+      callback(data);
     }
   }
   else {
-    callback(null, {key: 'food', value: []});
-  }
-};
-
-var geoCodeDeviceData = function (data, callback) {
-  var geoKeys = [];
-
-  if (data && data instanceof Array) {
-    data.map(function (item, index, array) {
-      if (item.state && item.state.length > 0) {
-        array[index].GeoLocation = geoCoder.geoCodeState(item.state);
-      }
-      else if (item.country && item.country.length > 0) {
-        array[index].GeoLocation = geoCoder.geoCodeCountry(item.country);
-      }
-    });
-
-    if (geoKeys.length > 0) {
-      geoCoder.geoCodeString(geoKeys, function (err, data) {
-        if (data) {
-
-        }
-      });
-    } else {
-
-      callback(null, {key: 'food', value: data});
-    }
-  }
-  else {
-    callback(null, {key: 'food', value: []});
+    callback([]);
   }
 };
 
@@ -89,10 +59,10 @@ var geoCodeDrugData = function (data, callback) {
         array[index].GeoLocation = geoCoder.geoCodeCountry(item.primarysourcecountry);
       }
     });
-    callback(null, {key: 'drug', value: data})
+    callback(data);
   }
   else {
-    callback(null, {key: 'drug', value: []});
+    callback([]);
   }
 };
 
@@ -113,7 +83,9 @@ function getAggregateSplashSearchData(req, res) {
           chosenFields = req.swagger.params.foodFields.value.split(',');
         }
         getAPIData('food', 'enforcement', req, chosenFields, function (data) {
-          callback(null, {key: 'food', value: data});
+          geoCodeFoodData(data, function (data) {
+            callback(null, {key: 'food', value: data});
+          });
         });
       },
       function (callback) {
@@ -122,7 +94,9 @@ function getAggregateSplashSearchData(req, res) {
           chosenFields = req.swagger.params.drugFields.value.split(',');
         }
         getAPIData('drug', 'event', req, chosenFields, function (data) {
-          callback(null, {key: 'drug', value: data});
+          geoCodeDrugData(data, function (data) {
+            callback(null, {key: 'drug', value: data});
+          });
         });
 
       }
@@ -130,7 +104,9 @@ function getAggregateSplashSearchData(req, res) {
     function (err, data) {
       var returnData = {drug: [], device: [], food: []};
       for (var idx in data) {
-        returnData[data[idx].key] = data[idx].value;
+        if (data[idx].value instanceof  Array) {
+          returnData[data[idx].key] = data[idx].value;
+        }
       }
       var statusMessage = '';
       statusMessage += returnData.drug.length > 0 ? returnData.drug.length + ' drug records, ' : 'No drug data, ';
@@ -160,7 +136,7 @@ function getEventSearchData(req, callback) {
 }
 
 var getAPIData = function (endPointBase, typeOfEngPoint, req, fields, callback) {
-  var limit=100, start=0, search;
+  var limit = 100, start = 0, search;
   if (req.swagger.params.limit) {
     limit = req.swagger.params.limit.value || 100;
   }
