@@ -6,4 +6,10 @@ openfdaviz.controller('SearchBarController', ['$scope', '$state', function ($sco
     var $searchTermTxt = $('#fdaSearch');
     $state.go('search', { query: $searchTermTxt.val() });
   };
+
+  $scope.handleKeypress = function($event){
+    if($event.keyCode === 13){
+      $scope.sendSearch($event);
+    }
+  }
 }]);
