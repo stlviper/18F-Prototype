@@ -60,7 +60,7 @@ module.exports = {
       return this.geoCodeByISO3(country);
     }
     else {
-      return "Country Code format not supported";
+      return "Country Code format not supported(ISO3 or ISO2 only)";
     }
   },
 
