@@ -14,7 +14,7 @@ openfdaviz.controller('SearchController', ['$scope', '$http', '$stateParams', "l
   $scope.defaults = {
     maxZoom: 10,
     minZoom: 1
-  },
+  };
   $scope.layers = {
     baselayers: {
       xyz: {
@@ -71,7 +71,9 @@ openfdaviz.controller('SearchController', ['$scope', '$http', '$stateParams', "l
   $scope.runQuery = function () {
     $stateParams.query = $scope.query;
     $scope.queryInProgress = true;
-    $scope.results = emptyResults;
+    $scope.results.drugs = [];
+    $scope.results.foods = [];
+    $scope.results.devices = [];
     $.when.apply($, [queryDrugs(), queryFoods(), queryDevices()]).done([_filterSearchResults, _updateHeatmap]);
   };
 

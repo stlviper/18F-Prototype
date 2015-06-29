@@ -18,7 +18,7 @@
       <div class="panel panel-default">
         <div class="panel-body">
           <p ng-if="results.drugs.length == 0 && !queryInProgress">No Results Found</p>
-          <p ng-if="queryInProgress">Loading...</p>
+          <div ng-if="queryInProgress"><div class="loader">Loading...</div><span class="loader-label">Loading...</span></div>
           <ul ng-if="results.drugs.length > 0 && !queryInProgress" ng-repeat="result in results.drugs">
             <li>
               <dl>
@@ -39,7 +39,7 @@
       <div class="panel panel-default">
         <div class="panel-body">
           <p ng-if="results.devices.length == 0 && !queryInProgress">No Results Found</p>
-          <p ng-if="queryInProgress">Loading...</p>
+          <div ng-if="queryInProgress"><div class="loader">Loading...</div><span class="loader-label">Loading...</span></div>
           <ul ng-if="results.devices.length > 0 && !queryInProgress" ng-repeat="result in results.devices">
             <li>
               <h5>{{result.product_description}}</h5>
@@ -61,7 +61,7 @@
       <div class="panel panel-default">
         <div class="panel-body">
           <p ng-if="results.foods.length == 0 && !queryInProgress">No Results Found</p>
-          <p ng-if="queryInProgress">Loading...</p>
+          <div ng-if="queryInProgress"><div class="loader">Loading...</div><span class="loader-label">Loading...</span></div>
           <ul ng-if="results.foods.length > 0 && !queryInProgress" ng-repeat="result in results.foods">
             <li>
               <h5>{{result.product_description}}</h5>
