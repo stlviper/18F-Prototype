@@ -35,6 +35,20 @@ window.openfdaviz.config(['$stateProvider', '$urlRouterProvider', function ($sta
           templateUrl: '/app/components/footer/standard.html'
         }
       }
+    })
+    .state('about', {
+      url: '/about',
+      views: {
+        'nav': {
+          templateUrl: '/app/components/nav/standard.html'
+        },
+        'content': {
+          templateUrl: '/app/shared/about/about.html'
+        },
+        'footer': {
+          templateUrl: '/app/components/footer/standard.html'
+        }
+      }
     });
 
 }]);
