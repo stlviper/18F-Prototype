@@ -43,40 +43,11 @@ var geoCodeFoodData = function (data, callback) {
         }
       });
     } else {
-
-      callback(null, {key: 'food', value: data});
+      callback(data);
     }
   }
   else {
-    callback(null, {key: 'food', value: []});
-  }
-};
-var geoCodeDeviceData = function (data, callback) {
-  var geoKeys = [];
-
-  if (data && data instanceof Array) {
-    data.map(function (item, index, array) {
-      if (item.state && item.state.length > 0) {
-        array[index].GeoLocation = geoCoder.geoCodeState(item.state);
-      }
-      else if (item.country && item.country.length > 0) {
-        array[index].GeoLocation = geoCoder.geoCodeCountry(item.country);
-      }
-    });
-
-    if (geoKeys.length > 0) {
-      geoCoder.geoCodeString(geoKeys, function (err, data) {
-        if (data) {
-
-        }
-      });
-    } else {
-
-      callback(null, {key: 'food', value: data});
-    }
-  }
-  else {
-    callback(null, {key: 'food', value: []});
+    callback([]);
   }
 };
 
@@ -88,42 +59,62 @@ var geoCodeDrugData = function (data, callback) {
         array[index].GeoLocation = geoCoder.geoCodeCountry(item.primarysourcecountry);
       }
     });
-    callback(null, {key: 'drug', value: data})
+    callback(data);
   }
   else {
-    callback(null, {key: 'drug', value: []});
+    callback([]);
   }
 };
 
+var formatSearchFields = function (value, fields) {
+  var retSearchField = '';
+  for (var idx in fields) {
+    retSearchField += fields[idx].trim() + ':' + value.trim() + '+'
+  }
+  return retSearchField.substring(0, retSearchField.length - 1);//NOTE: Remove the last + character
+};
 
 function getAggregateSplashSearchData(req, res) {
   async.parallel([
-
       function (callback) {
-        var fdaUrl = FDA_DRUG_EVENT + 'event.json?limit=100&search=patient.drug.openfda.brand_name:"' + req.swagger.params.value.value + '"+patient.drug.openfda.brand_name:"' + req.swagger.params.value.value + '"';
-        getDataFromFdaApi(fdaUrl, function (data) {
-          geoCodeDrugData(data, callback);
-        });
-      },
-
-      function (callback) {
-        var fdaUrl = FDA_FOOD_EVENT + 'enforcement.json?limit=100&search=product_description:"' + req.swagger.params.value.value + '"+reason_for_recall:"' + req.swagger.params.value.value + '"';
-        getDataFromFdaApi(fdaUrl, function (data) {
-          geoCodeFoodData(data, callback);
-        });
-      },
-
-      function (callback) {
-        var fdaUrl = FDA_DEVICE_EVENT + 'event.json?limit=100&search=device.brand_name:"' + req.swagger.params.value.value + '"+device.generic_name:"' + req.swagger.params.value.value + '"+device.manufacturer_d_name:"' + req.swagger.params.value.value + '"';
-        getDataFromFdaApi(fdaUrl, function (data) {
+        var chosenFields = [];
+        if (req.swagger.params.deviceFields.value) {
+          chosenFields = req.swagger.params.deviceFields.value.split(',');
+        }
+        getAPIData('device', 'event', req, chosenFields, function (data) {
           callback(null, {key: 'device', value: data});
         });
+      },
+      function (callback) {
+        var chosenFields = [];
+        if (req.swagger.params.foodFields.value) {
+          chosenFields = req.swagger.params.foodFields.value.split(',');
+        }
+        getAPIData('food', 'enforcement', req, chosenFields, function (data) {
+          geoCodeFoodData(data, function (data) {
+            callback(null, {key: 'food', value: data});
+          });
+        });
+      },
+      function (callback) {
+        var chosenFields = [];
+        if (req.swagger.params.drugFields.value) {
+          chosenFields = req.swagger.params.drugFields.value.split(',');
+        }
+        getAPIData('drug', 'event', req, chosenFields, function (data) {
+          geoCodeDrugData(data, function (data) {
+            callback(null, {key: 'drug', value: data});
+          });
+        });
+
       }
     ],
     function (err, data) {
-      var returnData = {};
+      var returnData = {drug: [], device: [], food: []};
       for (var idx in data) {
-        returnData[data[idx].key] = data[idx].value;
+        if (data[idx].value instanceof  Array) {
+          returnData[data[idx].key] = data[idx].value;
+        }
       }
       var statusMessage = '';
       statusMessage += returnData.drug.length > 0 ? returnData.drug.length + ' drug records, ' : 'No drug data, ';
@@ -152,10 +143,28 @@ function getEventSearchData(req, callback) {
   });
 }
 
-var getAPIData = function (endPointBase, typeOfEngPoint, req, callback) {
-  var limit = req.swagger.params.limit.value || 100;
-  var start = req.swagger.params.skip.value || 0;
-  var fdaUrl = FDA_END_POINTS[endPointBase] + FDA_END_TYPES[typeOfEngPoint] + '?search=' + req.swagger.params.query.value + '&limit=' + limit + '&skip=' + start;
+var getAPIData = function (endPointBase, typeOfEngPoint, req, fields, callback) {
+  var limit = 100, start = 0, search;
+  if (req.swagger.params.limit) {
+    limit = req.swagger.params.limit.value || 100;
+  }
+  if (req.swagger.params.skip) {
+    start = req.swagger.params.skip.value || 0;
+  }
+  if (req.swagger.params.query) {
+    search = req.swagger.params.query.value;
+  }
+  if (fields.length > 0) {
+    search = formatSearchFields(req.swagger.params.query.value, fields);
+  }
+  var fdaUrl = FDA_END_POINTS[endPointBase] + FDA_END_TYPES[typeOfEngPoint] + '?search=' + search;
+
+  if (limit) {
+    fdaUrl += '&limit=' + limit;
+  }
+  if (start) {
+    fdaUrl += '&skip=' + start;
+  }
   getDataFromFdaApi(fdaUrl, callback);
 };
 
@@ -164,7 +173,6 @@ var getAPIRangeData = function (endPointBase, typeOfEngPoint, datefield, req, ca
     + ':[' + req.swagger.params.start.value + '+TO+' + req.swagger.params.end.value + ']&count=' + req.swagger.params.field.value;
   getDataFromFdaApi(fdaUrl, callback);
 };
-
 
 function getDataFromFdaApi(fdaUrl, callback) {
   request.get({
@@ -180,7 +188,6 @@ function getDataFromFdaApi(fdaUrl, callback) {
     }
   );
 }
-
 
 module.exports = {
   aggregateSplashSearch: function (req, res) {
@@ -206,7 +213,7 @@ module.exports = {
   },
 
   deviceEventRangeCount: function (req, res) {
-    getAPIRangeData('device', 'event', 'receivedate', req, function (data) {
+    getAPIRangeData('device', 'event', 'report_date', req, function (data) {
       res.json(data);
     });
   },
@@ -231,5 +238,4 @@ module.exports = {
     getAPIData: getAPIData,
     getAPIRangeData: getAPIRangeData
   }
-
 };

@@ -24,10 +24,25 @@ paths:
       operationId: aggregateSplashSearch
       description: Aggregated search for the splash page
       parameters:
-        - name: value
+        - name: query
           in: query
           description: Value to search on in hardcoded FDA endpoint for the sites splash page
           required: true
+          type: string
+        - name: drugFields
+          in: query
+          description: The fields one wishes to search in the drug results. Comma seperated list.
+          required: false
+          type: string
+        - name: foodFields
+          in: query
+          description: The fields one wishes to search in the food results. Comma seperated list.
+          required: false
+          type: string
+        - name: deviceFields
+          in: query
+          description: The fields one wishes to search in the device results. Comma seperated list.
+          required: false
           type: string
       produces:
         - application/json
