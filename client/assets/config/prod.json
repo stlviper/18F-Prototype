@@ -7,6 +7,6 @@
     "general": "http://openfdavizapi.cloudogsystems.com/search/splash",
     "drugs": "http://openfdavizapi.cloudogsystems.com/drug/event/search",
     "foods": "http://openfdavizapi.cloudogsystems.com/food/event/search",
-    "devices": "http://openfdavizapi.cloudogsystems.com/devices/event/search"
+    "devices": "http://openfdavizapi.cloudogsystems.com/device/event/search"
   }
 }
