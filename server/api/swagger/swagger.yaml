@@ -79,6 +79,11 @@ paths:
           description: Limit the number of results
           required: false
           type: integer
+        - name: fields
+          in: query
+          description: The fields one wishes to search. Comma seperated list.
+          required: false
+          type: string
       produces:
         - application/json
       responses:
@@ -147,6 +152,11 @@ paths:
           description: Limit the number of results
           required: false
           type: integer
+        - name: fields
+          in: query
+          description: The fields one wishes to search. Comma seperated list.
+          required: false
+          type: string
       produces:
         - application/json
       responses:
@@ -201,7 +211,7 @@ paths:
       parameters:
         - name: query
           in: query
-          description: Field and Value to search on separated by a colon ( field:value ). query string should be in quotes. Format example= primarysourcecountry:us
+          description: The value
           required: true
           type: string
           collectionFormat: multi
@@ -215,6 +225,11 @@ paths:
           description: Limit the number of results
           required: false
           type: integer
+        - name: fields
+          in: query
+          description: The fields one wishes to search. Comma seperated list.
+          required: false
+          type: string
       produces:
         - application/json
       responses:
