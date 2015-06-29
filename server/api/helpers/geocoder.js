@@ -60,7 +60,7 @@ module.exports = {
       return this.geoCodeByISO3(country);
     }
     else {
-      return "Country Code format not supported";
+      return "Country Code format not supported(ISO3 or ISO2 only)";
     }
   },
 
@@ -68,9 +68,14 @@ module.exports = {
     if (_stateGeoCodeList === null) {
       _loadStateGeoCoder();
     }
-    for (var i = 0; i < _stateGeoCodeList.length; i++) {
-      if (_stateGeoCodeList[i].STATE === state.toUpperCase()) {
-        return {lat: _stateGeoCodeList[i].LATITUDE, lng: _stateGeoCodeList[i].LONGITUDE};
+    if (!state || state.length >= 3) {
+      return "The state is to long. Only two letter initials are supported";
+    }
+    else {
+      for (var i = 0; i < _stateGeoCodeList.length; i++) {
+        if (_stateGeoCodeList[i].STATE === state.toUpperCase()) {
+          return {lat: _stateGeoCodeList[i].LATITUDE, lng: _stateGeoCodeList[i].LONGITUDE};
+        }
       }
     }
   },
