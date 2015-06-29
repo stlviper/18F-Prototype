@@ -94,5 +94,5 @@ module.exports = function(grunt) {
 	grunt.registerTask('start', ['clean:client', 'deploysubproject:client', 'clean:server', 'deploysubproject:server',
 			'shell:startClientDev', 'shell:startServer']);
 	grunt.registerTask('start:dev', ['start:clientDev', 'start:server'])
-	grunt.registerTask('start:prod', ['start:clientDev', 'start:server'])
+	grunt.registerTask('start:prod', ['start:clientProd', 'start:server'])
 };
