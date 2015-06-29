@@ -44,7 +44,9 @@ openfdaviz.controller('SearchController', ['$scope', '$http', '$stateParams', "l
 
   var startDate = new Date("December 31, 1970");
   var endDate = new Date();
-  $scope.query = $stateParams.query;
+  $scope.input = {
+    searchText: $stateParams.query
+  };
   $scope.devicesQueryInProgress = false;
   $scope.drugsQueryInProgress = false;
   $scope.foodsQueryInProgress = false;
@@ -77,7 +79,7 @@ openfdaviz.controller('SearchController', ['$scope', '$http', '$stateParams', "l
   });
 
   $scope.runQuery = function () {
-    $stateParams.query = $scope.query;
+    $stateParams.query = $scope.input.searchText;
     $scope.layers.overlays.heat.data = [];
 
     setQueryState();
@@ -94,11 +96,11 @@ openfdaviz.controller('SearchController', ['$scope', '$http', '$stateParams', "l
   }
 
   var generalQuery = function () {
-    $stateParams.query = $scope.query;
+    $stateParams.query = $scope.input.searchText;
     var deferred = $.Deferred();
 
     setQueryState();
-    $http.get(config.resources.general + '?query=' + $scope.query)
+    $http.get(config.resources.general + '?query=' + $scope.input.searchText)
       .success(function (resp) {
         $scope.results.drugs = resp.drug || [];
         $scope.results.devices = resp.device || [];
@@ -114,7 +116,7 @@ openfdaviz.controller('SearchController', ['$scope', '$http', '$stateParams', "l
 
   function queryDrugs() {
     var deferred = $.Deferred();
-    $http.get(config.resources.drugs + '?query=' + $scope.query)
+    $http.get(config.resources.drugs + '?query=' + $scope.input.searchText)
       .success(function (resp) {
         if(!resp.error){
           $scope.results.drugs = resp;
@@ -133,7 +135,7 @@ openfdaviz.controller('SearchController', ['$scope', '$http', '$stateParams', "l
 
   function queryFoods() {
     var deferred = $.Deferred();
-    $http.get(config.resources.foods + '?query=' + $scope.query)
+    $http.get(config.resources.foods + '?query=' + $scope.input.searchText)
       .success(function (resp) {
         if(!resp.error){
           $scope.results.foods = resp;
@@ -150,7 +152,7 @@ openfdaviz.controller('SearchController', ['$scope', '$http', '$stateParams', "l
 
   function queryDevices() {
     var deferred = $.Deferred();
-    $http.get(config.resources.devices + '?query=' + $scope.query)
+    $http.get(config.resources.devices + '?query=' + $scope.input.searchText)
       .success(function (resp) {
         if(!resp.error){
           $scope.results.devices = resp;

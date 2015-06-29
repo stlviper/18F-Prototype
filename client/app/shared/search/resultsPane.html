@@ -31,13 +31,10 @@
           <ul ng-if="results.drugs.length > 0 && !drugsQueryInProgress" ng-repeat="result in results.drugs">
             <li>
               <dl>
-                <dd><b>Brand Name: </b>{{result.patient.drug[0].medicinalproduct}}</dd>
-                <dd><b>Sender: </b>{{result.sender.senderorganization}}</dd>
+                <dd><b>Brand Name: </b>{{result.openfda.brand_name[0]}}</dd>
+                <dd><b>Manufacturer: </b>{{result.openfda.manufacturer_name[0] }}</dd>
+                <dd><b>Sender: </b>{{result.recalling_firm}}</dd>
               </dl>
-              <h5>Reactions:</h5>
-              <ul ng-repeat="reacts in result.patient.reaction">
-                <li>{{reacts.reactionmeddrapt}}</li>
-              </ul>
             </li>
           </ul>
         </div>
