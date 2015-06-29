@@ -81,7 +81,7 @@ function getAggregateSplashSearchData(req, res) {
         if (req.swagger.params.deviceFields.value) {
           chosenFields = req.swagger.params.deviceFields.value.split(',');
         }
-        getAPIData('device', 'event', req, chosenFields, function (data) {
+        getAPIData('device', 'enforcement', req, chosenFields, function (data) {
           callback(null, {key: 'device', value: data});
         });
       },
@@ -101,7 +101,7 @@ function getAggregateSplashSearchData(req, res) {
         if (req.swagger.params.drugFields.value) {
           chosenFields = req.swagger.params.drugFields.value.split(',');
         }
-        getAPIData('drug', 'event', req, chosenFields, function (data) {
+        getAPIData('drug', 'enforcement', req, chosenFields, function (data) {
           geoCodeDrugData(data, function (data) {
             callback(null, {key: 'drug', value: data});
           });
@@ -199,7 +199,7 @@ module.exports = {
     if (req.swagger.params.fields.value) {
       chosenFields = req.swagger.params.fields.value.split(',');
     }
-    getAPIData('drug', 'event', req, chosenFields, function (data) {
+    getAPIData('drug', 'enforcement', req, chosenFields, function (data) {
       res.json(data);
     });
   },
@@ -215,13 +215,13 @@ module.exports = {
     if (req.swagger.params.fields.value) {
       chosenFields = req.swagger.params.deviceFields.value.split(',');
     }
-    getAPIData('device', 'event', req, chosenFields, function (data) {
+    getAPIData('device', 'enforcement', req, chosenFields, function (data) {
       res.json(data);
     });
   },
 
   deviceEventRangeCount: function (req, res) {
-    getAPIRangeData('device', 'event', 'report_date', req, function (data) {
+    getAPIRangeData('device', 'enforcement', 'report_date', req, function (data) {
       res.json(data);
     });
   },
