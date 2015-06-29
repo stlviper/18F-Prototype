@@ -121,7 +121,7 @@ function getAggregateSplashSearchData(req, res) {
       }
     ],
     function (err, data) {
-      var returnData = {};
+      var returnData = {drug: [], device: [], food: []};
       for (var idx in data) {
         returnData[data[idx].key] = data[idx].value;
       }
@@ -231,5 +231,4 @@ module.exports = {
     getAPIData: getAPIData,
     getAPIRangeData: getAPIRangeData
   }
-
 };
