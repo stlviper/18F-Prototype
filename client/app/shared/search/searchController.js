@@ -57,6 +57,12 @@ openfdaviz.controller('SearchController', ['$scope', '$http', '$stateParams', "l
 
   $scope.results = emptyResults;
 
+  $scope.handleKeypress = function($event){
+    if($event.keyCode === 13){
+      $scope.runQuery();
+    }
+  };
+
   $scope.activateResultsTab = function (activeTab) {
     $scope.activeResultsTab = activeTab;
   };
