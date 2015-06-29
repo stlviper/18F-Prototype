@@ -115,7 +115,7 @@ describe('Testing Drugs Controller.', function () {
       mockReq.swagger.params.limit = {value: "5"};
       mockReq.swagger.params.skip = {value: '20'};
 
-      drugs.tests.getAPIData('food', 'enforcement', mockReq, function (data) {
+      drugs.tests.getAPIData('food', 'enforcement', mockReq, [], function (data) {
         expect(data.length).to.equal(5);
         expect(data[0]['@epoch']).to.exist;
         expect(data[3]['@epoch']).to.exist;
@@ -138,7 +138,7 @@ describe('Testing Drugs Controller.', function () {
       mockReq.swagger.params.limit = {value: "5"};
       mockReq.swagger.params.skip = {value: '0'};
 
-      drugs.tests.getAPIData('device', 'enforcement', mockReq, function (data) {
+      drugs.tests.getAPIData('device', 'enforcement', mockReq, [], function (data) {
         expect(data.length).to.equal(5);
         expect(data[0]['@epoch']).to.exist;
         expect(data[3]['@epoch']).to.exist;
@@ -161,7 +161,7 @@ describe('Testing Drugs Controller.', function () {
       mockReq.swagger.params.limit = {value: "5"};
       mockReq.swagger.params.skip = {value: '20'};
 
-      drugs.tests.getAPIData('food', 'enforcement', mockReq, function (data) {
+      drugs.tests.getAPIData('food', 'enforcement', mockReq, [], function (data) {
         expect(data.length).to.equal(5);
         expect(data[0]['@epoch']).to.exist;
         expect(data[3]['@epoch']).to.exist;
@@ -178,7 +178,7 @@ describe('Testing Drugs Controller.', function () {
   });
 
   describe('Should return an array of counts for a Range of records in Device Events', function () {
-    it('Contain an array of device enforcement events for a time range', function (done) {
+    it('Contain an array of device enforcement events for a time range', [], function (done) {
       var mockReq = this.mockReq;
       mockReq.swagger.params.start = {value: "20100521"};
       mockReq.swagger.params.end = {value: "20150410"};
