@@ -1,0 +1,7 @@
+e# Save as .codeclimate.yml (note leading .) in project root directory
+languages:
+  JavaScript: true
+exclude_paths:
+ - "assets/**/*"
+ - "client/assets/js/**/*"
+ - "server/swagger-ui/**/*"

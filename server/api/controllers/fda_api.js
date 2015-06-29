@@ -183,7 +183,6 @@ function getDataFromFdaApi(fdaUrl, callback) {
 
 
 module.exports = {
-
   aggregateSplashSearch: function (req, res) {
     getAggregateSplashSearchData(req, res)
   },

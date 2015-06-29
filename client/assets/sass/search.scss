@@ -59,12 +59,34 @@
 }
 
 #resultsPanel{
+  margin-bottom: 25px;
+
   .panel-body{
-    max-height: 620px;
+    height: 645px;
     overflow: scroll;
+  }
+
+  .details-container{
+    height: 750px;
   }
 
   .nav.nav-tabs > li.active > a{
     border: 1px solid #ddd;
   }
+}
+
+.leaflet-control-layers-toggle {
+  background-image: url(../img/layers.png);
+  width: 36px;
+  height: 36px;
+}
+
+.leaflet-retina .leaflet-control-layers-toggle {
+  background-image: url(../img/layers-2x.png);
+  background-size: 26px 26px;
+}
+
+.angular-leaflet-map {
+  width: 100%;
+  height: 400px;
 }
