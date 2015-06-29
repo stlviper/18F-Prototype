@@ -37,7 +37,7 @@ describe('Method geoCoder.geoCodeState()', function () {
   });
   it('Should return 34.95Lat, -92Lng for state AR', function () {
     assert.doesNotThrow(function () {
-      var res = geocoder.geoCodeCountry('AR');
+      var res = geocoder.geoCodeState('AR');
       assert.equal(res.lat, 34.9513);
       assert.equal(res.lng, -92.3809);
     });
