@@ -65,7 +65,7 @@ paths:
       parameters:
         - name: query
           in: query
-          description: Field and Value to search on separated by a colon ( field:value ). query string should be in quotes. Format example= primarysourcecountry:us
+          description: Field and Value to search on separated by a colon ( field:value ). query string should be in quotes. Format example= primarysourcecountry:us. If you want to apply a single value to multiple fields enter the value here and the fields in the fields param
           required: true
           type: string
           collectionFormat: multi
@@ -138,7 +138,7 @@ paths:
       parameters:
         - name: query
           in: query
-          description: Field and Value to search on separated by a colon ( field:value ). query string should be in quotes. Format example= primarysourcecountry:us
+          description: Field and Value to search on separated by a colon ( field:value ). query string should be in quotes. Format example= primarysourcecountry:us. If you want to apply a single value to multiple fields enter the value here and the fields in the fields param
           required: true
           type: string
           collectionFormat: multi
@@ -211,7 +211,7 @@ paths:
       parameters:
         - name: query
           in: query
-          description: The value
+          description: Field and Value to search on separated by a colon ( field:value ). query string should be in quotes. Format example= primarysourcecountry:us. If you want to apply a single value to multiple fields enter the value here and the fields in the fields param
           required: true
           type: string
           collectionFormat: multi
