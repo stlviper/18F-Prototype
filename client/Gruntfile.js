@@ -120,19 +120,6 @@ module.exports = function (grunt) {
           expand: true
         }]
       },
-      //special case for plugin, since it is loaded with html5 workers
-      heatcanvasDev: {
-        files: [{
-          src: [ 'assets/js/heatcanvas/heatcanvas-worker.js' ],
-          dest: 'build/js/heatcanvas-worker.js'
-        }]
-      },
-      heatcanvasProd: {
-        files: [{
-          src: [ 'assets/js/heatcanvas/heatcanvas-worker.js' ],
-          dest: '../dist/client/js/heatcanvas-worker.js'
-        }]
-      },
       htmlresourcesProd: {
         files: [{
           cwd: 'assets/html/error-pages',
@@ -209,7 +196,7 @@ module.exports = function (grunt) {
           {
             expand: true,
             cwd: './build/js/',
-            src: ['*.js', '!npm-lib.js', '!heatcanvas-worker.js'],
+            src: ['*.js', '!npm-lib.js'],
             dest: '../dist/client/js/',
             ext: '.min.js'
           }
@@ -243,8 +230,8 @@ module.exports = function (grunt) {
   grunt.registerTask('test', ['mochaTest:client']);
   grunt.registerTask('selenium', ['protractor_webdriver', 'protractor:run']);
   grunt.registerTask('default', ['build']);
-  grunt.registerTask('build', ['sass:dev', 'concat', 'browserify', 'copy:vendorCss', 'copy:devConfig', 'copy:devImages', 'copy:devFonts', 'copy:devIndex', 'copy:heatcanvasDev', 'ngtemplates', 'test']);
-  grunt.registerTask('build:prod', ['build', 'sass:dist', 'uglify', 'copy:npmLib', 'copy:prodConfig', 'copy:prodImages', 'copy:prodFonts', 'copy:prodIndex', 'copy:heatcanvasProd', 'copy:htmlresourcesProd']);
+  grunt.registerTask('build', ['sass:dev', 'concat', 'browserify', 'copy:vendorCss', 'copy:devConfig', 'copy:devImages', 'copy:devFonts', 'copy:devIndex', 'ngtemplates', 'test']);
+  grunt.registerTask('build:prod', ['build', 'sass:dist', 'uglify', 'copy:npmLib', 'copy:prodConfig', 'copy:prodImages', 'copy:prodFonts', 'copy:prodIndex', 'copy:htmlresourcesProd']);
   grunt.registerTask('deploy', ['clean', 'build:prod']);
 
 };
