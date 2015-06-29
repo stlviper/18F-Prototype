@@ -7,6 +7,6 @@
     "general": "http://localhost:3002/search/splash",
     "drugs": "http://localhost:3002/drug/event/search",
     "foods": "http://localhost:3002/food/event/search",
-    "devices": "http://localhost:3002/devices/event/search"
+    "devices": "http://localhost:3002/device/event/search"
   }
 }

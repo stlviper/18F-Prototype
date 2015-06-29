@@ -64,13 +64,17 @@
   .panel-body{
     height: 645px;
     overflow: scroll;
+
+    ul > li > dl{
+      margin-bottom: 0;
+    }
   }
 
   .details-container{
     height: 750px;
   }
 
-  .nav.nav-tabs > li.active > a{
+  .nav.nav-tabs > li.active > a {
     border: 1px solid #ddd;
   }
 }

@@ -21,16 +21,14 @@
           <p ng-if="queryInProgress">Loading...</p>
           <ul ng-if="results.drugs.length > 0" ng-repeat="result in results.drugs">
             <li>
+              <dl>
+                <dd><b>Brand Name: </b>{{result.patient.drug[0].medicinalproduct}}</dd>
+                <dd><b>Sender: </b>{{result.sender.senderorganization}}</dd>
+              </dl>
               <h5>Reactions:</h5>
               <ul ng-repeat="reacts in result.patient.reaction">
                 <li>{{reacts.reactionmeddrapt}}</li>
               </ul>
-              <dl>
-                <dt>Brand Name:</dt>
-                <dd>{{patient.drug[0].medicinalproduct}}</dd>
-                <dt>Sender:</dt>
-                <dd>{{result.sender.senderorganization}}</dd>
-              </dl>
             </li>
           </ul>
         </div>
@@ -46,18 +44,12 @@
             <li>
               <h5>{{result.product_description}}</h5>
               <dl>
-                <dt>Device Name:</dt>
-                <dd>{{device.brand_name}}</dd>
-                <dt>Brand Name:</dt>
-                <dd>{{device.generic_name}}</dd>
-                <dt>Manufacturer:</dt>
-                <dd>{{device.manufacturer_d_name}}</dd>
-                <dt>Recall Date:</dt>
-                <dd>{{recall_initiation_date}}</dd>
-                <dt>Reason:</dt>
-                <dd>{{reason_for_recall}}</dd>
-                <dt>Code:</dt>
-                <dd>{{code_info}}</dd>
+                <dd><b>Device Name: </b>{{result.device[0].brand_name}}</dd>
+                <dd><b>Brand Name: </b>{{result.device[0].generic_name}}</dd>
+                <dd><b>Manufacturer: </b>{{result.device[0].manufacturer_d_name}}</dd>
+                <dd><b>Recall Date: </b>{{result.date_received}}</dd>
+                <dd><b>Reason: </b>{{result.event_type}}</dd>
+                <dd><b>Code: </b>{{result.event_key}}</dd>
               </dl>
             </li>
           </ul>
@@ -74,12 +66,9 @@
             <li>
               <h5>{{result.product_description}}</h5>
               <dl>
-                <dt>Recall Date</dt>
-                <dd>{{primarysourcecountry}}</dd>
-                <dt>Reason</dt>
-                <dd>{{reason_for_recall}}</dd>
-                <dt>Code</dt>
-                <dd>{{code_info}}</dd>
+                <dd><b>Recall Date: </b>{{result.primarysourcecountry}}</dd>
+                <dd><b>Reason: </b>{{result.reason_for_recall}}</dd>
+                <dd><b>Code: </b>{{result.code_info}}</dd>
               </dl>
             </li>
           </ul>
