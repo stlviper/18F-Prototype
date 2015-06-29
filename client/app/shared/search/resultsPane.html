@@ -19,7 +19,7 @@
         <div class="panel-body">
           <p ng-if="results.drugs.length == 0 && !queryInProgress">No Results Found</p>
           <p ng-if="queryInProgress">Loading...</p>
-          <ul ng-if="results.drugs.length > 0" ng-repeat="result in results.drugs">
+          <ul ng-if="results.drugs.length > 0 && !queryInProgress" ng-repeat="result in results.drugs">
             <li>
               <dl>
                 <dd><b>Brand Name: </b>{{result.patient.drug[0].medicinalproduct}}</dd>
@@ -40,7 +40,7 @@
         <div class="panel-body">
           <p ng-if="results.devices.length == 0 && !queryInProgress">No Results Found</p>
           <p ng-if="queryInProgress">Loading...</p>
-          <ul ng-if="results.devices.length > 0" ng-repeat="result in results.devices">
+          <ul ng-if="results.devices.length > 0 && !queryInProgress" ng-repeat="result in results.devices">
             <li>
               <h5>{{result.product_description}}</h5>
               <dl>
@@ -62,7 +62,7 @@
         <div class="panel-body">
           <p ng-if="results.foods.length == 0 && !queryInProgress">No Results Found</p>
           <p ng-if="queryInProgress">Loading...</p>
-          <ul ng-if="results.foods.length > 0" ng-repeat="result in results.foods">
+          <ul ng-if="results.foods.length > 0 && !queryInProgress" ng-repeat="result in results.foods">
             <li>
               <h5>{{result.product_description}}</h5>
               <dl>
