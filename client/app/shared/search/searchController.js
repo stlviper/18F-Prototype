@@ -42,8 +42,8 @@ openfdaviz.controller('SearchController', ['$scope', '$http', '$stateParams', "l
 
   $scope.activeResultsTab = 'drugs';
 
-  var startDate = new Date("December 31, 2004");
-  var endDate = new Date("December 31, 2014");
+  var startDate = new Date("December 31, 1970");
+  var endDate = new Date();
   $scope.query = $stateParams.query;
   $scope.queryInProgress = false;
 
@@ -256,7 +256,6 @@ openfdaviz.controller('SearchController', ['$scope', '$http', '$stateParams', "l
   }
 
   function _isDateInBounds(dateToCheckString) {
-
     // Check year
     var reYear = /((19|20)\d{2})/;
     var dateToCheckYear = Number(dateToCheckString.match(reYear)[0]);
@@ -270,9 +269,39 @@ openfdaviz.controller('SearchController', ['$scope', '$http', '$stateParams', "l
       return false;
     }
 
-    // Check month
+    if(dateToCheckYear === startDateYear){
+      // Check month (assumes format of YYYYMMDD)
+      var dateToCheckMonth = Number(dateToCheckString.substring(4,6));
+      var startDateMonth = Number(startDate.getMonth().toString());
+      if (dateToCheckMonth < startDateMonth) {
+        return false;
+      }
 
-    // Check day
+      if(dateToCheckMonth === startDateMonth) {
+        // Check day (assumes format of YYYYMMDD)
+        var dateToCheckDay = Number(dateToCheckString.substring(6,8));
+        var startDateDay = Number(startDate.getDay().toString());
+        if (dateToCheckDay < startDateDay) {
+          return false;
+        }
+      }
+    }
+    if(dateToCheckYear === endDateYear) {
+      var dateToCheckMonth = Number(dateToCheckString.substring(4,6));
+      var endDateMonth = Number(endDate.getMonth().toString());
+      if (dateToCheckMonth > endDateMonth) {
+        return false;
+      }
+
+      if(dateToCheckMonth === startDateMonth) {
+        var dateToCheckDay = Number(dateToCheckString.substring(6,8));
+        var endDateDay = Number(endDate.getDay().toString());
+        if (dateToCheckDay > endDateDay) {
+          return false;
+        }
+      }
+    }
+
 
     return true;
   }
