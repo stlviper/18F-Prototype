@@ -3,12 +3,12 @@
 openfdaviz.controller('SearchController', ['$scope', '$http', '$stateParams', "leafletData", function ($scope, $http, $stateParams, leafletData) {
 
   //Setting up the Leaflet Directive
-  var mapZoom = 3;
+  var mapZoom = 1;
   var dataPoints = [];
 
   $scope.fdaVizMapCenter = {
-    lat: 38,
-    lng: -96,
+    lat: 0,
+    lng: 0,
     zoom: mapZoom
   };
   $scope.defaults = {
