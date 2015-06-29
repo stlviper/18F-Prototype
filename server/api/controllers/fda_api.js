@@ -200,7 +200,9 @@ module.exports = {
       chosenFields = req.swagger.params.fields.value.split(',');
     }
     getAPIData('drug', 'enforcement', req, chosenFields, function (data) {
-      res.json(data);
+      geoCodeDrugData(data, function (data) {
+        res.json(data);
+      });
     });
   },
 
@@ -232,7 +234,9 @@ module.exports = {
       chosenFields = req.swagger.params.fields.value.split(',');
     }
     getAPIData('food', 'enforcement', req, chosenFields, function (data) {
-      res.json(data);
+      geoCodeFoodData(data, function (data) {
+        res.json(data);
+      });
     });
   },
 
