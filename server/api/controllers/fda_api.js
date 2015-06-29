@@ -195,7 +195,11 @@ module.exports = {
   },
 
   drugEventSearch: function (req, res) {
-    getEventSearchData(req, function (data) {
+    var chosenFields = [];
+    if (req.swagger.params.fields.value) {
+      chosenFields = req.swagger.params.fields.value.split(',');
+    }
+    getAPIData('drug', 'event', req, chosenFields, function (data) {
       res.json(data);
     });
   },
@@ -207,7 +211,11 @@ module.exports = {
   },
 
   deviceEventSearch: function (req, res) {
-    getAPIData('device', 'event', req, function (data) {
+    var chosenFields = [];
+    if (req.swagger.params.fields.value) {
+      chosenFields = req.swagger.params.deviceFields.value.split(',');
+    }
+    getAPIData('device', 'event', req, chosenFields, function (data) {
       res.json(data);
     });
   },
@@ -219,7 +227,11 @@ module.exports = {
   },
 
   foodEventSearch: function (req, res) {
-    getAPIData('food', 'enforcement', req, function (data) {
+    var chosenFields = [];
+    if (req.swagger.params.fields.value) {
+      chosenFields = req.swagger.params.fields.value.split(',');
+    }
+    getAPIData('food', 'enforcement', req, chosenFields, function (data) {
       res.json(data);
     });
   },
