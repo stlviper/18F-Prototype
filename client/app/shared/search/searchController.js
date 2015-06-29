@@ -40,12 +40,14 @@ openfdaviz.controller('SearchController', ['$scope', '$http', '$stateParams', "l
 
   };
 
-  $scope.activeResultsTab = 'drugs';
+  $scope.activeResultsTab = 'foods';
 
   var startDate = new Date("December 31, 1970");
   var endDate = new Date();
   $scope.query = $stateParams.query;
-  $scope.queryInProgress = false;
+  $scope.devicesQueryInProgress = false;
+  $scope.drugsQueryInProgress = false;
+  $scope.foodsQueryInProgress = false;
 
   var emptyResults = {
     drugs: [],
@@ -64,24 +66,32 @@ openfdaviz.controller('SearchController', ['$scope', '$http', '$stateParams', "l
       startDate = data.minDate;
       endDate = data.maxDate;
       _filterSearchResults();
-      _updateHeatmap();
+      _updateAllResults();
     });
   });
 
   $scope.runQuery = function () {
     $stateParams.query = $scope.query;
-    $scope.queryInProgress = true;
+    $scope.layers.overlays.heat.data = [];
+
+    setQueryState();
+    $.when.apply($, [queryDrugs(), queryFoods(), queryDevices()]).done([_filterSearchResults]);
+  };
+
+  function setQueryState(){
+    $scope.devicesQueryInProgress = true;
+    $scope.drugsQueryInProgress = true;
+    $scope.foodsQueryInProgress = true;
     $scope.results.drugs = [];
     $scope.results.foods = [];
     $scope.results.devices = [];
-    $.when.apply($, [queryDrugs(), queryFoods(), queryDevices()]).done([_filterSearchResults, _updateHeatmap]);
-  };
+  }
 
   var generalQuery = function () {
     $stateParams.query = $scope.query;
     var deferred = $.Deferred();
-    $scope.queryInProgress = true;
-    $scope.results = emptyResults;
+
+    setQueryState();
     $http.get(config.resources.general + '?query=' + $scope.query)
       .success(function (resp) {
         $scope.results.drugs = resp.drug || [];
@@ -94,7 +104,7 @@ openfdaviz.controller('SearchController', ['$scope', '$http', '$stateParams', "l
       });
     return deferred;
   };
-  $.when(generalQuery()).done([_filterSearchResults, _updateHeatmap]);
+  $.when(generalQuery()).done([_filterSearchResults, _updateAllResults]);
 
   function queryDrugs() {
     var deferred = $.Deferred();
@@ -103,10 +113,12 @@ openfdaviz.controller('SearchController', ['$scope', '$http', '$stateParams', "l
         if(!resp.error){
           $scope.results.drugs = resp;
         }
+        handleDrugsResponse();
         deferred.resolve();
       })
       .error(function () {
         console.log("error requesting drugs");
+        $scope.drugsQueryInProgress = false;
       });
     return deferred;
     // current: status: '' || []
@@ -120,10 +132,12 @@ openfdaviz.controller('SearchController', ['$scope', '$http', '$stateParams', "l
         if(!resp.error){
           $scope.results.foods = resp;
         }
+        handleFoodsResponse();
         deferred.resolve();
       })
       .error(function () {
         console.log("error requesting foods");
+        $scope.foodsQueryInProgress = false;
       });
     return deferred;
   }
@@ -135,25 +149,51 @@ openfdaviz.controller('SearchController', ['$scope', '$http', '$stateParams', "l
         if(!resp.error){
           $scope.results.devices = resp;
         }
+        handleDevicesResponse();
         deferred.resolve();
       })
       .error(function () {
         console.log("error requesting devices");
+        $scope.devicesQueryInProgress = false;
       });
     return deferred;
   }
 
-  function _updateHeatmap() {
-    $scope.queryInProgress = false;
-    $scope.layers.overlays.heat.data = [];
+  function handleFoodsResponse(){
+    $scope.foodsQueryInProgress = false;
+
     // Plot food geodata points
     if (typeof $scope.results.foods !== 'undefined') {
       _addPointsToHeatmap($scope.results.foods);
+      refreshMap();
     }
+  }
+
+  function handleDrugsResponse(){
+    $scope.drugsQueryInProgress = false;
+
     // Plot drug geodata points
     if (typeof $scope.results.drugs !== 'undefined') {
       _addPointsToHeatmap($scope.results.drugs);
+      refreshMap();
     }
+  }
+
+  function handleDevicesResponse(){
+    $scope.devicesQueryInProgress = false;
+  }
+
+  function _updateAllResults() {
+    $scope.layers.overlays.heat.data = [];
+
+    handleDrugsResponse();
+    handleFoodsResponse();
+    handleDevicesResponse();
+
+    refreshMap();
+  }
+
+  function refreshMap(){
     $scope.layers.overlays.heat.doRefresh = true;
     // This is what people currently recommend to get the map to update immediately
     leafletData.getMap().then(function(map) {

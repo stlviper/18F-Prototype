@@ -3,13 +3,22 @@
 
   <ul class="nav nav-tabs" role="tablist">
     <li role="presentation" class="active">
-      <a href="" aria-controls="profile" role="tab" data-toggle="tab" ng-click="activateResultsTab('drugs')">Drugs ({{results.drugs.length}})</a>
+      <a href="" aria-controls="profile" role="tab" data-toggle="tab" ng-click="activateResultsTab('foods')">
+        <div ng-if="foodsQueryInProgress"><div class="loader">Loading...</div></div>
+        <span class="loader-label">Foods ({{results.foods.length}})</span>
+      </a>
     </li>
     <li role="presentation">
-      <a href="" aria-controls="profile" role="tab" data-toggle="tab" ng-click="activateResultsTab('foods')">Foods ({{results.foods.length}})</a>
+      <a href="" aria-controls="profile" role="tab" data-toggle="tab" ng-click="activateResultsTab('drugs')">
+        <div ng-if="drugsQueryInProgress"><div class="loader">Loading...</div></div>
+        <span class="loader-label">Drugs ({{results.drugs.length}})</span>
+      </a>
     </li>
     <li role="presentation">
-      <a href="" aria-controls="profile" role="tab" data-toggle="tab" ng-click="activateResultsTab('devices')">Devices ({{results.devices.length}})</a>
+      <a href="" aria-controls="profile" role="tab" data-toggle="tab" ng-click="activateResultsTab('devices')">
+        <div ng-if="devicesQueryInProgress"><div class="loader">Loading...</div></div>
+        <span class="loader-label">Devices ({{results.devices.length}})</span>
+      </a>
     </li>
   </ul>
 
@@ -17,9 +26,9 @@
     <div ng-switch-when="drugs">
       <div class="panel panel-default">
         <div class="panel-body">
-          <p ng-if="results.drugs.length == 0 && !queryInProgress">No Results Found</p>
-          <div ng-if="queryInProgress"><div class="loader">Loading...</div><span class="loader-label">Loading...</span></div>
-          <ul ng-if="results.drugs.length > 0 && !queryInProgress" ng-repeat="result in results.drugs">
+          <p ng-if="results.drugs.length == 0 && !drugsQueryInProgress">No Results Found</p>
+          <div ng-if="drugsQueryInProgress">Loading...</div>
+          <ul ng-if="results.drugs.length > 0 && !drugsQueryInProgress" ng-repeat="result in results.drugs">
             <li>
               <dl>
                 <dd><b>Brand Name: </b>{{result.patient.drug[0].medicinalproduct}}</dd>
@@ -38,9 +47,9 @@
     <div ng-switch-when="devices">
       <div class="panel panel-default">
         <div class="panel-body">
-          <p ng-if="results.devices.length == 0 && !queryInProgress">No Results Found</p>
-          <div ng-if="queryInProgress"><div class="loader">Loading...</div><span class="loader-label">Loading...</span></div>
-          <ul ng-if="results.devices.length > 0 && !queryInProgress" ng-repeat="result in results.devices">
+          <p ng-if="results.devices.length == 0 && !devicesQueryInProgress">No Results Found</p>
+          <div ng-if="devicesQueryInProgress">Loading...</div>
+          <ul ng-if="results.devices.length > 0 && !devicesQueryInProgress" ng-repeat="result in results.devices">
             <li>
               <h5>{{result.product_description}}</h5>
               <dl>
@@ -60,9 +69,9 @@
     <div ng-switch-when="foods">
       <div class="panel panel-default">
         <div class="panel-body">
-          <p ng-if="results.foods.length == 0 && !queryInProgress">No Results Found</p>
-          <div ng-if="queryInProgress"><div class="loader">Loading...</div><span class="loader-label">Loading...</span></div>
-          <ul ng-if="results.foods.length > 0 && !queryInProgress" ng-repeat="result in results.foods">
+          <p ng-if="results.foods.length == 0 && !foodsQueryInProgress">No Results Found</p>
+          <div ng-if="foodsQueryInProgress">Loading...</div>
+          <ul ng-if="results.foods.length > 0 && !foodsQueryInProgress" ng-repeat="result in results.foods">
             <li>
               <h5>{{result.product_description}}</h5>
               <dl>
