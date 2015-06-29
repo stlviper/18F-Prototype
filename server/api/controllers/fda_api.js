@@ -51,6 +51,7 @@ var geoCodeFoodData = function (data, callback) {
     callback(null, {key: 'food', value: []});
   }
 };
+
 var geoCodeDeviceData = function (data, callback) {
   var geoKeys = [];
 
@@ -95,29 +96,35 @@ var geoCodeDrugData = function (data, callback) {
   }
 };
 
-
 function getAggregateSplashSearchData(req, res) {
   async.parallel([
-
       function (callback) {
-        var fdaUrl = FDA_DRUG_EVENT + 'event.json?limit=100&search=patient.drug.openfda.brand_name:"' + req.swagger.params.value.value + '"+patient.drug.openfda.brand_name:"' + req.swagger.params.value.value + '"';
-        getDataFromFdaApi(fdaUrl, function (data) {
-          geoCodeDrugData(data, callback);
-        });
-      },
-
-      function (callback) {
-        var fdaUrl = FDA_FOOD_EVENT + 'enforcement.json?limit=100&search=product_description:"' + req.swagger.params.value.value + '"+reason_for_recall:"' + req.swagger.params.value.value + '"';
-        getDataFromFdaApi(fdaUrl, function (data) {
-          geoCodeFoodData(data, callback);
-        });
-      },
-
-      function (callback) {
-        var fdaUrl = FDA_DEVICE_EVENT + 'event.json?limit=100&search=device.brand_name:"' + req.swagger.params.value.value + '"+device.generic_name:"' + req.swagger.params.value.value + '"+device.manufacturer_d_name:"' + req.swagger.params.value.value + '"';
-        getDataFromFdaApi(fdaUrl, function (data) {
+        var chosenFields = [];
+        if (req.swagger.params.deviceFields.value) {
+          chosenFields = req.swagger.params.deviceFields.value.split(',');
+        }
+        getAPIData('device', 'event', req, chosenFields, function (data) {
           callback(null, {key: 'device', value: data});
         });
+      },
+      function (callback) {
+        var chosenFields = [];
+        if (req.swagger.params.foodFields.value) {
+          chosenFields = req.swagger.params.foodFields.value.split(',');
+        }
+        getAPIData('food', 'enforcement', req, chosenFields, function (data) {
+          callback(null, {key: 'food', value: data});
+        });
+      },
+      function (callback) {
+        var chosenFields = [];
+        if (req.swagger.params.drugFields.value) {
+          chosenFields = req.swagger.params.drugFields.value.split(',');
+        }
+        getAPIData('drug', 'event', req, chosenFields, function (data) {
+          callback(null, {key: 'drug', value: data});
+        });
+
       }
     ],
     function (err, data) {
@@ -152,10 +159,28 @@ function getEventSearchData(req, callback) {
   });
 }
 
-var getAPIData = function (endPointBase, typeOfEngPoint, req, callback) {
-  var limit = req.swagger.params.limit.value || 100;
-  var start = req.swagger.params.skip.value || 0;
-  var fdaUrl = FDA_END_POINTS[endPointBase] + FDA_END_TYPES[typeOfEngPoint] + '?search=' + req.swagger.params.query.value + '&limit=' + limit + '&skip=' + start;
+var getAPIData = function (endPointBase, typeOfEngPoint, req, fields, callback) {
+  var limit=100, start=0, search;
+  if (req.swagger.params.limit) {
+    limit = req.swagger.params.limit.value || 100;
+  }
+  if (req.swagger.params.skip) {
+    start = req.swagger.params.skip.value || 0;
+  }
+  if (req.swagger.params.query) {
+    search = req.swagger.params.query.value;
+  }
+  if (fields.length > 0) {
+    search = formatSearchFields(req.swagger.params.query.value, fields);
+  }
+  var fdaUrl = FDA_END_POINTS[endPointBase] + FDA_END_TYPES[typeOfEngPoint] + '?search=' + search;
+
+  if (limit) {
+    fdaUrl += '&limit=' + limit;
+  }
+  if (start) {
+    fdaUrl += '&skip=' + start;
+  }
   getDataFromFdaApi(fdaUrl, callback);
 };
 
@@ -165,6 +190,13 @@ var getAPIRangeData = function (endPointBase, typeOfEngPoint, datefield, req, ca
   getDataFromFdaApi(fdaUrl, callback);
 };
 
+var formatSearchFields = function (value, fields) {
+  var retSearchField = '';
+  for (var idx in fields) {
+    retSearchField += fields[idx].trim() + ':' + value.trim() + '+'
+  }
+  return retSearchField.substring(0, retSearchField.length - 1);//NOTE: Remove the last + character
+};
 
 function getDataFromFdaApi(fdaUrl, callback) {
   request.get({
