@@ -80,7 +80,7 @@ openfdaviz.controller('SearchController', ['$scope', '$http', '$stateParams', "l
     var deferred = $.Deferred();
     $scope.queryInProgress = true;
     $scope.results = emptyResults;
-    $http.get(config.resources.general + '?value=' + $scope.query)
+    $http.get(config.resources.general + '?query=' + $scope.query)
       .success(function (resp) {
         $scope.results.drugs = resp.drug || [];
         $scope.results.devices = resp.device || [];
