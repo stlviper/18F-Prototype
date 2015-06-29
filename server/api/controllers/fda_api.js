@@ -66,6 +66,14 @@ var geoCodeDrugData = function (data, callback) {
   }
 };
 
+var formatSearchFields = function (value, fields) {
+  var retSearchField = '';
+  for (var idx in fields) {
+    retSearchField += fields[idx].trim() + ':' + value.trim() + '+'
+  }
+  return retSearchField.substring(0, retSearchField.length - 1);//NOTE: Remove the last + character
+};
+
 function getAggregateSplashSearchData(req, res) {
   async.parallel([
       function (callback) {
@@ -166,14 +174,6 @@ var getAPIRangeData = function (endPointBase, typeOfEngPoint, datefield, req, ca
   getDataFromFdaApi(fdaUrl, callback);
 };
 
-var formatSearchFields = function (value, fields) {
-  var retSearchField = '';
-  for (var idx in fields) {
-    retSearchField += fields[idx].trim() + ':' + value.trim() + '+'
-  }
-  return retSearchField.substring(0, retSearchField.length - 1);//NOTE: Remove the last + character
-};
-
 function getDataFromFdaApi(fdaUrl, callback) {
   request.get({
       url: encodeURI(fdaUrl),
@@ -213,7 +213,7 @@ module.exports = {
   },
 
   deviceEventRangeCount: function (req, res) {
-    getAPIRangeData('device', 'event', 'receivedate', req, function (data) {
+    getAPIRangeData('device', 'event', 'report_date', req, function (data) {
       res.json(data);
     });
   },

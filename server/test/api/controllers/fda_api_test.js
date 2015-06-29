@@ -178,12 +178,12 @@ describe('Testing Drugs Controller.', function () {
   });
 
   describe('Should return an array of counts for a Range of records in Device Events', function () {
-    it('Contain an array of device enforcement events for a time range', [], function (done) {
+    it('Contain an array of device enforcement events for a time range', function (done) {
       var mockReq = this.mockReq;
       mockReq.swagger.params.start = {value: "20100521"};
       mockReq.swagger.params.end = {value: "20150410"};
-      mockReq.swagger.params.field = {value: 'state'};
-      drugs.tests.getAPIRangeData('device', 'enforcement', 'recall_initiation_date', mockReq, function (data) {
+      mockReq.swagger.params.field = {value: 'manufacturer_state'};
+      drugs.tests.getAPIRangeData('device', 'event', 'report_date', mockReq, function (data) {
         expect(data[0]).to.exist;
         expect(data[0].count).to.exist;
         done();
