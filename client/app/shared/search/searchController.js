@@ -141,7 +141,7 @@ openfdaviz.controller('SearchController', ['$scope', '$http', '$stateParams', "l
     $scope.layers.overlays.devices.data = [];
 
     setQueryState();
-    $.when.apply($, [queryDrugs(), queryFoods(), queryDevices()]).done([_filterSearchResults]);
+    $.when.apply($, [queryDrugs(), queryFoods(), queryDevices()]).done([_updateAllResults]);
   };
 
   function setQueryState(){
@@ -170,7 +170,7 @@ openfdaviz.controller('SearchController', ['$scope', '$http', '$stateParams', "l
       });
     return deferred;
   };
-  $.when(generalQuery()).done([_filterSearchResults, _updateAllResults]);
+  $.when(generalQuery()).done([_updateAllResults]);
 
   function queryDrugs() {
     var deferred = $.Deferred();
@@ -259,6 +259,8 @@ openfdaviz.controller('SearchController', ['$scope', '$http', '$stateParams', "l
     $scope.layers.overlays.foods.data = [];
     $scope.layers.overlays.drugs.data = [];
     $scope.layers.overlays.devices.data = [];
+
+    _filterSearchResults();
 
     handleDrugsResponse();
     handleFoodsResponse();
