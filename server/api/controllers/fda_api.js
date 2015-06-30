@@ -52,14 +52,55 @@ var geoCodeFoodData = function (data, callback) {
 };
 
 var geoCodeDrugData = function (data, callback) {
-  var processedData = [];
+  var geoKeys = [];
+
   if (data && data instanceof Array) {
     data.map(function (item, index, array) {
-      if (item.primarysourcecountry) {
-        array[index].GeoLocation = geoCoder.geoCodeCountry(item.primarysourcecountry);
+      if (item.state && item.state.length > 0) {
+        array[index].GeoLocation = geoCoder.geoCodeState(item.state);
+      }
+      else if (item.country && item.country.length > 0) {
+        array[index].GeoLocation = geoCoder.geoCodeCountry(item.country);
       }
     });
-    callback(data);
+
+    if (geoKeys.length > 0) {
+      geoCoder.geoCodeString(geoKeys, function (err, data) {
+        if (data) {
+
+        }
+      });
+    } else {
+      callback(data);
+    }
+  }
+  else {
+    callback([]);
+  }
+};
+
+var geoCodeDeviceData = function(data, callback){
+  var geoKeys = [];
+
+  if (data && data instanceof Array) {
+    data.map(function (item, index, array) {
+      if (item.state && item.state.length > 0) {
+        array[index].GeoLocation = geoCoder.geoCodeState(item.state);
+      }
+      else if (item.country && item.country.length > 0) {
+        array[index].GeoLocation = geoCoder.geoCodeCountry(item.country);
+      }
+    });
+
+    if (geoKeys.length > 0) {
+      geoCoder.geoCodeString(geoKeys, function (err, data) {
+        if (data) {
+
+        }
+      });
+    } else {
+      callback(data);
+    }
   }
   else {
     callback([]);
@@ -200,7 +241,9 @@ module.exports = {
       chosenFields = req.swagger.params.fields.value.split(',');
     }
     getAPIData('drug', 'enforcement', req, chosenFields, function (data) {
-      res.json(data);
+      geoCodeDrugData(data, function (data) {
+        res.json(data);
+      });
     });
   },
 
@@ -216,7 +259,9 @@ module.exports = {
       chosenFields = req.swagger.params.deviceFields.value.split(',');
     }
     getAPIData('device', 'enforcement', req, chosenFields, function (data) {
-      res.json(data);
+      geoCodeDeviceData(data, function(processedData){
+        res.json(processedData);
+      });
     });
   },
 
@@ -232,7 +277,9 @@ module.exports = {
       chosenFields = req.swagger.params.fields.value.split(',');
     }
     getAPIData('food', 'enforcement', req, chosenFields, function (data) {
-      res.json(data);
+      geoCodeFoodData(data, function (data) {
+        res.json(data);
+      });
     });
   },
 

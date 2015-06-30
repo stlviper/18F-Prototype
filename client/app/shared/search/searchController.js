@@ -4,7 +4,9 @@ openfdaviz.controller('SearchController', ['$scope', '$http', '$stateParams', "l
 
   //Setting up the Leaflet Directive
   var mapZoom = 1;
-  var dataPoints = [];
+  var foodsMapPoints = [];
+  var drugsMapPoints = [];
+  var devicesMapPoints = [];
 
   $scope.fdaVizMapCenter = {
     lat: 0,
@@ -24,10 +26,34 @@ openfdaviz.controller('SearchController', ['$scope', '$http', '$stateParams', "l
       }
     },
     overlays: {
-      heat: {
-        name: 'Heat Map',
+      foods: {
+        name: 'Food',
         type: 'heat',
-        data: dataPoints,
+        data: foodsMapPoints,
+        layerOptions: {
+          radius: 8,
+          blur: 5,
+          minOpacity: 0.7
+        },
+        visible: true,
+        doRefresh: true
+      },
+      drugs: {
+        name: 'Drugs',
+        type: 'heat',
+        data: drugsMapPoints,
+        layerOptions: {
+          radius: 8,
+          blur: 5,
+          minOpacity: 0.7
+        },
+        visible: true,
+        doRefresh: true
+      },
+      devices: {
+        name: 'Devices',
+        type: 'heat',
+        data: devicesMapPoints,
         layerOptions: {
           radius: 8,
           blur: 5,
@@ -109,7 +135,9 @@ openfdaviz.controller('SearchController', ['$scope', '$http', '$stateParams', "l
 
   $scope.runQuery = function () {
     $stateParams.query = $scope.input.searchText;
-    $scope.layers.overlays.heat.data = [];
+    $scope.layers.overlays.foods.data = [];
+    $scope.layers.overlays.drugs.data = [];
+    $scope.layers.overlays.devices.data = [];
 
     setQueryState();
     $.when.apply($, [queryDrugs(), queryFoods(), queryDevices()]).done([_filterSearchResults]);
@@ -201,7 +229,7 @@ openfdaviz.controller('SearchController', ['$scope', '$http', '$stateParams', "l
 
     // Plot food geodata points
     if (typeof $scope.results.foods !== 'undefined') {
-      _addPointsToHeatmap($scope.results.foods);
+      _addPointsToHeatmap($scope.results.foods, $scope.layers.overlays.foods.data);
       refreshMap();
     }
   }
@@ -211,17 +239,25 @@ openfdaviz.controller('SearchController', ['$scope', '$http', '$stateParams', "l
 
     // Plot drug geodata points
     if (typeof $scope.results.drugs !== 'undefined') {
-      _addPointsToHeatmap($scope.results.drugs);
+      _addPointsToHeatmap($scope.results.drugs, $scope.layers.overlays.drugs.data);
       refreshMap();
     }
   }
 
   function handleDevicesResponse(){
     $scope.devicesQueryInProgress = false;
+
+    // Plot device geodata points
+    if (typeof $scope.results.devices !== 'undefined') {
+      _addPointsToHeatmap($scope.results.devices, $scope.layers.overlays.devices.data);
+      refreshMap();
+    }
   }
 
   function _updateAllResults() {
-    $scope.layers.overlays.heat.data = [];
+    $scope.layers.overlays.foods.data = [];
+    $scope.layers.overlays.drugs.data = [];
+    $scope.layers.overlays.devices.data = [];
 
     handleDrugsResponse();
     handleFoodsResponse();
@@ -231,14 +267,16 @@ openfdaviz.controller('SearchController', ['$scope', '$http', '$stateParams', "l
   }
 
   function refreshMap(){
-    $scope.layers.overlays.heat.doRefresh = true;
+    $scope.layers.overlays.foods.doRefresh = true;
+    $scope.layers.overlays.drugs.doRefresh = true;
+    $scope.layers.overlays.devices.doRefresh = true;
     // This is what people currently recommend to get the map to update immediately
     leafletData.getMap().then(function(map) {
       map.invalidateSize();
     });
   }
 
-  function _addPointsToHeatmap(category) {
+  function _addPointsToHeatmap(category, layer) {
     var perturbRadius = 0.004;
     for (var i in category) {
       if (typeof category[i].isDisplayable !== 'undefined') {
@@ -251,15 +289,15 @@ openfdaviz.controller('SearchController', ['$scope', '$http', '$stateParams', "l
             // Since the heatmap doesn't change when there are duplicate points,
             // perturb duplicate points a little so there is a visible difference
             // in the heatmap
-            for (var j = 0; j < $scope.layers.overlays.heat.data.length; j++) {
-              if (latLng[0] === $scope.layers.overlays.heat.data[j][0] &&
-                latLng[1] === $scope.layers.overlays.heat.data[j][1]) {
+            for (var j = 0; j < layer.length; j++) {
+              if (latLng[0] === layer[j][0] &&
+                latLng[1] === layer[j][1]) {
                 latLng = _perturbPoints(latLng, perturbRadius);
                 break;
               }
             }
             if (category[i].isDisplayable) {
-              $scope.layers.overlays.heat.data.push(latLng);
+              layer.push(latLng);
             }
           }
         }
