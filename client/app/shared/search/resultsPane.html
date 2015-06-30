@@ -28,7 +28,7 @@
         <div id="drugsResultsList" class="panel-body">
           <p ng-if="results.drugs.length == 0 && !drugsQueryInProgress">No Results Found</p>
           <div ng-if="drugsQueryInProgress">Loading...</div>
-          <ul ng-if="results.drugs.length > 0 && !drugsQueryInProgress">
+          <ul class="results-styling" ng-if="results.drugs.length > 0 && !drugsQueryInProgress">
             <span ng-repeat="result in results.drugs">
             <li ng-if="result.isDisplayable" ng-click="showModal(result)">
               <dl>
@@ -50,7 +50,7 @@
         <div id="devicesResultsList" class="panel-body">
           <p ng-if="results.devices.length == 0 && !devicesQueryInProgress">No Results Found</p>
           <div ng-if="devicesQueryInProgress">Loading...</div>
-          <ul ng-if="results.devices.length > 0 && !devicesQueryInProgress">
+          <ul class="results-styling" ng-if="results.devices.length > 0 && !devicesQueryInProgress">
             <span ng-repeat="result in results.devices">
             <li ng-if="result.isDisplayable" ng-click="showModal(result)">
               <dl>
@@ -70,7 +70,7 @@
         <div id="foodsResultsList" class="panel-body">
           <p ng-if="results.foods.length == 0 && !foodsQueryInProgress">No Results Found</p>
           <div ng-if="foodsQueryInProgress">Loading...</div>
-          <ul ng-if="results.foods.length > 0 && !foodsQueryInProgress">
+          <ul class="results-styling" ng-if="results.foods.length > 0 && !foodsQueryInProgress">
             <span ng-repeat="result in results.foods">
             <li ng-if="result.isDisplayable" ng-click="showModal(result)">
               <dl>
