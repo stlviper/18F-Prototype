@@ -1,6 +1,5 @@
 var should = require('should');
 var request = require('supertest');
-var server = require('../../../app');
 var assert = require("assert");
 var expect = require('chai').expect;
 

@@ -76,16 +76,16 @@ openfdaviz.controller('SearchController', ['$scope', '$http', '$stateParams', "l
     //TODO: make this smooth, or scroll top before drop-in animation happens
     //$(document).on("shown.bs.modal", "#detailModal", function () {
     //  $("#detailModal .modal-content").scrollTop(0);
-    //});;
+    //});
+
+    $("#closeModalButton").on("click", function (e) {
+      $("#detailModal").modal('hide');
+    });
   }
 
   $scope.showModal = function(result){
     $scope.modal.selectedItem = result;
     $('#detailModal').modal('show');
-  };
-
-  $scope.hideModal = function(){
-    $("#detailModal").modal('hide');
   };
 
   $scope.$on("$destroy", function() {
@@ -348,8 +348,8 @@ openfdaviz.controller('SearchController', ['$scope', '$http', '$stateParams', "l
       if (typeof drugs[i].isDisplayable === 'undefined') {
         drugs[i].isDisplayable = true;
       }
-      if (typeof drugs[i].report_date !== 'undefined') {
-        if (!_isDateInBounds(drugs[i].report_date)) {
+      if (typeof drugs[i].receivedate !== 'undefined') {
+        if (!_isDateInBounds(drugs[i].receivedate)) {
           drugs[i].isDisplayable = false;
         } else {
           drugs[i].isDisplayable = true;
@@ -363,8 +363,8 @@ openfdaviz.controller('SearchController', ['$scope', '$http', '$stateParams', "l
       if (typeof devices[i].isDisplayable === 'undefined') {
         devices[i].isDisplayable = true;
       }
-      if (typeof devices[i].report_date !== 'undefined') {
-        if (!_isDateInBounds(devices[i].report_date)) {
+      if (typeof devices[i].date_of_event !== 'undefined') {
+        if (!_isDateInBounds(devices[i].date_of_event)) {
           devices[i].isDisplayable = false;
         } else {
           devices[i].isDisplayable = false;
