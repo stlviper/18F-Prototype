@@ -135,7 +135,7 @@ openfdaviz.controller('SearchController', ['$scope', '$http', '$stateParams', "l
   });
 
   $scope.runQuery = function () {
-    $scope.query = $stateParams.query = $scope.input.searchText;
+    $stateParams.query = $scope.input.searchText = $('#searchText').val();
     $scope.layers.overlays.foods.data = [];
     $scope.layers.overlays.drugs.data = [];
     $scope.layers.overlays.devices.data = [];
