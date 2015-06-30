@@ -123,6 +123,38 @@
   }
 }
 
+@media(max-width: 768px){
+  #devicesResultsList, #drugsResultsList, #foodsResultsList{
+    > ul > li > dl > dd{
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      width: 400px;
+    }
+  }
+}
+
+@media(max-width: 540px){
+  #devicesResultsList, #drugsResultsList, #foodsResultsList{
+    > ul > li > dl > dd{
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      width: 300px;
+    }
+  }
+}
+@media(max-width: 460px){
+  #devicesResultsList, #drugsResultsList, #foodsResultsList{
+    > ul > li > dl > dd{
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      width: 250px;
+    }
+  }
+}
+
 .leaflet-control-layers-toggle {
   background-image: url(../img/layers.png);
   width: 36px;
