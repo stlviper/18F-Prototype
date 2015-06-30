@@ -76,16 +76,16 @@ openfdaviz.controller('SearchController', ['$scope', '$http', '$stateParams', "l
     //TODO: make this smooth, or scroll top before drop-in animation happens
     //$(document).on("shown.bs.modal", "#detailModal", function () {
     //  $("#detailModal .modal-content").scrollTop(0);
-    //});
-
-    $("#closeModalButton").on("click", function (e) {
-      $("#detailModal").modal('hide');
-    });
+    //});;
   }
 
   $scope.showModal = function(result){
     $scope.modal.selectedItem = result;
     $('#detailModal').modal('show');
+  };
+
+  $scope.hideModal = function(){
+    $("#detailModal").modal('hide');
   };
 
   $scope.$on("$destroy", function() {
