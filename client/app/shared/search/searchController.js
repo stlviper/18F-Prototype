@@ -3,18 +3,20 @@
 openfdaviz.controller('SearchController', ['$scope', '$http', '$stateParams', "leafletData", function ($scope, $http, $stateParams, leafletData) {
 
   //Setting up the Leaflet Directive
-  var mapZoom = 3;
-  var dataPoints = [];
+  var mapZoom = 1;
+  var foodsMapPoints = [];
+  var drugsMapPoints = [];
+  var devicesMapPoints = [];
 
   $scope.fdaVizMapCenter = {
-    lat: 38,
-    lng: -96,
+    lat: 0,
+    lng: 0,
     zoom: mapZoom
   };
   $scope.defaults = {
     maxZoom: 10,
     minZoom: 1
-  },
+  };
   $scope.layers = {
     baselayers: {
       xyz: {
@@ -24,10 +26,34 @@ openfdaviz.controller('SearchController', ['$scope', '$http', '$stateParams', "l
       }
     },
     overlays: {
-      heat: {
-        name: 'Heat Map',
+      foods: {
+        name: 'Food',
         type: 'heat',
-        data: dataPoints,
+        data: foodsMapPoints,
+        layerOptions: {
+          radius: 8,
+          blur: 5,
+          minOpacity: 0.7
+        },
+        visible: true,
+        doRefresh: true
+      },
+      drugs: {
+        name: 'Drugs',
+        type: 'heat',
+        data: drugsMapPoints,
+        layerOptions: {
+          radius: 8,
+          blur: 5,
+          minOpacity: 0.7
+        },
+        visible: true,
+        doRefresh: true
+      },
+      devices: {
+        name: 'Devices',
+        type: 'heat',
+        data: devicesMapPoints,
         layerOptions: {
           radius: 8,
           blur: 5,
@@ -40,12 +66,46 @@ openfdaviz.controller('SearchController', ['$scope', '$http', '$stateParams', "l
 
   };
 
-  $scope.activeResultsTab = 'drugs';
+  function init(){
+    angular.element(document).ready(function(){
+      bindEvents();
+    });
+  }
 
-  var startDate = new Date("December 31, 2004");
-  var endDate = new Date("December 31, 2014");
+  function bindEvents(){
+    //TODO: make this smooth, or scroll top before drop-in animation happens
+    //$(document).on("shown.bs.modal", "#detailModal", function () {
+    //  $("#detailModal .modal-content").scrollTop(0);
+    //});
+
+    $("#closeModalButton").on("click", function (e) {
+      $("#detailModal").modal('hide');
+    });
+  }
+
+  $scope.showModal = function(result){
+    $scope.modal.selectedItem = result;
+    $('#detailModal').modal('show');
+  };
+
+  $scope.$on("$destroy", function() {
+    $(document).off('show.bs.modal', '#detailModal');
+  });
+
+  $scope.activeResultsTab = 'foods';
+
+  var startDate = new Date("December 31, 1970");
+  var endDate = new Date();
+  $scope.input = {
+    searchText: $stateParams.query
+  };
   $scope.query = $stateParams.query;
-  $scope.queryInProgress = false;
+  $scope.devicesQueryInProgress = false;
+  $scope.drugsQueryInProgress = false;
+  $scope.foodsQueryInProgress = false;
+  $scope.modal = {
+    selectedItem: {}
+  };
 
   var emptyResults = {
     drugs: [],
@@ -54,6 +114,12 @@ openfdaviz.controller('SearchController', ['$scope', '$http', '$stateParams', "l
   };
 
   $scope.results = emptyResults;
+
+  $scope.handleKeypress = function($event){
+    if($event.keyCode === 13){
+      $scope.runQuery();
+    }
+  };
 
   $scope.activateResultsTab = function (activeTab) {
     $scope.activeResultsTab = activeTab;
@@ -64,23 +130,35 @@ openfdaviz.controller('SearchController', ['$scope', '$http', '$stateParams', "l
       startDate = data.minDate;
       endDate = data.maxDate;
       _filterSearchResults();
-      _updateHeatmap();
+      _updateAllResults();
     });
   });
 
   $scope.runQuery = function () {
-    $stateParams.query = $scope.query;
-    $scope.queryInProgress = true;
-    $scope.results = emptyResults;
-    $.when.apply($, [queryDrugs(), queryFoods(), queryDevices()]).done([_filterSearchResults, _updateHeatmap]);
+    $stateParams.query = $scope.input.searchText = $('#searchText').val();
+    $scope.layers.overlays.foods.data = [];
+    $scope.layers.overlays.drugs.data = [];
+    $scope.layers.overlays.devices.data = [];
+
+    setQueryState();
+    $.when.apply($, [queryDrugs(), queryFoods(), queryDevices()]).done([_updateAllResults]);
   };
 
+  function setQueryState(){
+    $scope.devicesQueryInProgress = true;
+    $scope.drugsQueryInProgress = true;
+    $scope.foodsQueryInProgress = true;
+    $scope.results.drugs = [];
+    $scope.results.foods = [];
+    $scope.results.devices = [];
+  }
+
   var generalQuery = function () {
-    $stateParams.query = $scope.query;
+    $stateParams.query = $scope.input.searchText;
     var deferred = $.Deferred();
-    $scope.queryInProgress = true;
-    $scope.results = emptyResults;
-    $http.get(config.resources.general + '?value=' + $scope.query)
+
+    setQueryState();
+    $http.get(config.resources.general + '?query=' + $scope.input.searchText)
       .success(function (resp) {
         $scope.results.drugs = resp.drug || [];
         $scope.results.devices = resp.device || [];
@@ -92,19 +170,21 @@ openfdaviz.controller('SearchController', ['$scope', '$http', '$stateParams', "l
       });
     return deferred;
   };
-  $.when(generalQuery()).done([_filterSearchResults, _updateHeatmap]);
+  $.when(generalQuery()).done([_updateAllResults]);
 
   function queryDrugs() {
     var deferred = $.Deferred();
-    $http.get(config.resources.drugs + '?query=' + $scope.query)
+    $http.get(config.resources.drugs + '?query=' + $scope.input.searchText)
       .success(function (resp) {
         if(!resp.error){
           $scope.results.drugs = resp;
         }
+        handleDrugsResponse();
         deferred.resolve();
       })
       .error(function () {
         console.log("error requesting drugs");
+        $scope.drugsQueryInProgress = false;
       });
     return deferred;
     // current: status: '' || []
@@ -113,53 +193,93 @@ openfdaviz.controller('SearchController', ['$scope', '$http', '$stateParams', "l
 
   function queryFoods() {
     var deferred = $.Deferred();
-    $http.get(config.resources.foods + '?query=' + $scope.query)
+    $http.get(config.resources.foods + '?query=' + $scope.input.searchText)
       .success(function (resp) {
         if(!resp.error){
           $scope.results.foods = resp;
         }
+        handleFoodsResponse();
         deferred.resolve();
       })
       .error(function () {
         console.log("error requesting foods");
+        $scope.foodsQueryInProgress = false;
       });
     return deferred;
   }
 
   function queryDevices() {
     var deferred = $.Deferred();
-    $http.get(config.resources.devices + '?query=' + $scope.query)
+    $http.get(config.resources.devices + '?query=' + $scope.input.searchText)
       .success(function (resp) {
         if(!resp.error){
           $scope.results.devices = resp;
         }
+        handleDevicesResponse();
         deferred.resolve();
       })
       .error(function () {
         console.log("error requesting devices");
+        $scope.devicesQueryInProgress = false;
       });
     return deferred;
   }
 
-  function _updateHeatmap() {
-    $scope.queryInProgress = false;
-    $scope.layers.overlays.heat.data = [];
+  function handleFoodsResponse(){
+    $scope.foodsQueryInProgress = false;
+
     // Plot food geodata points
     if (typeof $scope.results.foods !== 'undefined') {
-      _addPointsToHeatmap($scope.results.foods);
+      _addPointsToHeatmap($scope.results.foods, $scope.layers.overlays.foods.data);
+      refreshMap();
     }
+  }
+
+  function handleDrugsResponse(){
+    $scope.drugsQueryInProgress = false;
+
     // Plot drug geodata points
     if (typeof $scope.results.drugs !== 'undefined') {
-      _addPointsToHeatmap($scope.results.drugs);
+      _addPointsToHeatmap($scope.results.drugs, $scope.layers.overlays.drugs.data);
+      refreshMap();
     }
-    $scope.layers.overlays.heat.doRefresh = true;
+  }
+
+  function handleDevicesResponse(){
+    $scope.devicesQueryInProgress = false;
+
+    // Plot device geodata points
+    if (typeof $scope.results.devices !== 'undefined') {
+      _addPointsToHeatmap($scope.results.devices, $scope.layers.overlays.devices.data);
+      refreshMap();
+    }
+  }
+
+  function _updateAllResults() {
+    $scope.layers.overlays.foods.data = [];
+    $scope.layers.overlays.drugs.data = [];
+    $scope.layers.overlays.devices.data = [];
+
+    _filterSearchResults();
+
+    handleDrugsResponse();
+    handleFoodsResponse();
+    handleDevicesResponse();
+
+    refreshMap();
+  }
+
+  function refreshMap(){
+    $scope.layers.overlays.foods.doRefresh = true;
+    $scope.layers.overlays.drugs.doRefresh = true;
+    $scope.layers.overlays.devices.doRefresh = true;
     // This is what people currently recommend to get the map to update immediately
     leafletData.getMap().then(function(map) {
       map.invalidateSize();
     });
   }
 
-  function _addPointsToHeatmap(category) {
+  function _addPointsToHeatmap(category, layer) {
     var perturbRadius = 0.004;
     for (var i in category) {
       if (typeof category[i].isDisplayable !== 'undefined') {
@@ -172,15 +292,15 @@ openfdaviz.controller('SearchController', ['$scope', '$http', '$stateParams', "l
             // Since the heatmap doesn't change when there are duplicate points,
             // perturb duplicate points a little so there is a visible difference
             // in the heatmap
-            for (var j = 0; j < $scope.layers.overlays.heat.data.length; j++) {
-              if (latLng[0] === $scope.layers.overlays.heat.data[j][0] &&
-                latLng[1] === $scope.layers.overlays.heat.data[j][1]) {
+            for (var j = 0; j < layer.length; j++) {
+              if (latLng[0] === layer[j][0] &&
+                latLng[1] === layer[j][1]) {
                 latLng = _perturbPoints(latLng, perturbRadius);
                 break;
               }
             }
             if (category[i].isDisplayable) {
-              $scope.layers.overlays.heat.data.push(latLng);
+              layer.push(latLng);
             }
           }
         }
@@ -254,7 +374,6 @@ openfdaviz.controller('SearchController', ['$scope', '$http', '$stateParams', "l
   }
 
   function _isDateInBounds(dateToCheckString) {
-
     // Check year
     var reYear = /((19|20)\d{2})/;
     var dateToCheckYear = Number(dateToCheckString.match(reYear)[0]);
@@ -268,11 +387,43 @@ openfdaviz.controller('SearchController', ['$scope', '$http', '$stateParams', "l
       return false;
     }
 
-    // Check month
+    if(dateToCheckYear === startDateYear){
+      // Check month (assumes format of YYYYMMDD)
+      var dateToCheckMonth = Number(dateToCheckString.substring(4,6));
+      var startDateMonth = Number(startDate.getMonth().toString());
+      if (dateToCheckMonth < startDateMonth) {
+        return false;
+      }
 
-    // Check day
+      if(dateToCheckMonth === startDateMonth) {
+        // Check day (assumes format of YYYYMMDD)
+        var dateToCheckDay = Number(dateToCheckString.substring(6,8));
+        var startDateDay = Number(startDate.getDay().toString());
+        if (dateToCheckDay < startDateDay) {
+          return false;
+        }
+      }
+    }
+    if(dateToCheckYear === endDateYear) {
+      var dateToCheckMonth = Number(dateToCheckString.substring(4,6));
+      var endDateMonth = Number(endDate.getMonth().toString());
+      if (dateToCheckMonth > endDateMonth) {
+        return false;
+      }
+
+      if(dateToCheckMonth === startDateMonth) {
+        var dateToCheckDay = Number(dateToCheckString.substring(6,8));
+        var endDateDay = Number(endDate.getDay().toString());
+        if (dateToCheckDay > endDateDay) {
+          return false;
+        }
+      }
+    }
+
 
     return true;
   }
+
+  init();
 
 }]);

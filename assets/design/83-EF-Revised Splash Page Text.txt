@@ -1,0 +1,7 @@
+Revised Content for the Splash Page
+
+Main Heading: Search & Visualize the FDA Database
+
+Description Text: The openFDA Visualizer visualizes food, drug, and device recall information.
+
+Text Inside the Search Box: Enter Food, Drug, or Device Keywords

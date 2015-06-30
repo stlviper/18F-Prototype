@@ -3,32 +3,40 @@
 
   <ul class="nav nav-tabs" role="tablist">
     <li role="presentation" class="active">
-      <a href="" aria-controls="profile" role="tab" data-toggle="tab" ng-click="activateResultsTab('drugs')">Drugs ({{results.drugs.length}})</a>
+      <a href="" aria-controls="profile" role="tab" data-toggle="tab" ng-click="activateResultsTab('foods')">
+        <div ng-if="foodsQueryInProgress"><div class="loader">Loading...</div></div>
+        <span class="loader-label">Foods ({{results.foods.length}})</span>
+      </a>
     </li>
     <li role="presentation">
-      <a href="" aria-controls="profile" role="tab" data-toggle="tab" ng-click="activateResultsTab('foods')">Foods ({{results.foods.length}})</a>
+      <a href="" aria-controls="profile" role="tab" data-toggle="tab" ng-click="activateResultsTab('drugs')">
+        <div ng-if="drugsQueryInProgress"><div class="loader">Loading...</div></div>
+        <span class="loader-label">Drugs ({{results.drugs.length}})</span>
+      </a>
     </li>
     <li role="presentation">
-      <a href="" aria-controls="profile" role="tab" data-toggle="tab" ng-click="activateResultsTab('devices')">Devices ({{results.devices.length}})</a>
+      <a href="" aria-controls="profile" role="tab" data-toggle="tab" ng-click="activateResultsTab('devices')">
+        <div ng-if="devicesQueryInProgress"><div class="loader">Loading...</div></div>
+        <span class="loader-label">Devices ({{results.devices.length}})</span>
+      </a>
     </li>
   </ul>
 
   <div ng-switch="activeResultsTab">
     <div ng-switch-when="drugs">
       <div class="panel panel-default">
-        <div class="panel-body">
-          <p ng-if="results.drugs.length == 0 && !queryInProgress">No Results Found</p>
-          <p ng-if="queryInProgress">Loading...</p>
-          <ul ng-if="results.drugs.length > 0" ng-repeat="result in results.drugs">
-            <li>
+        <div id="drugsResultsList" class="panel-body">
+          <p ng-if="results.drugs.length == 0 && !drugsQueryInProgress">No Results Found</p>
+          <div ng-if="drugsQueryInProgress">Loading...</div>
+          <ul ng-if="results.drugs.length > 0 && !drugsQueryInProgress">
+            <li ng-repeat="result in results.drugs" ng-click="showModal(result)">
               <dl>
-                <dd><b>Brand Name: </b>{{result.patient.drug[0].medicinalproduct}}</dd>
-                <dd><b>Sender: </b>{{result.sender.senderorganization}}</dd>
+                <dd><b>Description: </b>{{result.product_description}}</dd>
+                <dd ng-if="result.openfda.brand_name[0]"><b>Brand Name: </b>{{result.openfda.brand_name[0]}}</dd>
+                <dd ng-if="result.openfda.manufacturer_name[0]"><b>Manufacturer: </b>{{result.openfda.manufacturer_name[0]}}</dd>
+                <dd><b>Recall Report Date: </b>{{result.report_date}}</dd>
+                <dd><b>Recalling Firm: </b>{{result.recalling_firm}}</dd>
               </dl>
-              <h5>Reactions:</h5>
-              <ul ng-repeat="reacts in result.patient.reaction">
-                <li>{{reacts.reactionmeddrapt}}</li>
-              </ul>
             </li>
           </ul>
         </div>
@@ -37,19 +45,15 @@
 
     <div ng-switch-when="devices">
       <div class="panel panel-default">
-        <div class="panel-body">
-          <p ng-if="results.devices.length == 0 && !queryInProgress">No Results Found</p>
-          <p ng-if="queryInProgress">Loading...</p>
-          <ul ng-if="results.devices.length > 0" ng-repeat="result in results.devices">
-            <li>
-              <h5>{{result.product_description}}</h5>
+        <div id="devicesResultsList" class="panel-body">
+          <p ng-if="results.devices.length == 0 && !devicesQueryInProgress">No Results Found</p>
+          <div ng-if="devicesQueryInProgress">Loading...</div>
+          <ul ng-if="results.devices.length > 0 && !devicesQueryInProgress">
+            <li ng-repeat="result in results.devices" ng-click="showModal(result)">
               <dl>
-                <dd><b>Device Name: </b>{{result.device[0].brand_name}}</dd>
-                <dd><b>Brand Name: </b>{{result.device[0].generic_name}}</dd>
-                <dd><b>Manufacturer: </b>{{result.device[0].manufacturer_d_name}}</dd>
-                <dd><b>Recall Date: </b>{{result.date_received}}</dd>
-                <dd><b>Reason: </b>{{result.event_type}}</dd>
-                <dd><b>Code: </b>{{result.event_key}}</dd>
+                <dd><b>Description: </b>{{result.product_description}}</dd>
+                <dd><b>Recall Report Date: </b>{{result.report_date}}</dd>
+                <dd><b>Recalling Firm: </b>{{result.recalling_firm}}</dd>
               </dl>
             </li>
           </ul>
@@ -59,20 +63,55 @@
 
     <div ng-switch-when="foods">
       <div class="panel panel-default">
-        <div class="panel-body">
-          <p ng-if="results.foods.length == 0 && !queryInProgress">No Results Found</p>
-          <p ng-if="queryInProgress">Loading...</p>
-          <ul ng-if="results.foods.length > 0" ng-repeat="result in results.foods">
-            <li>
-              <h5>{{result.product_description}}</h5>
+        <div id="foodsResultsList" class="panel-body">
+          <p ng-if="results.foods.length == 0 && !foodsQueryInProgress">No Results Found</p>
+          <div ng-if="foodsQueryInProgress">Loading...</div>
+          <ul ng-if="results.foods.length > 0 && !foodsQueryInProgress">
+            <li ng-repeat="result in results.foods" ng-click="showModal(result)">
               <dl>
-                <dd><b>Recall Date: </b>{{result.primarysourcecountry}}</dd>
-                <dd><b>Reason: </b>{{result.reason_for_recall}}</dd>
-                <dd><b>Code: </b>{{result.code_info}}</dd>
+                <dd><b>Description: </b>{{result.product_description}}</dd>
+                <dd><b>Recall Report Date: </b>{{result.report_date}}</dd>
+                <dd><b>Recalling Firm: </b>{{result.recalling_firm}}</dd>
               </dl>
             </li>
           </ul>
         </div>
       </div>
     </div>
+  </div>
+
+  <div id="detailModal" ng-model="modal.selectedItem" class="modal fade">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h4 class="modal-title">Report Details</h4>
+        </div>
+        <div class="modal-body multi-select-body">
+          <dt>Description</dt>
+          <dd>{{modal.selectedItem.product_description}}</dd>
+          <dt>Reason</dt>
+          <dd>{{modal.selectedItem.reason_for_recall}}</dd>
+          <dt>Initial Firm Notification</dt>
+          <dd>{{modal.selectedItem.initial_firm_notification}}</dd>
+          <dt>Recall Report Date</dt>
+          <dd>{{modal.selectedItem.report_date}}</dd>
+          <dt>Recalling Firm</dt>
+          <dd>{{modal.selectedItem.recalling_firm}}</dd>
+          <dt>Classification</dt>
+          <dd>{{modal.selectedItem.classification}}</dd>
+          <dt>Code Info</dt>
+          <dd>{{modal.selectedItem.code_info}}</dd>
+          <dt>City</dt>
+          <dd>{{modal.selectedItem.city}}</dd>
+          <dt ng-if="modal.selectedItem.state">State</dt>
+          <dd ng-if="modal.selectedItem.state">{{modal.selectedItem.state}}</dd>
+          <dt>Country</dt>
+          <dd>{{modal.selectedItem.country}}</dd>
+        </div>
+        <div class="modal-footer">
+          <button id="closeModalButton" class="btn btn-primary btn-blue">Close</button>
+        </div>
+      </div>
+    </div>
+  </div>
 </div>

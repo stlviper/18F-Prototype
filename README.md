@@ -118,19 +118,22 @@ You will now have a running version of the openFDAViz app. The eb open command w
 
 ## *** Summary of Team OGSystems Agile Development Methodology ***git
 
-Team OGSystems used an interactive agile software development approach to create the FDA prototype. Team OGSystems operates as an agile shop and pooled resources from a variety of teams and shifted priorities in response to this RFQ.
-While some priorities were shifted for each team member, the process for responding and building the prototype remained business as usual for Team OGSystems.
-We approached this as a short-term hackathon and swarmed many aspects of building out the prototype and process. We identified a sole Product Owner (PO), Chad Dalton to help set priorities and groom our backlog along the way.
-The PO was responsible for managing and prioritizing our agile JIRA workflow and lists. We established a multidisciplinary and collaborative team made up of seven of the labor categories out of both the design Pool One and development Pool Two.
-We conducted a team standup meeting, and as a team, we outlined our cadence to include a sprint demo, a release demo, and regularly scheduled standups. We used two daily standups to accommodate the accelerated pace and collaboration necessary to meet the delivery deadline.
-We immediately followed the kick-off meeting with our initial design phase and conducted a MindMapping exercise to drive the team to a singular vision and strategy.
-The MindMap helped the PO and team create the initial backlog and begin to set priorities, and provided a forum for us to brainstorm what we may want to do with the data and how we might drive the prototype forward. (Figure 1 MindMap)
+OGSystems’ agile engineering method centers on user-centric design, using working prototypes and rapid deployment of capabilities to refine solutions. Our unique blend of agile, scaled agile and visual facilitation allows us to quickly respond to challenges scaling from Team to Enterprise.
+Team OGSystems created the FDA Prototype following our normal agile software development approach. Our staff of experienced and certified agile practitioners followed business as usual in responding and building the prototype by adding the RFQ response as a high priority project to our normal backlog.
+The Product Owner (PO), Chad Dalton set initial priorities and groomed our backlog along the way and was responsible for managing and prioritizing our agile JIRA workflow and lists.
+We established a multidisciplinary and collaborative team made up of seven of the identified labor categories out of design Pool One and development Pool Two.
+The team elected to use Kanban and established a cadence for a sprint demo, a release demo, and two daily standups to accommodate the accelerated pace and collaboration necessary to meet the delivery deadline.
+Immediately following the kick-off meeting we conducted a MindMapping exercise to establish a vision and strategy for the project. The PO and team used the MindMap to create the initial backlog and priorities, and provided a baseline to brainstorm data options and prototype design, Figure 1.
+
+(Figure 1 MindMap)
+
 ![alt text](https://github.com/stlviper/18F-Prototype/blob/master/assets/design/18F-Mindmap001.jpg "Mind Map")
 
-After the initial standup, the team began to self identify in roles that matched their experience and expertise. We started design development, built wireframes, designed architecture, and scheduled user engagement sessions.
-With the initial design phase started, we engaged end customers in a collaborative session to solicit feedback on initial design concepts. This session yielded additional design and development concepts and stories.
+Our team then self-identified in roles that matched their experience and expertise. We started design development, building wireframes, designing architecture, and scheduling user engagement sessions.
+With the initial design phase started, we engaged end customers in a collaborative session to solicit feedback on initial design concepts, Figure 2. This session yielded additional design and development concepts and stories, Figure 2.1 and Figure 2.2.
 
 (Figure 2: Customer Engagement)
+
 ![alt text](https://github.com/stlviper/18F-Prototype/blob/master/assets/design/18F-UserEngagementSession001.jpg "Customer Engagement")
 
 (Figure 2.1: Customer Engagement Session)
@@ -142,7 +145,7 @@ alt="A Day of Design, Development and collaboration!" width="240" height="180" b
 
 ![alt text](https://github.com/stlviper/18F-Prototype/blob/master/assets/design/18F-UIMockUp004.jpg "Customer Suggestions")
 
-We also conducted a Persona Development brainstorming session and developed Personas to aid the design and prioritization process.
+We conducted a Persona Development brainstorming session, Figure 3, and developed Personas, Figure 4, to aid in the design and prioritization process.
 
 (Figure 3: Persona Brainstorming)
 
@@ -152,34 +155,35 @@ We also conducted a Persona Development brainstorming session and developed Pers
 
 ![alt text](https://github.com/stlviper/18F-Prototype/blob/master/assets/design/27-EF-46UserPersonas-1506.jpg "Persona Development")
 
-Our first design priority was to swarm on the architectural runway and build out enough of the architecture. Nolan Hager led the devops decisions to get us up and running in AWS using Elastic Beanstalk to set us up to build a scalable web application that interfaces with the FDA api.
-This architecture allows the app to scale up and load balance based on its server capacity and configuration.
+Our first design priority was to swarm on the architectural runway and build out the initial architecture. Nolan Hager led the devops decisions to get us up and running in AWS using Elastic Beanstalk with a scalable web application that interfaces with the FDA api, Figure 5.
+This architecture supports scaling and load balancing based on its server capacity and configuration.
 
 (Figure 5: openFDAViz Architecture)
 
 ![alt text](https://github.com/stlviper/18F-Prototype/blob/master/assets/process/18fAWSArchitecture.png "openFDAViz Architecture")
 
-During the project we used several applications to facilitate the collaboration of remotely based teams (Saint Louis; Chantilly, VA). We used HipChat for day-to-day interactions and integrated it with our Atlassian Suite to receive notifications in our 18F chat room. We used Appear video chat capability.
-Very little email was generated during this period and collaboration via chat and video was continual. Using our Agile workflow in JIRA, each task was reviewed by two or more parties - we used Crucible to perform version controlled, user-story based reviews. We used GitHub for version control.
-Test Driven Development is a staple of our agile development approach. We used Mocha and Selenium to conduct unit tests and UI testing automatically at build. This helps ensure code quality and reduce cross browser inconstancies. We used a Kanban board to iterate through our stories and track the state of the prototype.
-We also set work in progress (WIP) limits in each of our swim lanes on the Kanban board to keep our team lean and allow us to complete more work with less delay.
+We used several applications to facilitate the collaboration of remotely based teams (Saint Louis; Chantilly, VA), including HipChat for day-to-day interactions, Figure 6, integrated with Jira and Confluence to receive notifications in our 18F chat room and Appear video chat capability.
+Little email was generated during this period and collaboration via chat and video was continual. Our Agile workflow was tracked in JIRA, reviewing each task by two or more parties, leveraging Crucible for version controlled, user-story based reviews and GitHub for version control.
+Mocha and Selenium used for automatic unit tests and UI testing automatically at were integral to our Test Driven Development Approach, ensuring code quality and reducing cross browser inconstancies. We used a Kanban board to iterate through our stories and track the state of the prototype.
+Setting work in progress (WIP) limits in each swim lanes on the Kanban board kept our team lean and allowed us to complete more work with less delay, Figure 7.
 
-(Figure 6: Kanban Snapshot)
-
-![alt text](https://github.com/stlviper/18F-Prototype/blob/master/assets/process/jira_snap.png "JIRA Snapshot")
-
-(Figure 7: HipChat Snapshot)
+(Figure 6: HipChat Snapshot)
 
 ![alt text](https://github.com/stlviper/18F-Prototype/blob/master/assets/process/HipChat_snap.png "HipChat Snapshot")
 
-In our Kanban Snapshot, you can see we have a WIP limit alert in review. Using our lean process, we all focused on clearing out the review lane before proceeding to new work.
-All work was tagged in our JIRA instance with components to help tell the story of how we iterated over the design and development process to flush out the prototype.
+(Figure 7: Kanban Snapshot)
+
+![alt text](https://github.com/stlviper/18F-Prototype/blob/master/assets/process/jira_snap.png "JIRA Snapshot")
+
+The Kanban Snapshot shows a WIP limit alert in Review (Lane 3 of Figure 7). Following our lean process, we focused on clearing out the review lane before proceeding to new work.
+
+All work was tagged in JIRA, using components to help manage our iterations over the design and development process to flush out the prototype, Figure 8.
 
 (Figure 8: Components Snapshot)
 
 ![alt text](https://github.com/stlviper/18F-Prototype/blob/master/assets/process/component_snap.png "Components Snapshot")
 
-We conducted a user demo mid-day Wednesday to test the application and gather one more round of feedback prior to the prototype delivery. The accelerated project timeline posed some challenges that we addressed using an Agile software development approach and staying lean across the team.
+We conducted a user demo mid-day Wednesday to test the application and gather one more round of feedback prior to the initial prototype delivery. The accelerated project timeline posed some challenges that we addressed using an Agile software development approach and staying lean across the team, Figure 9.
 
 (Figure 9: Mid Release Demo 1)
 

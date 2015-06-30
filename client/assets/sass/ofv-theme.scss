@@ -268,6 +268,41 @@ a .resize:hover {
   margin: 0 auto;
   float: none;
 }
+.disclaimer{
+  > a{
+    color: #337ab7;
+  }
+  color: #CCCCCC; /*Color of Disclaimer Text*/
+  font-size:10px; /*Font Size of Disclaimer Text*/
+  font-family:  Arial, Helvetica, sans-serif; /*Web Safe Font Family of Disclaimer Text*/
+
+}
+
+.about-page{
+  a{
+    color: #337ab7;
+  }
+}
+
+.disclaimer {
+  a {
+    color: #337ab7;
+  }
+  color: #5c5f5b; /*Color of Disclaimer Text*/
+  font-size: 10px; /*Font Size of Disclaimer Text*/
+  font-family: Arial, Helvetica, sans-serif; /*Web Safe Font Family of Disclaimer Text*/
+
+}
+
+.about-page {
+  a {
+    color: #337ab7;
+  }
+}
+
+.dkgray {
+  color: #5c5f5b;
+}
 
 /* Responsive overrides */
 @media only screen and (max-width: 480px) {

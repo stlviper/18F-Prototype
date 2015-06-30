@@ -1,16 +1,19 @@
 {
+
   "files": [
-    "api/controllers/*.js",
-    "api/helpers/*.js"
+    "api/controllers/*",
+    "api/helpers/*"
   ],
 
   "tests": [
-    "test/*.js"
+    "test/api/controllers/*.js",
+    "test/api/helpers/*.js"
   ],
 
   "testFramework": "mocha",
 
   "env": {
     "type": "node"
-  }
+  },
+  "debug": true
 }
