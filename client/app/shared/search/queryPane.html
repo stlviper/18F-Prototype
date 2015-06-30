@@ -1,7 +1,7 @@
 <div>
   <div class="faceted-search">
     <label>Query:</label>
-    <input class="form-control" type="text" value={{query}} ng-keydown="handleKeypress($event)" placeholder="Enter an item to search for...">
+    <input class="form-control" type="text" id="searchText" name="searchText" value={{query}} ng-keydown="handleKeypress($event)" placeholder="Enter an item to search for...">
   </div>
   <div style="display: none;">
     <div style="margin-bottom:10px;"><label>Status:</label>&nbsp;&nbsp;
