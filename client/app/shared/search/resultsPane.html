@@ -29,7 +29,8 @@
           <p ng-if="results.drugs.length == 0 && !drugsQueryInProgress">No Results Found</p>
           <div ng-if="drugsQueryInProgress">Loading...</div>
           <ul ng-if="results.drugs.length > 0 && !drugsQueryInProgress">
-            <li ng-repeat="result in results.drugs" ng-click="showModal(result)">
+            <span ng-repeat="result in results.drugs">
+            <li ng-if="result.isDisplayable" ng-click="showModal(result)">
               <dl>
                 <dd><b>Description: </b>{{result.product_description}}</dd>
                 <dd ng-if="result.openfda.brand_name[0]"><b>Brand Name: </b>{{result.openfda.brand_name[0]}}</dd>
@@ -38,6 +39,7 @@
                 <dd><b>Recalling Firm: </b>{{result.recalling_firm}}</dd>
               </dl>
             </li>
+            </span>
           </ul>
         </div>
       </div>
@@ -49,13 +51,15 @@
           <p ng-if="results.devices.length == 0 && !devicesQueryInProgress">No Results Found</p>
           <div ng-if="devicesQueryInProgress">Loading...</div>
           <ul ng-if="results.devices.length > 0 && !devicesQueryInProgress">
-            <li ng-repeat="result in results.devices" ng-click="showModal(result)">
+            <span ng-repeat="result in results.devices">
+            <li ng-if="result.isDisplayable" ng-click="showModal(result)">
               <dl>
                 <dd><b>Description: </b>{{result.product_description}}</dd>
                 <dd><b>Recall Report Date: </b>{{result.report_date}}</dd>
                 <dd><b>Recalling Firm: </b>{{result.recalling_firm}}</dd>
               </dl>
             </li>
+            </span>
           </ul>
         </div>
       </div>
@@ -67,13 +71,15 @@
           <p ng-if="results.foods.length == 0 && !foodsQueryInProgress">No Results Found</p>
           <div ng-if="foodsQueryInProgress">Loading...</div>
           <ul ng-if="results.foods.length > 0 && !foodsQueryInProgress">
-            <li ng-repeat="result in results.foods" ng-click="showModal(result)">
+            <span ng-repeat="result in results.foods">
+            <li ng-if="result.isDisplayable" ng-click="showModal(result)">
               <dl>
                 <dd><b>Description: </b>{{result.product_description}}</dd>
                 <dd><b>Recall Report Date: </b>{{result.report_date}}</dd>
                 <dd><b>Recalling Firm: </b>{{result.recalling_firm}}</dd>
               </dl>
             </li>
+            </span>
           </ul>
         </div>
       </div>
