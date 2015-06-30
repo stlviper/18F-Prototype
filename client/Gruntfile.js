@@ -68,6 +68,18 @@ module.exports = function (grunt) {
           dest: '../dist/client/index.html'
         }]
       },
+      devFavIcon: {
+        files: [{
+          src: ['assets/img/favicon.ico'],
+          dest: '../dist/client/favicon.ico'
+        }]
+      },
+      prodFavIcon: {
+        files: [{
+          src: ['assets/img/favicon.ico'],
+          dest: '../dist/client/favicon.ico'
+        }]
+      },
       npmLib: {
         files: [{
           src: ['build/js/npm-lib.js'],
@@ -230,8 +242,8 @@ module.exports = function (grunt) {
   grunt.registerTask('test', ['mochaTest:client']);
   grunt.registerTask('selenium', ['protractor_webdriver', 'protractor:run']);
   grunt.registerTask('default', ['build']);
-  grunt.registerTask('build', ['sass:dev', 'concat', 'browserify', 'copy:vendorCss', 'copy:devConfig', 'copy:devImages', 'copy:devFonts', 'copy:devIndex', 'ngtemplates', 'test']);
-  grunt.registerTask('build:prod', ['build', 'sass:dist', 'uglify', 'copy:npmLib', 'copy:prodConfig', 'copy:prodImages', 'copy:prodFonts', 'copy:prodIndex', 'copy:htmlresourcesProd']);
+  grunt.registerTask('build', ['sass:dev', 'concat', 'browserify', 'copy:vendorCss', 'copy:devConfig', 'copy:devImages', 'copy:devFonts', 'copy:devIndex', "copy:devFavIcon", 'ngtemplates', 'test']);
+  grunt.registerTask('build:prod', ['build', 'sass:dist', 'uglify', 'copy:npmLib', 'copy:prodConfig', 'copy:prodImages', 'copy:prodFonts', 'copy:prodIndex', 'copy:htmlresourcesProd', "copy:prodFavIcon"]);
   grunt.registerTask('deploy', ['clean', 'build:prod']);
 
 };
