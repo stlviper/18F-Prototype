@@ -71,7 +71,7 @@ module.exports = function (grunt) {
       devFavIcon: {
         files: [{
           src: ['assets/img/favicon.ico'],
-          dest: '../dist/client/favicon.ico'
+          dest: 'favicon.ico'
         }]
       },
       prodFavIcon: {
