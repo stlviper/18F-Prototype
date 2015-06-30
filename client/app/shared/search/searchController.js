@@ -99,6 +99,7 @@ openfdaviz.controller('SearchController', ['$scope', '$http', '$stateParams', "l
   $scope.input = {
     searchText: $stateParams.query
   };
+  $scope.query = $stateParams.query;
   $scope.devicesQueryInProgress = false;
   $scope.drugsQueryInProgress = false;
   $scope.foodsQueryInProgress = false;
@@ -134,7 +135,7 @@ openfdaviz.controller('SearchController', ['$scope', '$http', '$stateParams', "l
   });
 
   $scope.runQuery = function () {
-    $stateParams.query = $scope.input.searchText;
+    $scope.query = $stateParams.query = $scope.input.searchText;
     $scope.layers.overlays.foods.data = [];
     $scope.layers.overlays.drugs.data = [];
     $scope.layers.overlays.devices.data = [];
