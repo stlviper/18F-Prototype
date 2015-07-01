@@ -4,19 +4,25 @@
   <ul class="nav nav-tabs" role="tablist">
     <li role="presentation" class="active">
       <a href="" aria-controls="profile" role="tab" data-toggle="tab" ng-click="activateResultsTab('foods')">
-        <div ng-if="foodsQueryInProgress"><div class="loader">Loading...</div></div>
+        <div ng-if="foodsQueryInProgress">
+          <div class="loader">Loading...</div>
+        </div>
         <span class="loader-label">Foods ({{counts.foods}})</span>
       </a>
     </li>
     <li role="presentation">
       <a href="" aria-controls="profile" role="tab" data-toggle="tab" ng-click="activateResultsTab('drugs')">
-        <div ng-if="drugsQueryInProgress"><div class="loader">Loading...</div></div>
+        <div ng-if="drugsQueryInProgress">
+          <div class="loader">Loading...</div>
+        </div>
         <span class="loader-label">Drugs ({{counts.drugs}})</span>
       </a>
     </li>
     <li role="presentation">
       <a href="" aria-controls="profile" role="tab" data-toggle="tab" ng-click="activateResultsTab('devices')">
-        <div ng-if="devicesQueryInProgress"><div class="loader">Loading...</div></div>
+        <div ng-if="devicesQueryInProgress">
+          <div class="loader">Loading...</div>
+        </div>
         <span class="loader-label">Devices ({{counts.devices}})</span>
       </a>
     </li>
@@ -27,14 +33,16 @@
       <div class="panel panel-default">
         <div id="drugsResultsList" class="panel-body">
           <p ng-if="counts.drugs == 0 && !drugsQueryInProgress">No Results Found</p>
+
           <div ng-if="drugsQueryInProgress">Loading...</div>
           <ul class="results-styling" ng-if="counts.drugs > 0 && !drugsQueryInProgress">
             <span ng-repeat="result in results.drugs">
-            <li ng-if="result.isDisplayable" ng-click="showModal(result)">
+            <li class="result-list-item" ng-if="result.isDisplayable" ng-click="showModal(result)">
               <dl>
                 <dd><b>Description: </b>{{result.product_description}}</dd>
                 <dd ng-if="result.openfda.brand_name[0]"><b>Brand Name: </b>{{result.openfda.brand_name[0]}}</dd>
-                <dd ng-if="result.openfda.manufacturer_name[0]"><b>Manufacturer: </b>{{result.openfda.manufacturer_name[0]}}</dd>
+                <dd ng-if="result.openfda.manufacturer_name[0]"><b>Manufacturer: </b>{{result.openfda.manufacturer_name[0]}}
+                </dd>
                 <dd><b>Recall Report Date: </b>{{result.report_date}}</dd>
                 <dd><b>Recalling Firm: </b>{{result.recalling_firm}}</dd>
               </dl>
@@ -49,10 +57,11 @@
       <div class="panel panel-default">
         <div id="devicesResultsList" class="panel-body">
           <p ng-if="counts.devices == 0 && !devicesQueryInProgress">No Results Found</p>
+
           <div ng-if="devicesQueryInProgress">Loading...</div>
           <ul class="results-styling" ng-if="counts.devices > 0 && !devicesQueryInProgress">
             <span ng-repeat="result in results.devices">
-            <li ng-if="result.isDisplayable" ng-click="showModal(result)">
+            <li class="result-list-item" ng-if="result.isDisplayable" ng-click="showModal(result)">
               <dl>
                 <dd><b>Description: </b>{{result.product_description}}</dd>
                 <dd><b>Recall Report Date: </b>{{result.report_date}}</dd>
@@ -69,10 +78,11 @@
       <div class="panel panel-default">
         <div id="foodsResultsList" class="panel-body">
           <p ng-if="counts.foods == 0 && !foodsQueryInProgress">No Results Found</p>
+
           <div ng-if="foodsQueryInProgress">Loading...</div>
           <ul class="results-styling" ng-if="counts.foods > 0 && !foodsQueryInProgress">
             <span ng-repeat="result in results.foods">
-            <li ng-if="result.isDisplayable" ng-click="showModal(result)">
+            <li class="result-list-item" ng-if="result.isDisplayable" ng-click="showModal(result)">
               <dl>
                 <dd><b>Description: </b>{{result.product_description}}</dd>
                 <dd><b>Recall Report Date: </b>{{result.report_date}}</dd>

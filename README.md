@@ -33,7 +33,7 @@ If you get an error about not being able to find node you may need to symlink /u
 
 This project consist of two parts. One is the Server Side API that makes calls to openFDA API and pre-processes the results while also caching certain values. The second is the User Interface. The server side API code is in the /server/ folder and the UI is in the /client/ folder. Both are managed by npm package manager. The final production code is also designed to run on Amazon Elastic Beanstalk for the server API and S3/Cloudfront CDN for the User Interface. Neither are required to run locally but you will need to create an empty aws.json credentials file for the build to succeed. Once those commands are entered you can start the API node server and a lightweight client server locally and visit the interface. The commands are listed below.
 
-```sh
+```
 $ git clone https://github.com/stlviper/18F-Prototype.git
 $ cd 18F-Prototype
 $ echo {} > aws.json
@@ -58,21 +58,25 @@ Mocha tests are automatically run on a grunt build, which is run on the grunt de
 ### Running Selenium automated browser tests
 
 - First set up the protractor and webdriver components (wrappers for selenium + angular enhancements)
+
 ```
 $ cd client
 $ npm install -g protractor, to start, first run webdriver-manager start --standalone
 $ ./node_modules/protractor/bin/webdriver-manager update --standalone --chrome
 ```
+
 - Then start the mock application server and run selenium
+
 ```
 $ node test/mockserver/mockserver_prod.js &
 $ grunt selenium
 ```
-
 NOTE: to clean up server instance run the following:
+
 ```
 $ ps aux | grep mockserver
 ```
+
 kill the process listed below
 <user>     27523   0.0  0.2  3054504  32996 s000  S     4:52PM   0:00.27 node test/mockserver/mockserver.js
 
@@ -83,7 +87,7 @@ Or run node mockserver.js in a separate terminal window without the &
 
 ### Local Development using openFDA Fake Server
 
-```sh
+```
 $ cd fake-api
 $ npm install
 $ cd ..
@@ -99,12 +103,14 @@ There is configuration available to deploy all resources to Amazon Web Services,
 Executing the commands below will cost you money as it will start 1 EC2 instance with autoscaling turned on and push objects to S3.
 
 Open aws.json and modify the contents to look like this,
+
 ```
 {
   "AWSAccessKeyId": "YOUR KeyID",
   "AWSSecretKey": "YOUR SECRET"
 }
 ```
+
 Then you need to have AWS EB Cli Installed (http://docs.aws.amazon.com/elasticbeanstalk/latest/dg/eb-cli3-install.html) you will be prompted to enter your KeyID and Secret when running the command below.
 
 ```
@@ -116,7 +122,7 @@ $ eb open
 
 You will now have a running version of the openFDAViz app. The eb open command will open the API in your browser.
 
-## *** Summary of Team OGSystems Agile Development Methodology ***git
+## *** Summary of Team OGSystems Agile Development Methodology ***
 
 OGSystems’ agile engineering method centers on user-centric design, using working prototypes and rapid deployment of capabilities to refine solutions. Our unique blend of agile, scaled agile and visual facilitation allows us to quickly respond to challenges scaling from Team to Enterprise.
 Team OGSystems created the FDA Prototype following our normal agile software development approach. Our staff of experienced and certified agile practitioners followed business as usual in responding and building the prototype by adding the RFQ response as a high priority project to our normal backlog.
@@ -197,6 +203,7 @@ alt="A Day of Design, Development and collaboration!" width="240" height="180" b
 
 ### Included Libraries / Projects
 Client Side
+
  - [angular](http://angularjs.org/) - [MIT](http://opensource.org/licenses/MIT)
  - [angular-leaflet-directive](https://github.com/tombatossals/angular-leaflet-directive) - [MIT](http://opensource.org/licenses/MIT)
  - [angular-route](https://github.com/angular/angular.js) - [MIT](http://opensource.org/licenses/MIT)
@@ -220,6 +227,7 @@ Client Side
  - [serve-favicon](https://github.com/expressjs/serve-favicon) - [MIT](http://opensource.org/licenses/MIT)
 
 Server Side API
+
  - [async](https://github.com/nodejitsu/forever) - [BSD](http://opensource.org/licenses/BSD-2-Clause)
  - [express](https://github.com/strongloop/express) - [MIT](http://opensource.org/licenses/MIT)
  - [request](https://github.com/request/request) - [Apache-2.0](http://opensource.org/licenses/Apache-2.0)
