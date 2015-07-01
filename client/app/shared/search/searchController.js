@@ -81,11 +81,6 @@ openfdaviz.controller('SearchController', ['$scope', '$http', '$stateParams', "l
   }
 
   function bindEvents(){
-    //TODO: make this smooth, or scroll top before drop-in animation happens
-    //$(document).on("shown.bs.modal", "#detailModal", function () {
-    //  $("#detailModal .modal-content").scrollTop(0);
-    //});
-
     $("#closeModalButton").on("click", function () {
       $("#detailModal").modal('hide');
     });
