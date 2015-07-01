@@ -263,6 +263,21 @@ openfdaviz.controller('SearchController', ['$scope', '$http', '$stateParams', "l
     }
   }
 
+  function _filterSearchResults(category) {
+    for (var i in category) {
+      if (!category[i].isDisplayable) {
+        category[i].isDisplayable = true;
+      }
+      if (category[i].report_date) {
+        if (!_isDateInBounds(category[i].report_date)) {
+          category[i].isDisplayable = false;
+        } else {
+          category[i].isDisplayable = true;
+        }
+      }
+    }
+  }
+
   function _updateAllResults() {
     $scope.layers.overlays.foods.data = [];
     $scope.layers.overlays.drugs.data = [];
@@ -354,23 +369,7 @@ openfdaviz.controller('SearchController', ['$scope', '$http', '$stateParams', "l
     return latLng;
   }
 
-  var _filterSearchResults = function (category) {
-    for (var i in category) {
-      if (!category[i].isDisplayable) {
-        category[i].isDisplayable = true;
-      }
-      if (category[i].report_date) {
-        if (!_isDateInBounds(category[i].report_date)) {
-          category[i].isDisplayable = false;
-        } else {
-          category[i].isDisplayable = true;
-        }
-      }
-    }
-  };
-
   function _isDateInBounds(dateToCheckString) {
-    // Check year
     var reYear = /((19|20)\d{2})/;
     var dateToCheckYear = Number(dateToCheckString.match(reYear)[0]);
     var startDateYear = Number(startDate.getFullYear().toString());
@@ -386,23 +385,15 @@ openfdaviz.controller('SearchController', ['$scope', '$http', '$stateParams', "l
       return false;
     }
     else if (dateToCheckYear === startDateYear) {
-      // Check month (assumes format of YYYYMMDD)
-      if (dateToCheckMonth < startDateMonth) {
+      if (dateToCheckMonth < startDateMonth ||
+         (dateToCheckMonth === startDateMonth && dateToCheckDay < startDateDay) ) {
         return false;
-      } else if (dateToCheckMonth === startDateMonth) {
-        // Check day (assumes format of YYYYMMDD)
-        if (dateToCheckDay < startDateDay) {
-          return false;
-        }
       }
     }
     else if (dateToCheckYear === endDateYear) {
-      if (dateToCheckMonth > endDateMonth) {
+      if (dateToCheckMonth > endDateMonth ||
+        (dateToCheckMonth === startDateMonth && dateToCheckDay > endDateDay) ) {
         return false;
-      } else if (dateToCheckMonth === startDateMonth) {
-        if (dateToCheckDay > endDateDay) {
-          return false;
-        }
       }
     }
     else {
