@@ -24,7 +24,7 @@ var FDA_END_TYPES = {
 };
 
 var geoCodeFoodData = function (data, callback) {
-  var geoKeys = [];
+  //var geoKeys = [];
 
   if (data && data instanceof Array) {
     data.map(function (item, index, array) {
@@ -35,8 +35,8 @@ var geoCodeFoodData = function (data, callback) {
         array[index].GeoLocation = geoCoder.geoCodeCountry(item.country);
       }
     });
-
-    if (geoKeys.length > 0) {
+    callback(data);
+   /* if (geoKeys.length > 0) {
       geoCoder.geoCodeString(geoKeys, function (err, data) {
         if (data) {
 
@@ -44,7 +44,7 @@ var geoCodeFoodData = function (data, callback) {
       });
     } else {
       callback(data);
-    }
+    }*/
   }
   else {
     callback([]);
@@ -52,7 +52,7 @@ var geoCodeFoodData = function (data, callback) {
 };
 
 var geoCodeDrugData = function (data, callback) {
-  var geoKeys = [];
+  //var geoKeys = [];
 
   if (data && data instanceof Array) {
     data.map(function (item, index, array) {
@@ -63,8 +63,8 @@ var geoCodeDrugData = function (data, callback) {
         array[index].GeoLocation = geoCoder.geoCodeCountry(item.country);
       }
     });
-
-    if (geoKeys.length > 0) {
+    callback(data);
+    /*if (geoKeys.length > 0) {
       geoCoder.geoCodeString(geoKeys, function (err, data) {
         if (data) {
 
@@ -72,15 +72,15 @@ var geoCodeDrugData = function (data, callback) {
       });
     } else {
       callback(data);
-    }
+    }*/
   }
   else {
     callback([]);
   }
 };
 
-var geoCodeDeviceData = function(data, callback){
-  var geoKeys = [];
+var geoCodeDeviceData = function (data, callback) {
+  //var geoKeys = [];
 
   if (data && data instanceof Array) {
     data.map(function (item, index, array) {
@@ -91,8 +91,8 @@ var geoCodeDeviceData = function(data, callback){
         array[index].GeoLocation = geoCoder.geoCodeCountry(item.country);
       }
     });
-
-    if (geoKeys.length > 0) {
+    callback(data);
+    /*if (geoKeys.length > 0) {
       geoCoder.geoCodeString(geoKeys, function (err, data) {
         if (data) {
 
@@ -100,7 +100,7 @@ var geoCodeDeviceData = function(data, callback){
       });
     } else {
       callback(data);
-    }
+    }*/
   }
   else {
     callback([]);
@@ -259,7 +259,7 @@ module.exports = {
       chosenFields = req.swagger.params.deviceFields.value.split(',');
     }
     getAPIData('device', 'enforcement', req, chosenFields, function (data) {
-      geoCodeDeviceData(data, function(processedData){
+      geoCodeDeviceData(data, function (processedData) {
         res.json(processedData);
       });
     });
