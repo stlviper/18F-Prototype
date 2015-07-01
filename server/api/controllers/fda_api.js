@@ -90,6 +90,22 @@ function getDataFromFdaApi(fdaUrl, callback) {
   );
 }
 
+var formatSearchFields = function (value, fields) {
+  var retSearchField = '';
+  if (fields && fields instanceof Array) {
+    for (var idx in fields) {
+      if (typeof fields[idx] === 'string' || fields[idx] instanceof String) {
+        retSearchField += fields[idx].trim() + ':' + value.trim() + '+';
+      }
+    }
+    //NOTE: Remove the last + character
+    return retSearchField.substring(0, retSearchField.length - 1);
+  }
+  else {
+    return '';
+  }
+};
+
 var getAPIData = function (endPointBase, typeOfEngPoint, req, fields, callback) {
   var limit = 100, start = 0, search;
   if (req.swagger.params.limit) {
@@ -121,22 +137,6 @@ var getAPIRangeData = function (endPointBase, typeOfEngPoint, datefield, req, ca
   getDataFromFdaApi(fdaUrl, callback);
 };
 
-
-var formatSearchFields = function (value, fields) {
-  var retSearchField = '';
-  if (fields && fields instanceof Array) {
-    for (var idx in fields) {
-      if (typeof fields[idx] === 'string' || fields[idx] instanceof String) {
-        retSearchField += fields[idx].trim() + ':' + value.trim() + '+';
-      }
-    }
-    //NOTE: Remove the last + character
-    return retSearchField.substring(0, retSearchField.length - 1);
-  }
-  else {
-    return '';
-  }
-};
 
 function getAggregateSplashSearchData(req, res) {
   async.parallel([
