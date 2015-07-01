@@ -86,7 +86,7 @@ openfdaviz.controller('SearchController', ['$scope', '$http', '$stateParams', "l
     //  $("#detailModal .modal-content").scrollTop(0);
     //});
 
-    $("#closeModalButton").on("click", function (e) {
+    $("#closeModalButton").on("click", function () {
       $("#detailModal").modal('hide');
     });
   }
@@ -298,40 +298,38 @@ openfdaviz.controller('SearchController', ['$scope', '$http', '$stateParams', "l
   function _addPointsToHeatmap(label, category, layer) {
     var perturbRadius = 0.004;
     for (var i in category) {
-      if (typeof category[i].isDisplayable !== 'undefined') {
-        if (typeof category[i].GeoLocation !== 'undefined') {
-          if (typeof category[i].GeoLocation.lat !== 'undefined' &&
-            typeof category[i].GeoLocation.lng !== 'undefined') {
-            var lat = Number(category[i].GeoLocation.lat);
-            var lng = Number(category[i].GeoLocation.lng);
-            var latLng = [lat, lng];
-            // Since the heatmap doesn't change when there are duplicate points,
-            // perturb duplicate points a little so there is a visible difference
-            // in the heatmap
-            for (var j = 0; j < layer.length; j++) {
-              if (latLng[0] === layer[j][0] &&
-                latLng[1] === layer[j][1]) {
-                latLng = _perturbPoints(latLng, perturbRadius);
-                break;
-              }
-            }
-            if (category[i].isDisplayable) {
-              switch(label){
-                case Categories.FOODS:
-                  $scope.counts.foods += 1;
-                  break;
-                case Categories.DRUGS:
-                  $scope.counts.drugs += 1;
-                  break;
-                case Categories.DEVICES:
-                  $scope.counts.devices += 1;
-                  break;
-                default:
-                  break;
-              }
-              layer.push(latLng);
-            }
+      if (typeof category[i].isDisplayable !== 'undefined' &&
+        typeof category[i].GeoLocation !== 'undefined' &&
+        typeof category[i].GeoLocation.lat !== 'undefined' &&
+        typeof category[i].GeoLocation.lng !== 'undefined') {
+        var lat = Number(category[i].GeoLocation.lat);
+        var lng = Number(category[i].GeoLocation.lng);
+        var latLng = [lat, lng];
+        // Since the heatmap doesn't change when there are duplicate points,
+        // perturb duplicate points a little so there is a visible difference
+        // in the heatmap
+        for (var j = 0; j < layer.length; j++) {
+          if (latLng[0] === layer[j][0] &&
+            latLng[1] === layer[j][1]) {
+            latLng = _perturbPoints(latLng, perturbRadius);
+            break;
           }
+        }
+        if (category[i].isDisplayable) {
+          switch (label) {
+            case Categories.FOODS:
+              $scope.counts.foods += 1;
+              break;
+            case Categories.DRUGS:
+              $scope.counts.drugs += 1;
+              break;
+            case Categories.DEVICES:
+              $scope.counts.devices += 1;
+              break;
+            default:
+              break;
+          }
+          layer.push(latLng);
         }
       }
     }

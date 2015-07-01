@@ -5,17 +5,19 @@ var express = require('express');
 var app = express();
 
 
-module.exports = app; // for testing
+module.exports = app;
 
 var config = {
-  appRoot: __dirname // required config
+  appRoot: __dirname
 };
 
 SwaggerExpress.create(config, function(err, swaggerExpress) {
-  if (err) { throw err; }
+  if (err) {
+    throw err;
+  }
 
   app.use(function (req, res, next) {
-    res.header('Access-Control-Allow-Origin', '*');//req.headers.origin);
+    res.header('Access-Control-Allow-Origin', '*');
     res.header('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, PATCH, DELETE');
     res.header('Access-Control-Allow-Headers', 'X-Requested-With,content-type');
     res.header('Access-Control-Allow-Headers', 'Content-Type');
@@ -31,6 +33,7 @@ SwaggerExpress.create(config, function(err, swaggerExpress) {
 
   app.use(function(err, req, res, next) {
     res.status(500).send(err);
+    next();
   });
 
   var port = process.env.PORT || 80;

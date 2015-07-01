@@ -1,7 +1,7 @@
 'use strict';
 
 var config = null;
-openfdaviz.controller('LayoutController', ['$scope', '$http', function($scope, $http){
+openfdaviz.controller('LayoutController', ['$scope', function($scope){
   $scope.imagePath = null;
 
   function init(){
@@ -12,15 +12,8 @@ openfdaviz.controller('LayoutController', ['$scope', '$http', function($scope, $
         config = resp;
         $scope.imagePath = config.paths.images;
       }
-    })
+    });
   }
-  //angular.element(document).ready(function () {
-  //  if(!config){
-  //    $http.get('config.json').success(function(resp){
-  //
-  //    });
-  //  }
-  //});
 
   init();
 }]);
