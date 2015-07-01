@@ -239,7 +239,7 @@ function getDataFromFdaApi(fdaUrl, callback) {
 
 module.exports = {
   aggregateSplashSearch: function (req, res) {
-    getAggregateSplashSearchData(req, res)
+    getAggregateSplashSearchData(req, res);
   },
 
   drugEventSearch: function (req, res) {
