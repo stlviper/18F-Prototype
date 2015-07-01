@@ -386,7 +386,6 @@ openfdaviz.controller('SearchController', ['$scope', '$http', '$stateParams', "l
     var dateToCheckMonth = Number(dateToCheckString.substring(4,6));
     var dateToCheckStartMonth = Number(dateToCheckString.substring(4, 6));
     var startDateMonth = Number(startDate.getMonth().toString());
-    var dateToCheckEndMonth = '';
 
     if ((dateToCheckYear < startDateYear) || (dateToCheckYear > endDateYear)) {
       return false;
