@@ -14,7 +14,7 @@ openfdaviz.directive("openfdavizTimeSlider", ['$parse', function ($parse) {
 
   var _formatDateForDisplay = function (date) {
     var outputFormat = d3.time.format('%m/%d/%Y');
-    return outputFormat(date)
+    return outputFormat(date);
   };
 
   var _updateDateFields = function ($minDateControl, minDate, $maxDateControl, maxDate) {

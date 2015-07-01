@@ -3,5 +3,5 @@ openfdaviz.directive('openfdavizLayout', function(){
     restrict: 'AE',
     replace: 'true',
     templateUrl: '/app/shared/layout/mainLayout.html'
-  }
+  };
 });
