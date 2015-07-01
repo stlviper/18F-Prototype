@@ -383,14 +383,17 @@ openfdaviz.controller('SearchController', ['$scope', '$http', '$stateParams', "l
     var dateToCheckYear = Number(dateToCheckString.match(reYear)[0]);
     var endDateYear = Number(endDate.getFullYear().toString());
     var startDateYear = Number(startDate.getFullYear().toString());
+    var dateToCheckMonth = Number(dateToCheckString.substring(4,6));
+    var dateToCheckStartMonth = Number(dateToCheckString.substring(4, 6));
+    var startDateMonth = Number(startDate.getMonth().toString());
+    var dateToCheckEndMonth = '';
+
     if ((dateToCheckYear < startDateYear) || (dateToCheckYear > endDateYear)) {
       return false;
     }
     else if (dateToCheckYear === startDateYear) {
       // Check month (assumes format of YYYYMMDD)
-      var dateToCheckMonth = Number(dateToCheckString.substring(4, 6));
-      var startDateMonth = Number(startDate.getMonth().toString());
-      if (dateToCheckMonth < startDateMonth) {
+      if (dateToCheckStartMonth < startDateMonth) {
         return false;
       }
 
