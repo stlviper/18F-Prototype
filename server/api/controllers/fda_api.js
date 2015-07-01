@@ -109,11 +109,12 @@ var geoCodeDeviceData = function (data, callback) {
 
 var formatSearchFields = function (value, fields) {
   var retSearchField = '';
-  if (fields) {
+  if (fields && fields instanceof Array) {
     for (var idx in fields) {
-      retSearchField += fields[idx].trim() + ':' + value.trim() + '+'
+      if (typeof fields[idx] === 'string' || fields[idx] instanceof String) {
+        retSearchField += fields[idx].trim() + ':' + value.trim() + '+';
+      }
     }
-
     return retSearchField.substring(0, retSearchField.length - 1);//NOTE: Remove the last + character
   }
   else {
