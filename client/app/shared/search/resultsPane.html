@@ -5,19 +5,19 @@
     <li role="presentation" class="active">
       <a href="" aria-controls="profile" role="tab" data-toggle="tab" ng-click="activateResultsTab('foods')">
         <div ng-if="foodsQueryInProgress"><div class="loader">Loading...</div></div>
-        <span class="loader-label">Foods ({{results.foods.length}})</span>
+        <span class="loader-label">Foods ({{counts.foods}})</span>
       </a>
     </li>
     <li role="presentation">
       <a href="" aria-controls="profile" role="tab" data-toggle="tab" ng-click="activateResultsTab('drugs')">
         <div ng-if="drugsQueryInProgress"><div class="loader">Loading...</div></div>
-        <span class="loader-label">Drugs ({{results.drugs.length}})</span>
+        <span class="loader-label">Drugs ({{counts.drugs}})</span>
       </a>
     </li>
     <li role="presentation">
       <a href="" aria-controls="profile" role="tab" data-toggle="tab" ng-click="activateResultsTab('devices')">
         <div ng-if="devicesQueryInProgress"><div class="loader">Loading...</div></div>
-        <span class="loader-label">Devices ({{results.devices.length}})</span>
+        <span class="loader-label">Devices ({{counts.devices}})</span>
       </a>
     </li>
   </ul>
@@ -26,9 +26,9 @@
     <div ng-switch-when="drugs">
       <div class="panel panel-default">
         <div id="drugsResultsList" class="panel-body">
-          <p ng-if="results.drugs.length == 0 && !drugsQueryInProgress">No Results Found</p>
+          <p ng-if="counts.drugs == 0 && !drugsQueryInProgress">No Results Found</p>
           <div ng-if="drugsQueryInProgress">Loading...</div>
-          <ul class="results-styling" ng-if="results.drugs.length > 0 && !drugsQueryInProgress">
+          <ul class="results-styling" ng-if="counts.drugs > 0 && !drugsQueryInProgress">
             <span ng-repeat="result in results.drugs">
             <li ng-if="result.isDisplayable" ng-click="showModal(result)">
               <dl>
@@ -48,9 +48,9 @@
     <div ng-switch-when="devices">
       <div class="panel panel-default">
         <div id="devicesResultsList" class="panel-body">
-          <p ng-if="results.devices.length == 0 && !devicesQueryInProgress">No Results Found</p>
+          <p ng-if="counts.devices == 0 && !devicesQueryInProgress">No Results Found</p>
           <div ng-if="devicesQueryInProgress">Loading...</div>
-          <ul class="results-styling" ng-if="results.devices.length > 0 && !devicesQueryInProgress">
+          <ul class="results-styling" ng-if="counts.devices > 0 && !devicesQueryInProgress">
             <span ng-repeat="result in results.devices">
             <li ng-if="result.isDisplayable" ng-click="showModal(result)">
               <dl>
@@ -68,9 +68,9 @@
     <div ng-switch-when="foods">
       <div class="panel panel-default">
         <div id="foodsResultsList" class="panel-body">
-          <p ng-if="results.foods.length == 0 && !foodsQueryInProgress">No Results Found</p>
+          <p ng-if="counts.foods == 0 && !foodsQueryInProgress">No Results Found</p>
           <div ng-if="foodsQueryInProgress">Loading...</div>
-          <ul class="results-styling" ng-if="results.foods.length > 0 && !foodsQueryInProgress">
+          <ul class="results-styling" ng-if="counts.foods > 0 && !foodsQueryInProgress">
             <span ng-repeat="result in results.foods">
             <li ng-if="result.isDisplayable" ng-click="showModal(result)">
               <dl>

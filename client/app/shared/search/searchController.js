@@ -2,11 +2,19 @@
 
 openfdaviz.controller('SearchController', ['$scope', '$http', '$stateParams', "leafletData", function ($scope, $http, $stateParams, leafletData) {
 
+  var Categories = {
+    FOODS: 0, DRUGS: 1, DEVICES: 2
+  };
+  // Keep track of how many points are being displayed on the heatmap after filtering
+  // for each category so the tabs of the results pane match
+  $scope.counts = {
+    foods: 0,
+    drugs: 0,
+    devices: 0
+  };
+
   //Setting up the Leaflet Directive
   var mapZoom = 1;
-  var foodsMapPoints = [];
-  var drugsMapPoints = [];
-  var devicesMapPoints = [];
 
   $scope.fdaVizMapCenter = {
     lat: 0,
@@ -29,7 +37,7 @@ openfdaviz.controller('SearchController', ['$scope', '$http', '$stateParams', "l
       foods: {
         name: 'Food',
         type: 'heat',
-        data: foodsMapPoints,
+        data: [],
         layerOptions: {
           radius: 8,
           blur: 5,
@@ -41,7 +49,7 @@ openfdaviz.controller('SearchController', ['$scope', '$http', '$stateParams', "l
       drugs: {
         name: 'Drugs',
         type: 'heat',
-        data: drugsMapPoints,
+        data: [],
         layerOptions: {
           radius: 8,
           blur: 5,
@@ -53,7 +61,7 @@ openfdaviz.controller('SearchController', ['$scope', '$http', '$stateParams', "l
       devices: {
         name: 'Devices',
         type: 'heat',
-        data: devicesMapPoints,
+        data: [],
         layerOptions: {
           radius: 8,
           blur: 5,
@@ -129,7 +137,6 @@ openfdaviz.controller('SearchController', ['$scope', '$http', '$stateParams', "l
     $scope.$on('dateChange', function (event, data) {
       startDate = data.minDate;
       endDate = data.maxDate;
-      _filterSearchResults();
       _updateAllResults();
     });
   });
@@ -139,6 +146,9 @@ openfdaviz.controller('SearchController', ['$scope', '$http', '$stateParams', "l
     $scope.layers.overlays.foods.data = [];
     $scope.layers.overlays.drugs.data = [];
     $scope.layers.overlays.devices.data = [];
+    $scope.counts.foods = 0;
+    $scope.counts.drugs = 0;
+    $scope.counts.devices = 0;
 
     setQueryState();
     $.when.apply($, [queryDrugs(), queryFoods(), queryDevices()]).done([_updateAllResults]);
@@ -151,6 +161,9 @@ openfdaviz.controller('SearchController', ['$scope', '$http', '$stateParams', "l
     $scope.results.drugs = [];
     $scope.results.foods = [];
     $scope.results.devices = [];
+    $scope.counts.foods = 0;
+    $scope.counts.drugs = 0;
+    $scope.counts.devices = 0;
   }
 
   var generalQuery = function () {
@@ -230,7 +243,7 @@ openfdaviz.controller('SearchController', ['$scope', '$http', '$stateParams', "l
 
     // Plot food geodata points
     if (typeof $scope.results.foods !== 'undefined') {
-      _addPointsToHeatmap($scope.results.foods, $scope.layers.overlays.foods.data);
+      _addPointsToHeatmap(Categories.FOODS, $scope.results.foods, $scope.layers.overlays.foods.data);
       refreshMap();
     }
   }
@@ -240,7 +253,7 @@ openfdaviz.controller('SearchController', ['$scope', '$http', '$stateParams', "l
 
     // Plot drug geodata points
     if (typeof $scope.results.drugs !== 'undefined') {
-      _addPointsToHeatmap($scope.results.drugs, $scope.layers.overlays.drugs.data);
+      _addPointsToHeatmap(Categories.DRUGS, $scope.results.drugs, $scope.layers.overlays.drugs.data);
       refreshMap();
     }
   }
@@ -250,7 +263,7 @@ openfdaviz.controller('SearchController', ['$scope', '$http', '$stateParams', "l
 
     // Plot device geodata points
     if (typeof $scope.results.devices !== 'undefined') {
-      _addPointsToHeatmap($scope.results.devices, $scope.layers.overlays.devices.data);
+      _addPointsToHeatmap(Categories.DEVICES, $scope.results.devices, $scope.layers.overlays.devices.data);
       refreshMap();
     }
   }
@@ -259,6 +272,9 @@ openfdaviz.controller('SearchController', ['$scope', '$http', '$stateParams', "l
     $scope.layers.overlays.foods.data = [];
     $scope.layers.overlays.drugs.data = [];
     $scope.layers.overlays.devices.data = [];
+    $scope.counts.foods = 0;
+    $scope.counts.drugs = 0;
+    $scope.counts.devices = 0;
 
     _filterSearchResults();
 
@@ -279,7 +295,7 @@ openfdaviz.controller('SearchController', ['$scope', '$http', '$stateParams', "l
     });
   }
 
-  function _addPointsToHeatmap(category, layer) {
+  function _addPointsToHeatmap(label, category, layer) {
     var perturbRadius = 0.004;
     for (var i in category) {
       if (typeof category[i].isDisplayable !== 'undefined') {
@@ -300,6 +316,19 @@ openfdaviz.controller('SearchController', ['$scope', '$http', '$stateParams', "l
               }
             }
             if (category[i].isDisplayable) {
+              switch(label){
+                case Categories.FOODS:
+                  $scope.counts.foods += 1;
+                  break;
+                case Categories.DRUGS:
+                  $scope.counts.drugs += 1;
+                  break;
+                case Categories.DEVICES:
+                  $scope.counts.devices += 1;
+                  break;
+                default:
+                  break;
+              }
               layer.push(latLng);
             }
           }
@@ -348,8 +377,8 @@ openfdaviz.controller('SearchController', ['$scope', '$http', '$stateParams', "l
       if (typeof drugs[i].isDisplayable === 'undefined') {
         drugs[i].isDisplayable = true;
       }
-      if (typeof drugs[i].receivedate !== 'undefined') {
-        if (!_isDateInBounds(drugs[i].receivedate)) {
+      if (typeof drugs[i].report_date !== 'undefined') {
+        if (!_isDateInBounds(drugs[i].report_date)) {
           drugs[i].isDisplayable = false;
         } else {
           drugs[i].isDisplayable = true;
@@ -363,11 +392,11 @@ openfdaviz.controller('SearchController', ['$scope', '$http', '$stateParams', "l
       if (typeof devices[i].isDisplayable === 'undefined') {
         devices[i].isDisplayable = true;
       }
-      if (typeof devices[i].date_of_event !== 'undefined') {
-        if (!_isDateInBounds(devices[i].date_of_event)) {
+      if (typeof devices[i].report_date !== 'undefined') {
+        if (!_isDateInBounds(devices[i].report_date)) {
           devices[i].isDisplayable = false;
         } else {
-          devices[i].isDisplayable = false;
+          devices[i].isDisplayable = true;
         }
       }
     }
