@@ -237,7 +237,7 @@ openfdaviz.controller('SearchController', ['$scope', '$http', '$stateParams', "l
     $scope.foodsQueryInProgress = false;
 
     // Plot food geodata points
-    if (typeof $scope.results.foods !== 'undefined') {
+    if ($scope.results.foods) {
       _addPointsToHeatmap(Categories.FOODS, $scope.results.foods, $scope.layers.overlays.foods.data);
       refreshMap();
     }
@@ -247,7 +247,7 @@ openfdaviz.controller('SearchController', ['$scope', '$http', '$stateParams', "l
     $scope.drugsQueryInProgress = false;
 
     // Plot drug geodata points
-    if (typeof $scope.results.drugs !== 'undefined') {
+    if ($scope.results.drugs) {
       _addPointsToHeatmap(Categories.DRUGS, $scope.results.drugs, $scope.layers.overlays.drugs.data);
       refreshMap();
     }
@@ -257,7 +257,7 @@ openfdaviz.controller('SearchController', ['$scope', '$http', '$stateParams', "l
     $scope.devicesQueryInProgress = false;
 
     // Plot device geodata points
-    if (typeof $scope.results.devices !== 'undefined') {
+    if ($scope.results.devices) {
       _addPointsToHeatmap(Categories.DEVICES, $scope.results.devices, $scope.layers.overlays.devices.data);
       refreshMap();
     }
@@ -271,7 +271,15 @@ openfdaviz.controller('SearchController', ['$scope', '$http', '$stateParams', "l
     $scope.counts.drugs = 0;
     $scope.counts.devices = 0;
 
-    _filterSearchResults();
+    if ($scope.results.foods) {
+      _filterSearchResults($scope.results.foods);
+    }
+    if ($scope.results.drugs) {
+      _filterSearchResults($scope.results.drugs);
+    }
+    if ($scope.results.devices) {
+      _filterSearchResults($scope.results.devices);
+    }
 
     handleDrugsResponse();
     handleFoodsResponse();
@@ -290,47 +298,55 @@ openfdaviz.controller('SearchController', ['$scope', '$http', '$stateParams', "l
     });
   }
 
-  function _addPointsToHeatmap(label, category, layer) {
+  function _addPointsToHeatmap(label, category, layerData) {
     var perturbRadius = 0.004;
     for (var i in category) {
-      if (typeof category[i].isDisplayable !== 'undefined' &&
-        typeof category[i].GeoLocation !== 'undefined' &&
-        typeof category[i].GeoLocation.lat !== 'undefined' &&
-        typeof category[i].GeoLocation.lng !== 'undefined') {
+      if (category[i].isDisplayable &&
+          category[i].GeoLocation &&
+          category[i].GeoLocation.lat &&
+          category[i].GeoLocation.lng) {
         var lat = Number(category[i].GeoLocation.lat);
         var lng = Number(category[i].GeoLocation.lng);
         var latLng = [lat, lng];
         // Since the heatmap doesn't change when there are duplicate points,
         // perturb duplicate points a little so there is a visible difference
         // in the heatmap
-        for (var j = 0; j < layer.length; j++) {
-          if (latLng[0] === layer[j][0] &&
-            latLng[1] === layer[j][1]) {
-            latLng = _perturbPoints(latLng, perturbRadius);
-            break;
-          }
-        }
-        if (category[i].isDisplayable) {
-          switch (label) {
-            case Categories.FOODS:
-              $scope.counts.foods += 1;
-              break;
-            case Categories.DRUGS:
-              $scope.counts.drugs += 1;
-              break;
-            case Categories.DEVICES:
-              $scope.counts.devices += 1;
-              break;
-            default:
-              break;
-          }
-          layer.push(latLng);
-        }
+        _perturbDuplicatePoints(layerData, latLng, perturbRadius);
+        _incrementDisplayCount(label, category[i]);
+        layerData.push(latLng);
       }
     }
   }
 
-  function _perturbPoints(latLng, radius) {
+  function _incrementDisplayCount(label, categoryElement) {
+    if (categoryElement.isDisplayable) {
+      switch (label) {
+        case Categories.FOODS:
+          $scope.counts.foods += 1;
+          break;
+        case Categories.DRUGS:
+          $scope.counts.drugs += 1;
+          break;
+        case Categories.DEVICES:
+          $scope.counts.devices += 1;
+          break;
+        default:
+          break;
+      }
+    }
+  }
+
+  function _perturbDuplicatePoints(layerData, latLng, radius) {
+    for (var j = 0; j < layerData.length; j++) {
+      if (latLng[0] === layerData[j][0] &&
+        latLng[1] === layerData[j][1]) {
+        latLng = _perturbPointPair(latLng, radius);
+        break;
+      }
+    }
+  }
+
+  function _perturbPointPair(latLng, radius) {
     // Spread duplicate points in a small circle around the point
     var angle = 2 * Math.PI * Math.random();
     latLng[0] += radius * Math.sin(angle);
@@ -338,82 +354,52 @@ openfdaviz.controller('SearchController', ['$scope', '$http', '$stateParams', "l
     return latLng;
   }
 
-  var _filterInformation = function (devices) {
-    for (var i in devices) {
-      if (!devices[i].isDisplayable) {
-        devices[i].isDisplayable = true;
+  var _filterSearchResults = function (category) {
+    for (var i in category) {
+      if (!category[i].isDisplayable) {
+        category[i].isDisplayable = true;
       }
-      if (devices[i].report_date) {
-        if (!_isDateInBounds(devices[i].report_date)) {
-          devices[i].isDisplayable = false;
+      if (category[i].report_date) {
+        if (!_isDateInBounds(category[i].report_date)) {
+          category[i].isDisplayable = false;
         } else {
-          devices[i].isDisplayable = true;
+          category[i].isDisplayable = true;
         }
       }
     }
   };
 
-  function _filterSearchResults() {
-    if (typeof $scope.results.foods !== 'undefined') {
-      _filterFoodSearchResults($scope.results.foods);
-    }
-    if (typeof $scope.results.drugs !== 'undefined') {
-      _filterDrugSearchResults($scope.results.drugs);
-    }
-    if (typeof $scope.results.devices !== 'undefined') {
-      _filterDeviceSearchResults($scope.results.devices);
-    }
-  }
-
-  function _filterFoodSearchResults(foods) {
-    _filterInformation(foods);
-  }
-
-  function _filterDrugSearchResults(drugs) {
-    _filterInformation(drugs);
-  }
-
-  function _filterDeviceSearchResults(devices) {
-    _filterInformation(devices);
-  }
-
   function _isDateInBounds(dateToCheckString) {
     // Check year
     var reYear = /((19|20)\d{2})/;
     var dateToCheckYear = Number(dateToCheckString.match(reYear)[0]);
-    var endDateYear = Number(endDate.getFullYear().toString());
     var startDateYear = Number(startDate.getFullYear().toString());
-    var dateToCheckMonth = Number(dateToCheckString.substring(4,6));
-    var dateToCheckStartMonth = Number(dateToCheckString.substring(4, 6));
+    var endDateYear = Number(endDate.getFullYear().toString());
+    var dateToCheckMonth = Number(dateToCheckString.substring(4, 6));
     var startDateMonth = Number(startDate.getMonth().toString());
+    var endDateMonth = Number(endDate.getMonth().toString());
+    var dateToCheckDay = Number(dateToCheckString.substring(6, 8));
+    var startDateDay = Number(startDate.getDay().toString());
+    var endDateDay = Number(endDate.getDay().toString());
 
     if ((dateToCheckYear < startDateYear) || (dateToCheckYear > endDateYear)) {
       return false;
     }
     else if (dateToCheckYear === startDateYear) {
       // Check month (assumes format of YYYYMMDD)
-      if (dateToCheckStartMonth < startDateMonth) {
+      if (dateToCheckMonth < startDateMonth) {
         return false;
-      }
-
-      if (dateToCheckMonth === startDateMonth) {
+      } else if (dateToCheckMonth === startDateMonth) {
         // Check day (assumes format of YYYYMMDD)
-        var dateToCheckDay = Number(dateToCheckString.substring(6, 8));
-        var startDateDay = Number(startDate.getDay().toString());
         if (dateToCheckDay < startDateDay) {
           return false;
         }
       }
     }
     else if (dateToCheckYear === endDateYear) {
-      var endDateMonth = Number(endDate.getMonth().toString());
       if (dateToCheckMonth > endDateMonth) {
         return false;
-      }
-
-      if (dateToCheckMonth === startDateMonth) {
-        dateToCheckDay = Number(dateToCheckString.substring(6, 8));
-        var endDateDay = Number(endDate.getDay().toString());
+      } else if (dateToCheckMonth === startDateMonth) {
         if (dateToCheckDay > endDateDay) {
           return false;
         }
