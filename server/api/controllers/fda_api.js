@@ -8,8 +8,6 @@ var request = require('request'),
 
 
 var FDA_DRUG_EVENT = 'https://api.fda.gov/drug/';
-var FDA_DEVICE_EVENT = 'https://api.fda.gov/device/';
-var FDA_FOOD_EVENT = 'https://api.fda.gov/food/';
 
 
 var FDA_END_POINTS = {
@@ -21,6 +19,22 @@ var FDA_END_TYPES = {
   event: 'event.json',
   enforcement: 'enforcement.json',
   label: 'label.json'
+};
+
+var formatSearchFields = function (value, fields) {
+  var retSearchField = '';
+  if (fields && fields instanceof Array) {
+    for (var idx in fields) {
+      if (typeof fields[idx] === 'string' || fields[idx] instanceof String) {
+        retSearchField += fields[idx].trim() + ':' + value.trim() + '+';
+      }
+    }
+    //NOTE: Remove the last + character
+    return retSearchField.substring(0, retSearchField.length - 1);
+  }
+  else {
+    return '';
+  }
 };
 
 var geoCodeFoodData = function (data, callback) {
@@ -121,23 +135,6 @@ var getAPIRangeData = function (endPointBase, typeOfEngPoint, datefield, req, ca
   getDataFromFdaApi(fdaUrl, callback);
 };
 
-
-var formatSearchFields = function (value, fields) {
-  var retSearchField = '';
-  if (fields && fields instanceof Array) {
-    for (var idx in fields) {
-      if (typeof fields[idx] === 'string' || fields[idx] instanceof String) {
-        retSearchField += fields[idx].trim() + ':' + value.trim() + '+';
-      }
-    }
-    //NOTE: Remove the last + character
-    return retSearchField.substring(0, retSearchField.length - 1);
-  }
-  else {
-    return '';
-  }
-};
-
 function getAggregateSplashSearchData(req, res) {
   async.parallel([
       function (callback) {
@@ -206,8 +203,6 @@ function getEventSearchData(req, callback) {
     callback(data);
   });
 }
-
-
 
 
 module.exports = {
