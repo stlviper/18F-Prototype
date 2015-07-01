@@ -97,7 +97,7 @@ describe('Testing Drugs Controller.', function () {
         expect(data[10]['@epoch']).to.exist;
         var totalCorrectResults = 0;
         for (var i = 0; i < data.length; i++) {
-          if (data[i].primarysourcecountry.toLowerCase() == 'us') {
+          if (data[i].primarysourcecountry.toLowerCase() === "us") {
             totalCorrectResults++;
           }
         }
@@ -121,7 +121,7 @@ describe('Testing Drugs Controller.', function () {
         expect(data[3]['@epoch']).to.exist;
         var totalCorrectResults = 0;
         for (var i = 0; i < data.length; i++) {
-          if (data[i].state.toLowerCase() == 'mo') {
+          if (data[i].state.toLowerCase() === "mo") {
             totalCorrectResults++;
           }
         }
@@ -144,7 +144,7 @@ describe('Testing Drugs Controller.', function () {
         expect(data[3]['@epoch']).to.exist;
         var totalCorrectResults = 0;
         for (var i = 0; i < data.length; i++) {
-          if (data[i].state.toLowerCase() == 'ca') {
+          if (data[i].state.toLowerCase() === "ca") {
             totalCorrectResults++;
           }
         }
@@ -167,7 +167,7 @@ describe('Testing Drugs Controller.', function () {
         expect(data[3]['@epoch']).to.exist;
         var totalCorrectResults = 0;
         for (var i = 0; i < data.length; i++) {
-          if (data[i].state.toLowerCase() == 'mo') {
+          if (data[i].state.toLowerCase() === "mo") {
             totalCorrectResults++;
           }
         }
