@@ -4,7 +4,7 @@ openfdaviz.directive('openfdavizMap', [function () {
     replace: 'true',
     scope: false,
     templateUrl: '/app/components/map/mapView.html',
-    link: function (scope, element, attrs) {
+    link: function (scope) {
       // create a map in the "map" div, set the view to a given place and zoom
 
       var map = L.map('map', {center: [38, 264], zoom: 4, minZoom: 2});

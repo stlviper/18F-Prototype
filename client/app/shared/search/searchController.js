@@ -74,24 +74,24 @@ openfdaviz.controller('SearchController', ['$scope', '$http', '$stateParams', "l
 
   };
 
-  function init(){
-    angular.element(document).ready(function(){
+  function init() {
+    angular.element(document).ready(function () {
       bindEvents();
     });
   }
 
-  function bindEvents(){
+  function bindEvents() {
     $("#closeModalButton").on("click", function () {
       $("#detailModal").modal('hide');
     });
   }
 
-  $scope.showModal = function(result){
+  $scope.showModal = function (result) {
     $scope.modal.selectedItem = result;
     $('#detailModal').modal('show');
   };
 
-  $scope.$on("$destroy", function() {
+  $scope.$on("$destroy", function () {
     $(document).off('show.bs.modal', '#detailModal');
   });
 
@@ -118,8 +118,8 @@ openfdaviz.controller('SearchController', ['$scope', '$http', '$stateParams', "l
 
   $scope.results = emptyResults;
 
-  $scope.handleKeypress = function($event){
-    if($event.keyCode === 13){
+  $scope.handleKeypress = function ($event) {
+    if ($event.keyCode === 13) {
       $scope.runQuery();
     }
   };
@@ -149,7 +149,7 @@ openfdaviz.controller('SearchController', ['$scope', '$http', '$stateParams', "l
     $.when.apply($, [queryDrugs(), queryFoods(), queryDevices()]).done([_updateAllResults]);
   };
 
-  function setQueryState(){
+  function setQueryState() {
     $scope.devicesQueryInProgress = true;
     $scope.drugsQueryInProgress = true;
     $scope.foodsQueryInProgress = true;
@@ -184,7 +184,7 @@ openfdaviz.controller('SearchController', ['$scope', '$http', '$stateParams', "l
     var deferred = $.Deferred();
     $http.get(config.resources.drugs + '?query=' + $scope.input.searchText)
       .success(function (resp) {
-        if(!resp.error){
+        if (!resp.error) {
           $scope.results.drugs = resp;
         }
         handleDrugsResponse();
@@ -203,7 +203,7 @@ openfdaviz.controller('SearchController', ['$scope', '$http', '$stateParams', "l
     var deferred = $.Deferred();
     $http.get(config.resources.foods + '?query=' + $scope.input.searchText)
       .success(function (resp) {
-        if(!resp.error){
+        if (!resp.error) {
           $scope.results.foods = resp;
         }
         handleFoodsResponse();
@@ -220,7 +220,7 @@ openfdaviz.controller('SearchController', ['$scope', '$http', '$stateParams', "l
     var deferred = $.Deferred();
     $http.get(config.resources.devices + '?query=' + $scope.input.searchText)
       .success(function (resp) {
-        if(!resp.error){
+        if (!resp.error) {
           $scope.results.devices = resp;
         }
         handleDevicesResponse();
@@ -233,7 +233,7 @@ openfdaviz.controller('SearchController', ['$scope', '$http', '$stateParams', "l
     return deferred;
   }
 
-  function handleFoodsResponse(){
+  function handleFoodsResponse() {
     $scope.foodsQueryInProgress = false;
 
     // Plot food geodata points
@@ -243,7 +243,7 @@ openfdaviz.controller('SearchController', ['$scope', '$http', '$stateParams', "l
     }
   }
 
-  function handleDrugsResponse(){
+  function handleDrugsResponse() {
     $scope.drugsQueryInProgress = false;
 
     // Plot drug geodata points
@@ -253,7 +253,7 @@ openfdaviz.controller('SearchController', ['$scope', '$http', '$stateParams', "l
     }
   }
 
-  function handleDevicesResponse(){
+  function handleDevicesResponse() {
     $scope.devicesQueryInProgress = false;
 
     // Plot device geodata points
@@ -280,12 +280,12 @@ openfdaviz.controller('SearchController', ['$scope', '$http', '$stateParams', "l
     refreshMap();
   }
 
-  function refreshMap(){
+  function refreshMap() {
     $scope.layers.overlays.foods.doRefresh = true;
     $scope.layers.overlays.drugs.doRefresh = true;
     $scope.layers.overlays.devices.doRefresh = true;
     // This is what people currently recommend to get the map to update immediately
-    leafletData.getMap().then(function(map) {
+    leafletData.getMap().then(function (map) {
       map.invalidateSize();
     });
   }
@@ -332,9 +332,9 @@ openfdaviz.controller('SearchController', ['$scope', '$http', '$stateParams', "l
 
   function _perturbPoints(latLng, radius) {
     // Spread duplicate points in a small circle around the point
-    var angle = 2*Math.PI*Math.random();
-    latLng[0] += radius*Math.sin(angle);
-    latLng[1] += radius*Math.cos(angle);
+    var angle = 2 * Math.PI * Math.random();
+    latLng[0] += radius * Math.sin(angle);
+    latLng[1] += radius * Math.cos(angle);
     return latLng;
   }
 
@@ -409,41 +409,38 @@ openfdaviz.controller('SearchController', ['$scope', '$http', '$stateParams', "l
       return false;
     }
 
-    if(dateToCheckYear === startDateYear){
+    if (dateToCheckYear === startDateYear) {
       // Check month (assumes format of YYYYMMDD)
-      var dateToCheckMonthForStartDateYear = Number(dateToCheckString.substring(4,6));
+      var dateToCheckMonth = Number(dateToCheckString.substring(4, 6));
       var startDateMonth = Number(startDate.getMonth().toString());
-      if (dateToCheckMonthForStartDateYear < startDateMonth) {
+      if (dateToCheckMonth < startDateMonth) {
         return false;
       }
 
-      if(dateToCheckMonth === startDateMonth) {
+      if (dateToCheckMonth === startDateMonth) {
         // Check day (assumes format of YYYYMMDD)
-        var dateToCheckDay = Number(dateToCheckString.substring(6,8));
+        var dateToCheckDay = Number(dateToCheckString.substring(6, 8));
         var startDateDay = Number(startDate.getDay().toString());
         if (dateToCheckDay < startDateDay) {
           return false;
         }
       }
     }
-    if(dateToCheckYear === endDateYear) {
-      var dateToCheckMonthForEndDateYear = Number(dateToCheckString.substring(4,6));
+    if (dateToCheckYear === endDateYear) {
+      var dateToCheckMonth = Number(dateToCheckString.substring(4, 6));
       var endDateMonth = Number(endDate.getMonth().toString());
-      if (dateToCheckMonthForEndDateYear > endDateMonth) {
+      if (dateToCheckMonth > endDateMonth) {
         return false;
       }
 
-      if(dateToCheckMonth === startDateMonth) {
-        dateToCheckDay = Number(dateToCheckString.substring(6,8));
+      if (dateToCheckMonth === startDateMonth) {
+        dateToCheckDay = Number(dateToCheckString.substring(6, 8));
         var endDateDay = Number(endDate.getDay().toString());
         if (dateToCheckDay > endDateDay) {
           return false;
         }
       }
     }
-
-
-    return true;
   }
 
   init();
