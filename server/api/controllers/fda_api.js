@@ -24,8 +24,6 @@ var FDA_END_TYPES = {
 };
 
 var geoCodeFoodData = function (data, callback) {
-  //var geoKeys = [];
-
   if (data && data instanceof Array) {
     data.map(function (item, index, array) {
       if (item.state && item.state.length > 0) {
@@ -36,15 +34,6 @@ var geoCodeFoodData = function (data, callback) {
       }
     });
     callback(data);
-    /* if (geoKeys.length > 0) {
-     geoCoder.geoCodeString(geoKeys, function (err, data) {
-     if (data) {
-
-     }
-     });
-     } else {
-     callback(data);
-     }*/
   }
   else {
     callback([]);
@@ -52,7 +41,6 @@ var geoCodeFoodData = function (data, callback) {
 };
 
 var geoCodeDrugData = function (data, callback) {
-  //var geoKeys = [];
 
   if (data && data instanceof Array) {
     data.map(function (item, index, array) {
@@ -64,15 +52,6 @@ var geoCodeDrugData = function (data, callback) {
       }
     });
     callback(data);
-    /*if (geoKeys.length > 0) {
-     geoCoder.geoCodeString(geoKeys, function (err, data) {
-     if (data) {
-
-     }
-     });
-     } else {
-     callback(data);
-     }*/
   }
   else {
     callback([]);
@@ -80,8 +59,6 @@ var geoCodeDrugData = function (data, callback) {
 };
 
 var geoCodeDeviceData = function (data, callback) {
-  //var geoKeys = [];
-
   if (data && data instanceof Array) {
     data.map(function (item, index, array) {
       if (item.state && item.state.length > 0) {
@@ -92,15 +69,6 @@ var geoCodeDeviceData = function (data, callback) {
       }
     });
     callback(data);
-    /*if (geoKeys.length > 0) {
-     geoCoder.geoCodeString(geoKeys, function (err, data) {
-     if (data) {
-
-     }
-     });
-     } else {
-     callback(data);
-     }*/
   }
   else {
     callback([]);
