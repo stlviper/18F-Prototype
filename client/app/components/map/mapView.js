@@ -27,5 +27,5 @@ openfdaviz.directive('openfdavizMap', [function () {
       heatmap.pushData(38.3, 267.69799, map.getZoom() * 4);
       map.addLayer(heatmap);
     }
-  }
+  };
 }]);

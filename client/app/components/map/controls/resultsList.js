@@ -5,5 +5,5 @@ openfdaviz.directive('resultsList', function(){
 		restrict: 'AE',
 		replace: 'true',
 		template: '<h3>Results List: all good</h3>'
-	}
+	};
 });

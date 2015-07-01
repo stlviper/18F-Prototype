@@ -11,5 +11,5 @@ openfdaviz.controller('SearchBarController', ['$scope', '$state', function ($sco
     if($event.keyCode === 13){
       $scope.sendSearch($event);
     }
-  }
+  };
 }]);
