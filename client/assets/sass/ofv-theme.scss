@@ -268,18 +268,19 @@ a .resize:hover {
   margin: 0 auto;
   float: none;
 }
-.disclaimer{
-  > a{
+
+.disclaimer {
+  > a {
     color: #337ab7;
   }
   color: #CCCCCC; /*Color of Disclaimer Text*/
-  font-size:10px; /*Font Size of Disclaimer Text*/
-  font-family:  Arial, Helvetica, sans-serif; /*Web Safe Font Family of Disclaimer Text*/
+  font-size: 10px; /*Font Size of Disclaimer Text*/
+  font-family: Arial, Helvetica, sans-serif; /*Web Safe Font Family of Disclaimer Text*/
 
 }
 
-.about-page{
-  a{
+.about-page {
+  a {
     color: #337ab7;
   }
 }
@@ -302,6 +303,12 @@ a .resize:hover {
 
 .dkgray {
   color: #5c5f5b;
+}
+
+.result-list-item:hover {
+  background: #42abb7;
+  border-radius: 2px;
+  padding: 2px;
 }
 
 /* Responsive overrides */
