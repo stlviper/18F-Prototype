@@ -381,20 +381,45 @@ openfdaviz.controller('SearchController', ['$scope', '$http', '$stateParams', "l
     var startDateDay = Number(startDate.getDay().toString());
     var endDateDay = Number(endDate.getDay().toString());
 
-    if ((dateToCheckYear < startDateYear) || (dateToCheckYear > endDateYear)) {
+    if (!_isYearInBounds(dateToCheckYear, startDateYear, endDateYear)) {
       return false;
     }
-    else if (dateToCheckYear === startDateYear) {
-      if (dateToCheckMonth < startDateMonth ||
-         (dateToCheckMonth === startDateMonth && dateToCheckDay < startDateDay) ) {
+    else if (dateToCheckYear === startDateYear || dateToCheckYear === endDateYear) {
+      if (!_isMonthInBounds(dateToCheckMonth, startDateMonth, endDateMonth)) {
         return false;
+      }
+      else if (dateToCheckDay === startDateDay || dateToCheckDay === endDateDay) {
+        if (!_isDayInBounds(dateToCheckDay, startDateDay, endDateDay)){
+          return false;
+        }
       }
     }
-    else if (dateToCheckYear === endDateYear) {
-      if (dateToCheckMonth > endDateMonth ||
-        (dateToCheckMonth === startDateMonth && dateToCheckDay > endDateDay) ) {
-        return false;
-      }
+    else {
+      return true;
+    }
+  }
+
+  function _isYearInBounds(dateToCheckYear, startDateYear, endDateYear) {
+    if ( (dateToCheckYear < startDateYear) || (dateToCheckYear > endDateYear) ) {
+      return false;
+    }
+    else {
+      return true;
+    }
+  }
+
+  function _isMonthInBounds(dateToCheckMonth, startDateMonth, endDateMonth) {
+    if ( (dateToCheckMonth < startDateMonth) || (dateToCheckMonth > endDateMonth) ) {
+      return false;
+    }
+    else {
+      return true;
+    }
+  }
+
+  function _isDayInBounds(dateToCheckDay, startDateDay, endDateDay) {
+    if ( (dateToCheckDay < startDateDay) || (dateToCheckDay > endDateDay) ) {
+      return false;
     }
     else {
       return true;
