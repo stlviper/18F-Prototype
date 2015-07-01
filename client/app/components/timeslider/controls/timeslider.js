@@ -7,11 +7,6 @@ openfdaviz.directive("openfdavizTimeSlider", ['$parse', function ($parse) {
     $maxDateSltr: ''
   };
 
-  var _formatDateForQuery = function (date) {
-    var outputFormat = d3.time.format('%Y%m%d');
-    return outputFormat(date);
-  };
-
   var _formatDateForDisplay = function (date) {
     var outputFormat = d3.time.format('%m/%d/%Y');
     return outputFormat(date);
