@@ -83,7 +83,8 @@ var formatSearchFields = function (value, fields) {
         retSearchField += fields[idx].trim() + ':' + value.trim() + '+';
       }
     }
-    return retSearchField.substring(0, retSearchField.length - 1);//NOTE: Remove the last + character
+    //NOTE: Remove the last + character
+    return retSearchField.substring(0, retSearchField.length - 1);
   }
   else {
     return '';
