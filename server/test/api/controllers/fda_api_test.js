@@ -58,7 +58,7 @@ describe('Testing Drugs Controller.', function () {
         expect(data[10]['@epoch']).to.exist;
         var totalCorrectResults = 0;
         for (var i = 0; i < data.length; i++) {
-          if (data[i].primarysourcecountry.toLowerCase() == 'us') {
+          if (data[i].primarysourcecountry.toLowerCase() === "us") {
             totalCorrectResults++;
           }
         }
