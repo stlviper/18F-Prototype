@@ -75,6 +75,53 @@ var geoCodeDeviceData = function (data, callback) {
   }
 };
 
+function getDataFromFdaApi(fdaUrl, callback) {
+  request.get({
+      url: encodeURI(fdaUrl),
+      json: true
+    },
+    function (error, response, body) {
+      if (!error && (response.statusCode == 200 || 404)) {
+        callback(response.statusCode == 404 ? body : body.results);
+      } else {
+        callback({error: 'Request Failed'});
+      }
+    }
+  );
+}
+
+var getAPIData = function (endPointBase, typeOfEngPoint, req, fields, callback) {
+  var limit = 100, start = 0, search;
+  if (req.swagger.params.limit) {
+    limit = req.swagger.params.limit.value || 100;
+  }
+  if (req.swagger.params.skip) {
+    start = req.swagger.params.skip.value || 0;
+  }
+  if (req.swagger.params.query) {
+    search = req.swagger.params.query.value;
+  }
+  if (fields.length > 0) {
+    search = formatSearchFields(req.swagger.params.query.value, fields);
+  }
+  var fdaUrl = FDA_END_POINTS[endPointBase] + FDA_END_TYPES[typeOfEngPoint] + '?search=' + search;
+
+  if (limit) {
+    fdaUrl += '&limit=' + limit;
+  }
+  if (start) {
+    fdaUrl += '&skip=' + start;
+  }
+  getDataFromFdaApi(fdaUrl, callback);
+};
+
+var getAPIRangeData = function (endPointBase, typeOfEngPoint, datefield, req, callback) {
+  var fdaUrl = FDA_END_POINTS[endPointBase] + FDA_END_TYPES[typeOfEngPoint] + "?search=" + datefield
+    + ':[' + req.swagger.params.start.value + '+TO+' + req.swagger.params.end.value + ']&count=' + req.swagger.params.field.value;
+  getDataFromFdaApi(fdaUrl, callback);
+};
+
+
 var formatSearchFields = function (value, fields) {
   var retSearchField = '';
   if (fields && fields instanceof Array) {
@@ -160,51 +207,8 @@ function getEventSearchData(req, callback) {
   });
 }
 
-var getAPIData = function (endPointBase, typeOfEngPoint, req, fields, callback) {
-  var limit = 100, start = 0, search;
-  if (req.swagger.params.limit) {
-    limit = req.swagger.params.limit.value || 100;
-  }
-  if (req.swagger.params.skip) {
-    start = req.swagger.params.skip.value || 0;
-  }
-  if (req.swagger.params.query) {
-    search = req.swagger.params.query.value;
-  }
-  if (fields.length > 0) {
-    search = formatSearchFields(req.swagger.params.query.value, fields);
-  }
-  var fdaUrl = FDA_END_POINTS[endPointBase] + FDA_END_TYPES[typeOfEngPoint] + '?search=' + search;
 
-  if (limit) {
-    fdaUrl += '&limit=' + limit;
-  }
-  if (start) {
-    fdaUrl += '&skip=' + start;
-  }
-  getDataFromFdaApi(fdaUrl, callback);
-};
 
-var getAPIRangeData = function (endPointBase, typeOfEngPoint, datefield, req, callback) {
-  var fdaUrl = FDA_END_POINTS[endPointBase] + FDA_END_TYPES[typeOfEngPoint] + "?search=" + datefield
-    + ':[' + req.swagger.params.start.value + '+TO+' + req.swagger.params.end.value + ']&count=' + req.swagger.params.field.value;
-  getDataFromFdaApi(fdaUrl, callback);
-};
-
-function getDataFromFdaApi(fdaUrl, callback) {
-  request.get({
-      url: encodeURI(fdaUrl),
-      json: true
-    },
-    function (error, response, body) {
-      if (!error && (response.statusCode == 200 || 404)) {
-        callback(response.statusCode == 404 ? body : body.results);
-      } else {
-        callback({error: 'Request Failed'});
-      }
-    }
-  );
-}
 
 module.exports = {
   aggregateSplashSearch: function (req, res) {
