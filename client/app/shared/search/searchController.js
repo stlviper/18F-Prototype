@@ -265,10 +265,10 @@ openfdaviz.controller('SearchController', ['$scope', '$http', '$stateParams', "l
 
   function _filterSearchResults(category) {
     for (var i in category) {
-      if (!category[i].isDisplayable) {
+      if (typeof category[i].isDisplayable === "undefined") {
         category[i].isDisplayable = true;
       }
-      if (category[i].report_date) {
+      if (typeof category[i].report_date !== "undefined") {
         if (!_isDateInBounds(category[i].report_date)) {
           category[i].isDisplayable = false;
         } else {
@@ -317,9 +317,9 @@ openfdaviz.controller('SearchController', ['$scope', '$http', '$stateParams', "l
     var perturbRadius = 0.004;
     for (var i in category) {
       if (category[i].isDisplayable &&
-          category[i].GeoLocation &&
-          category[i].GeoLocation.lat &&
-          category[i].GeoLocation.lng) {
+          typeof category[i].GeoLocation !== "undefined" &&
+          typeof category[i].GeoLocation.lat !== "undefined" &&
+          typeof category[i].GeoLocation.lng !== "undefined") {
         var lat = Number(category[i].GeoLocation.lat);
         var lng = Number(category[i].GeoLocation.lng);
         var latLng = [lat, lng];
@@ -375,24 +375,26 @@ openfdaviz.controller('SearchController', ['$scope', '$http', '$stateParams', "l
     var startDateYear = Number(startDate.getFullYear().toString());
     var endDateYear = Number(endDate.getFullYear().toString());
     var dateToCheckMonth = Number(dateToCheckString.substring(4, 6));
-    var startDateMonth = Number(startDate.getMonth().toString());
-    var endDateMonth = Number(endDate.getMonth().toString());
+    var startDateMonth = Number(startDate.getMonth().toString())+1;
+    var endDateMonth = Number(endDate.getMonth().toString())+1;
     var dateToCheckDay = Number(dateToCheckString.substring(6, 8));
-    var startDateDay = Number(startDate.getDay().toString());
-    var endDateDay = Number(endDate.getDay().toString());
+    var startDateDay = Number(startDate.getDate().toString());
+    var endDateDay = Number(endDate.getDate().toString());
 
     if (!_isYearInBounds(dateToCheckYear, startDateYear, endDateYear)) {
       return false;
     }
-    else if (dateToCheckYear === startDateYear || dateToCheckYear === endDateYear) {
-      if (!_isMonthInBounds(dateToCheckMonth, startDateMonth, endDateMonth)) {
-        return false;
-      }
-      else if (dateToCheckDay === startDateDay || dateToCheckDay === endDateDay) {
-        if (!_isDayInBounds(dateToCheckDay, startDateDay, endDateDay)){
-          return false;
-        }
-      }
+    else if (!_isMonthWithinStartBound(dateToCheckYear, startDateYear, dateToCheckMonth, startDateMonth)) {
+      return false;
+    }
+    else if (!_isMonthWithinEndBound(dateToCheckYear, endDateYear, dateToCheckMonth, endDateMonth)) {
+      return false;
+    }
+    else if (!_isDayWithinStartBound(dateToCheckMonth, startDateMonth, dateToCheckDay, startDateDay)) {
+      return false;
+    }
+    else if (!_isDayWithinEndBound(dateToCheckMonth, endDateMonth, dateToCheckDay, endDateDay)) {
+      return false;
     }
     else {
       return true;
@@ -408,8 +410,8 @@ openfdaviz.controller('SearchController', ['$scope', '$http', '$stateParams', "l
     }
   }
 
-  function _isMonthInBounds(dateToCheckMonth, startDateMonth, endDateMonth) {
-    if ( (dateToCheckMonth < startDateMonth) || (dateToCheckMonth > endDateMonth) ) {
+  function _isMonthWithinStartBound(dateToCheckYear, startDateYear, dateToCheckMonth, startDateMonth) {
+    if (dateToCheckYear === startDateYear && dateToCheckMonth < startDateMonth) {
       return false;
     }
     else {
@@ -417,8 +419,26 @@ openfdaviz.controller('SearchController', ['$scope', '$http', '$stateParams', "l
     }
   }
 
-  function _isDayInBounds(dateToCheckDay, startDateDay, endDateDay) {
-    if ( (dateToCheckDay < startDateDay) || (dateToCheckDay > endDateDay) ) {
+  function _isMonthWithinEndBound(dateToCheckYear, endDateYear, dateToCheckMonth, endDateMonth) {
+    if (dateToCheckYear === endDateYear && dateToCheckMonth > endDateMonth) {
+      return false;
+    }
+    else {
+      return true;
+    }
+  }
+
+  function _isDayWithinStartBound(dateToCheckMonth, startDateMonth, dateToCheckDay, startDateDay) {
+    if (dateToCheckMonth === startDateMonth && dateToCheckDay < startDateDay) {
+      return false;
+    }
+    else {
+      return true;
+    }
+  }
+
+  function _isDayWithinEndBound(dateToCheckMonth, endDateMonth, dateToCheckDay, endDateDay) {
+    if (dateToCheckMonth === endDateMonth && dateToCheckDay > endDateDay) {
       return false;
     }
     else {
