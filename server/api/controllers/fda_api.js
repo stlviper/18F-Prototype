@@ -36,15 +36,15 @@ var geoCodeFoodData = function (data, callback) {
       }
     });
     callback(data);
-   /* if (geoKeys.length > 0) {
-      geoCoder.geoCodeString(geoKeys, function (err, data) {
-        if (data) {
+    /* if (geoKeys.length > 0) {
+     geoCoder.geoCodeString(geoKeys, function (err, data) {
+     if (data) {
 
-        }
-      });
-    } else {
-      callback(data);
-    }*/
+     }
+     });
+     } else {
+     callback(data);
+     }*/
   }
   else {
     callback([]);
@@ -65,14 +65,14 @@ var geoCodeDrugData = function (data, callback) {
     });
     callback(data);
     /*if (geoKeys.length > 0) {
-      geoCoder.geoCodeString(geoKeys, function (err, data) {
-        if (data) {
+     geoCoder.geoCodeString(geoKeys, function (err, data) {
+     if (data) {
 
-        }
-      });
-    } else {
-      callback(data);
-    }*/
+     }
+     });
+     } else {
+     callback(data);
+     }*/
   }
   else {
     callback([]);
@@ -93,14 +93,14 @@ var geoCodeDeviceData = function (data, callback) {
     });
     callback(data);
     /*if (geoKeys.length > 0) {
-      geoCoder.geoCodeString(geoKeys, function (err, data) {
-        if (data) {
+     geoCoder.geoCodeString(geoKeys, function (err, data) {
+     if (data) {
 
-        }
-      });
-    } else {
-      callback(data);
-    }*/
+     }
+     });
+     } else {
+     callback(data);
+     }*/
   }
   else {
     callback([]);
@@ -109,10 +109,16 @@ var geoCodeDeviceData = function (data, callback) {
 
 var formatSearchFields = function (value, fields) {
   var retSearchField = '';
-  for (var idx in fields) {
-    retSearchField += fields[idx].trim() + ':' + value.trim() + '+'
+  if (fields) {
+    for (var idx in fields) {
+      retSearchField += fields[idx].trim() + ':' + value.trim() + '+'
+    }
+
+    return retSearchField.substring(0, retSearchField.length - 1);//NOTE: Remove the last + character
   }
-  return retSearchField.substring(0, retSearchField.length - 1);//NOTE: Remove the last + character
+  else {
+    return '';
+  }
 };
 
 function getAggregateSplashSearchData(req, res) {
