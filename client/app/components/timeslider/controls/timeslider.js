@@ -56,10 +56,7 @@ openfdaviz.directive("openfdavizTimeSlider", ['$parse', function ($parse) {
       .min(_settings.minYear)
       .max(_settings.maxYear)
       .value([_settings.minDefaultValue, _settings.maxDefaultValue]);
-      //.classed("svg-content-responsive", true);
 
-    //debugger;
-    //var x = d3.dateSlider.linear().domain([0,23]).range([margin,width-margin]);
     d3.select(window).on('resize', function(){
       redrawSlider();
     });
