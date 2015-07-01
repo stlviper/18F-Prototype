@@ -1,5 +1,5 @@
 'use strict';
-openfdaviz.directive("openfdavizTimeSlider", ['$parse', function ($parse) {
+openfdaviz.directive("openfdavizTimeSlider", ['$parse', function () {
   var _settings = {
     minYear: 2014,
     maxYear: 2015,
