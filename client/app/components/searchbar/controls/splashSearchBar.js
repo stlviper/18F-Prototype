@@ -6,5 +6,5 @@ openfdaviz.directive('openfdavizSplashSearchBar', function () {
     replace: 'true',
     templateUrl: '/app/components/searchbar/controls/splashSearchBar.html',
     controller: 'SearchBarController'
-  }
+  };
 });

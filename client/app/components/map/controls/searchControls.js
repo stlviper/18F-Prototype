@@ -5,5 +5,5 @@ openfdaviz.directive('searchControls', function(){
 		restrict: 'AE',
 		replace: 'true',
 		template: '<h3>Search Controls: all good</h3>'
-	}
+	};
 });
