@@ -338,6 +338,21 @@ openfdaviz.controller('SearchController', ['$scope', '$http', '$stateParams', "l
     return latLng;
   }
 
+  var _filterInformation = function (devices) {
+    for (var i in devices) {
+      if (!devices[i].isDisplayable) {
+        devices[i].isDisplayable = true;
+      }
+      if (devices[i].report_date) {
+        if (!_isDateInBounds(devices[i].report_date)) {
+          devices[i].isDisplayable = false;
+        } else {
+          devices[i].isDisplayable = true;
+        }
+      }
+    }
+  };
+
   function _filterSearchResults() {
     if (typeof $scope.results.foods !== 'undefined') {
       _filterFoodSearchResults($scope.results.foods);
@@ -351,65 +366,27 @@ openfdaviz.controller('SearchController', ['$scope', '$http', '$stateParams', "l
   }
 
   function _filterFoodSearchResults(foods) {
-    for (var i in foods) {
-      if (typeof foods[i].isDisplayable === 'undefined') {
-        foods[i].isDisplayable = true;
-      }
-      if (typeof foods[i].report_date !== 'undefined') {
-        if (!_isDateInBounds(foods[i].report_date)) {
-          foods[i].isDisplayable = false;
-        } else {
-          foods[i].isDisplayable = true;
-        }
-      }
-    }
+    _filterInformation(foods);
   }
 
   function _filterDrugSearchResults(drugs) {
-    for (var i in drugs) {
-      if (typeof drugs[i].isDisplayable === 'undefined') {
-        drugs[i].isDisplayable = true;
-      }
-      if (typeof drugs[i].report_date !== 'undefined') {
-        if (!_isDateInBounds(drugs[i].report_date)) {
-          drugs[i].isDisplayable = false;
-        } else {
-          drugs[i].isDisplayable = true;
-        }
-      }
-    }
+    _filterInformation(drugs);
   }
 
   function _filterDeviceSearchResults(devices) {
-    for (var i in devices) {
-      if (typeof devices[i].isDisplayable === 'undefined') {
-        devices[i].isDisplayable = true;
-      }
-      if (typeof devices[i].report_date !== 'undefined') {
-        if (!_isDateInBounds(devices[i].report_date)) {
-          devices[i].isDisplayable = false;
-        } else {
-          devices[i].isDisplayable = true;
-        }
-      }
-    }
+    _filterInformation(devices);
   }
 
   function _isDateInBounds(dateToCheckString) {
     // Check year
     var reYear = /((19|20)\d{2})/;
     var dateToCheckYear = Number(dateToCheckString.match(reYear)[0]);
-
-    var startDateYear = Number(startDate.getFullYear().toString());
-    if (dateToCheckYear < startDateYear) {
-      return false;
-    }
     var endDateYear = Number(endDate.getFullYear().toString());
-    if (dateToCheckYear > endDateYear) {
+    var startDateYear = Number(startDate.getFullYear().toString());
+    if ((dateToCheckYear < startDateYear) || (dateToCheckYear > endDateYear)) {
       return false;
     }
-
-    if (dateToCheckYear === startDateYear) {
+    else if (dateToCheckYear === startDateYear) {
       // Check month (assumes format of YYYYMMDD)
       var dateToCheckMonth = Number(dateToCheckString.substring(4, 6));
       var startDateMonth = Number(startDate.getMonth().toString());
@@ -426,7 +403,7 @@ openfdaviz.controller('SearchController', ['$scope', '$http', '$stateParams', "l
         }
       }
     }
-    if (dateToCheckYear === endDateYear) {
+    else if (dateToCheckYear === endDateYear) {
       var dateToCheckMonth = Number(dateToCheckString.substring(4, 6));
       var endDateMonth = Number(endDate.getMonth().toString());
       if (dateToCheckMonth > endDateMonth) {
@@ -440,6 +417,9 @@ openfdaviz.controller('SearchController', ['$scope', '$http', '$stateParams', "l
           return false;
         }
       }
+    }
+    else {
+      return true;
     }
   }
 
