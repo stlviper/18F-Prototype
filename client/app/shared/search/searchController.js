@@ -439,7 +439,7 @@ openfdaviz.controller('SearchController', ['$scope', '$http', '$stateParams', "l
       }
 
       if(dateToCheckMonth === startDateMonth) {
-        var dateToCheckDay = Number(dateToCheckString.substring(6,8));
+        dateToCheckDay = Number(dateToCheckString.substring(6,8));
         var endDateDay = Number(endDate.getDay().toString());
         if (dateToCheckDay > endDateDay) {
           return false;
