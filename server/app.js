@@ -36,7 +36,7 @@ SwaggerExpress.create(config, function(err, swaggerExpress) {
     next();
   });
 
-  var port = process.env.PORT || 80;
+  var port = process.env.PORT || 3002;
   app.listen(port);
 
   console.log('Dev API Server running on http://127.0.0.1:' + port);

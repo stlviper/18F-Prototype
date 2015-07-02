@@ -1,20 +1,20 @@
-FROM    centos:centos6
+FROM    centos:centos7
 
-RUN     yum -y update; yum clean all
-RUN     curl -sL https://rpm.nodesource.com/setup | bash -
-RUN     yum install -y gcc-c++ make nodejs git; yum clean all
+# Update the OS and install necessary packages
+RUN     yum -y install epel-release
+RUN     yum -y install gcc-c++ make nodejs npm
 RUN     npm install -g grunt-cli
 
-# Start openFDA Viz
+# Copy and setup openFDA Viz
 
 COPY    . /src
 RUN     echo {} > /src/aws.json
 RUN     cd /src; npm install --unsafe-perm
 
-EXPOSE  8000
-EXPOSE  3001
+EXPOSE  3002 8000
 
-RUN     cd /src; npm run-script startDev
+RUN     chmod 755 /src/start.sh
+WORKDIR  "/src"
 
-
-# docker build -t stlviper/openfdaviz .
+# Run openFDA Viz
+CMD     ["/src/start.sh"]

@@ -52,9 +52,6 @@ $ grunt deploy:prod
 
 Mocha tests are automatically run on a grunt build, which is run on the grunt deploy job as above.
 
-###
-
-
 ### Running Selenium automated browser tests
 
 - First set up the protractor and webdriver components (wrappers for selenium + angular enhancements)
@@ -95,6 +92,28 @@ $ PORT=3001 node fake-api/bin/www
 ```
 Above will run a fake openFDA server for testing. You can view it at 
     http://localhost:3001/healthcheck/
+    
+### Deploying in Docker
+
+You will need to have [Docker](https://www.docker.com/) already installed and setup. Configuring Docker is outside the scope of this README.
+
+Once you have a working docker environment you can build a docker image and run it using the following commands,
+
+```
+$ docker build -t stlviper/openfdaviz .
+$ docker run -t -i -p 3002:3002 -p 8000:8000 stlviper/openfdaviz /bin/bash
+$ ./start.sh
+```
+
+If you are on a OSX you will need to tunnel ports 3002 and 8000 so you can access them using localhost, this can be done by issuing the following commands
+```
+$ VBoxManage controlvm boot2docker-vm natpf1 "swagger,tcp,127.0.0.1,3002,,3002"
+$ VBoxManage controlvm boot2docker-vm natpf1 "client,tcp,127.0.0.1,8000,,8000"
+```
+
+Once the Docker image is running you can access it at:
+
+http://localhost:8000/
 
 ### Deploying openFDAVizAPI Server on AWS Resources
 
