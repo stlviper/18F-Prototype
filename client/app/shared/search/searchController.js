@@ -1,6 +1,6 @@
 'use strict';
 
-openfdaviz.controller('SearchController', ['$scope', '$http', '$stateParams', "leafletData", function ($scope, $http, $stateParams, leafletData) {
+openfdaviz.controller('SearchController', ['$scope', '$http', '$stateParams', 'leafletData', function ($scope, $http, $stateParams, leafletData) {
 
   var Categories = {
     FOODS: 0, DRUGS: 1, DEVICES: 2
@@ -55,7 +55,7 @@ openfdaviz.controller('SearchController', ['$scope', '$http', '$stateParams', "l
           blur: 5,
           minOpacity: 0.7
         },
-        visible: true,
+        visible: false,
         doRefresh: true
       },
       devices: {
@@ -67,7 +67,7 @@ openfdaviz.controller('SearchController', ['$scope', '$http', '$stateParams', "l
           blur: 5,
           minOpacity: 0.7
         },
-        visible: true,
+        visible: false,
         doRefresh: true
       }
     }
@@ -126,7 +126,31 @@ openfdaviz.controller('SearchController', ['$scope', '$http', '$stateParams', "l
 
   $scope.activateResultsTab = function (activeTab) {
     $scope.activeResultsTab = activeTab;
+    _updateHeatmapLayerVisibilities(activeTab);
   };
+
+  function _updateHeatmapLayerVisibilities(category) {
+    if (category === 'foods') {
+      $scope.layers.overlays.foods.visible = true;
+      $scope.layers.overlays.drugs.visible = false;
+      $scope.layers.overlays.devices.visible = false;
+    }
+    else if (category === 'drugs') {
+      $scope.layers.overlays.foods.visible = false;
+      $scope.layers.overlays.drugs.visible = true;
+      $scope.layers.overlays.devices.visible = false;
+    }
+    else if (category === 'devices') {
+      $scope.layers.overlays.foods.visible = false;
+      $scope.layers.overlays.drugs.visible = false;
+      $scope.layers.overlays.devices.visible = true;
+    }
+    else {
+      $scope.layers.overlays.foods.visible = false;
+      $scope.layers.overlays.drugs.visible = false;
+      $scope.layers.overlays.devices.visible = false;
+    }
+  }
 
   angular.element(document).ready(function () {
     $scope.$on('dateChange', function (event, data) {
@@ -271,7 +295,7 @@ openfdaviz.controller('SearchController', ['$scope', '$http', '$stateParams', "l
       if (typeof category[i].isDisplayable === "undefined") {
         category[i].isDisplayable = false;
       }
-      if (typeof category[i].report_date !== "undefined") {
+      if (category[i].report_date) {
         if (!_isDateInBounds(category[i].report_date)) {
           category[i].isDisplayable = false;
         } else {
@@ -308,9 +332,9 @@ openfdaviz.controller('SearchController', ['$scope', '$http', '$stateParams', "l
     var perturbRadius = 0.004;
     for (var i in category) {
       if (category[i].isDisplayable &&
-          typeof category[i].GeoLocation !== "undefined" &&
-          typeof category[i].GeoLocation.lat !== "undefined" &&
-          typeof category[i].GeoLocation.lng !== "undefined") {
+          category[i].GeoLocation &&
+          category[i].GeoLocation.lat &&
+          category[i].GeoLocation.lng) {
         var lat = Number(category[i].GeoLocation.lat);
         var lng = Number(category[i].GeoLocation.lng);
         var latLng = [lat, lng];
@@ -375,10 +399,10 @@ openfdaviz.controller('SearchController', ['$scope', '$http', '$stateParams', "l
     if (!_isYearInBounds(dateToCheckYear, startDateYear, endDateYear)) {
       return false;
     }
-    else if (!_isMonthWithinBounds(dateToCheckYear, startDateYear, endDateYear, dateToCheckMonth, startDateMonth, endDateMonth)) {
+    else if (!_isMonthInBounds(dateToCheckYear, startDateYear, endDateYear, dateToCheckMonth, startDateMonth, endDateMonth)) {
       return false;
     }
-    else if (!_isDayWithinBounds(dateToCheckMonth, startDateMonth, endDateMonth, dateToCheckDay, startDateDay, endDateDay)) {
+    else if (!_isDayInBounds(dateToCheckMonth, startDateMonth, endDateMonth, dateToCheckDay, startDateDay, endDateDay)) {
       return false;
     }
     else {
@@ -395,7 +419,7 @@ openfdaviz.controller('SearchController', ['$scope', '$http', '$stateParams', "l
     }
   }
 
-  function _isMonthWithinBounds(dateToCheckYear, startDateYear, endDateYear, dateToCheckMonth, startDateMonth, endDateMonth) {
+  function _isMonthInBounds(dateToCheckYear, startDateYear, endDateYear, dateToCheckMonth, startDateMonth, endDateMonth) {
     if ((dateToCheckYear === startDateYear) && (dateToCheckMonth < startDateMonth)) {
       return false;
     }
@@ -407,7 +431,7 @@ openfdaviz.controller('SearchController', ['$scope', '$http', '$stateParams', "l
     }
   }
 
-  function _isDayWithinBounds(dateToCheckMonth, startDateMonth, endDateMonth, dateToCheckDay, startDateDay, endDateDay) {
+  function _isDayInBounds(dateToCheckMonth, startDateMonth, endDateMonth, dateToCheckDay, startDateDay, endDateDay) {
     if ((dateToCheckMonth === startDateMonth) && (dateToCheckDay < startDateDay)) {
       return false;
     }
