@@ -1,6 +1,6 @@
 'use strict';
 
-openfdaviz.controller('SearchController', ['$scope', '$http', '$stateParams', 'leafletData', 'leafletEvents', function ($scope, $http, $stateParams, leafletData, leafletEvents) {
+openfdaviz.controller('SearchController', ['$scope', '$http', '$stateParams', 'leafletData', function ($scope, $http, $stateParams, leafletData) {
 
   var Categories = {
     FOODS: 0, DRUGS: 1, DEVICES: 2
