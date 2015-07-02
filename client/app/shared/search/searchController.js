@@ -97,8 +97,8 @@ openfdaviz.controller('SearchController', ['$scope', '$http', '$stateParams', "l
 
   $scope.activeResultsTab = 'foods';
 
-  var startDate = new Date("December 31, 1970");
-  var endDate = new Date();
+  var startDate = new Date("December 31, 2003");
+  var endDate = new Date("December 31, 2014");
   $scope.input = {
     searchText: $stateParams.query
   };
@@ -238,6 +238,7 @@ openfdaviz.controller('SearchController', ['$scope', '$http', '$stateParams', "l
 
     // Plot food geodata points
     if ($scope.results.foods) {
+      _filterSearchResults($scope.results.foods);
       _addPointsToHeatmap(Categories.FOODS, $scope.results.foods, $scope.layers.overlays.foods.data);
       refreshMap();
     }
@@ -248,6 +249,7 @@ openfdaviz.controller('SearchController', ['$scope', '$http', '$stateParams', "l
 
     // Plot drug geodata points
     if ($scope.results.drugs) {
+      _filterSearchResults($scope.results.drugs);
       _addPointsToHeatmap(Categories.DRUGS, $scope.results.drugs, $scope.layers.overlays.drugs.data);
       refreshMap();
     }
@@ -258,6 +260,7 @@ openfdaviz.controller('SearchController', ['$scope', '$http', '$stateParams', "l
 
     // Plot device geodata points
     if ($scope.results.devices) {
+      _filterSearchResults($scope.results.devices);
       _addPointsToHeatmap(Categories.DEVICES, $scope.results.devices, $scope.layers.overlays.devices.data);
       refreshMap();
     }
@@ -266,7 +269,7 @@ openfdaviz.controller('SearchController', ['$scope', '$http', '$stateParams', "l
   function _filterSearchResults(category) {
     for (var i in category) {
       if (typeof category[i].isDisplayable === "undefined") {
-        category[i].isDisplayable = true;
+        category[i].isDisplayable = false;
       }
       if (typeof category[i].report_date !== "undefined") {
         if (!_isDateInBounds(category[i].report_date)) {
@@ -286,21 +289,9 @@ openfdaviz.controller('SearchController', ['$scope', '$http', '$stateParams', "l
     $scope.counts.drugs = 0;
     $scope.counts.devices = 0;
 
-    if ($scope.results.foods) {
-      _filterSearchResults($scope.results.foods);
-    }
-    if ($scope.results.drugs) {
-      _filterSearchResults($scope.results.drugs);
-    }
-    if ($scope.results.devices) {
-      _filterSearchResults($scope.results.devices);
-    }
-
     handleDrugsResponse();
     handleFoodsResponse();
     handleDevicesResponse();
-
-    refreshMap();
   }
 
   function refreshMap() {
@@ -375,8 +366,8 @@ openfdaviz.controller('SearchController', ['$scope', '$http', '$stateParams', "l
     var startDateYear = Number(startDate.getFullYear().toString());
     var endDateYear = Number(endDate.getFullYear().toString());
     var dateToCheckMonth = Number(dateToCheckString.substring(4, 6));
-    var startDateMonth = Number(startDate.getMonth().toString())+1;
-    var endDateMonth = Number(endDate.getMonth().toString())+1;
+    var startDateMonth = Number(startDate.getMonth().toString());
+    var endDateMonth = Number(endDate.getMonth().toString());
     var dateToCheckDay = Number(dateToCheckString.substring(6, 8));
     var startDateDay = Number(startDate.getDate().toString());
     var endDateDay = Number(endDate.getDate().toString());
@@ -384,16 +375,10 @@ openfdaviz.controller('SearchController', ['$scope', '$http', '$stateParams', "l
     if (!_isYearInBounds(dateToCheckYear, startDateYear, endDateYear)) {
       return false;
     }
-    else if (!_isMonthWithinStartBound(dateToCheckYear, startDateYear, dateToCheckMonth, startDateMonth)) {
+    else if (!_isMonthWithinBounds(dateToCheckYear, startDateYear, endDateYear, dateToCheckMonth, startDateMonth, endDateMonth)) {
       return false;
     }
-    else if (!_isMonthWithinEndBound(dateToCheckYear, endDateYear, dateToCheckMonth, endDateMonth)) {
-      return false;
-    }
-    else if (!_isDayWithinStartBound(dateToCheckMonth, startDateMonth, dateToCheckDay, startDateDay)) {
-      return false;
-    }
-    else if (!_isDayWithinEndBound(dateToCheckMonth, endDateMonth, dateToCheckDay, endDateDay)) {
+    else if (!_isDayWithinBounds(dateToCheckMonth, startDateMonth, endDateMonth, dateToCheckDay, startDateDay, endDateDay)) {
       return false;
     }
     else {
@@ -410,8 +395,11 @@ openfdaviz.controller('SearchController', ['$scope', '$http', '$stateParams', "l
     }
   }
 
-  function _isMonthWithinStartBound(dateToCheckYear, startDateYear, dateToCheckMonth, startDateMonth) {
-    if (dateToCheckYear === startDateYear && dateToCheckMonth < startDateMonth) {
+  function _isMonthWithinBounds(dateToCheckYear, startDateYear, endDateYear, dateToCheckMonth, startDateMonth, endDateMonth) {
+    if ((dateToCheckYear === startDateYear) && (dateToCheckMonth < startDateMonth)) {
+      return false;
+    }
+    else if((dateToCheckYear === endDateYear) && (dateToCheckMonth > endDateMonth)) {
       return false;
     }
     else {
@@ -419,26 +407,11 @@ openfdaviz.controller('SearchController', ['$scope', '$http', '$stateParams', "l
     }
   }
 
-  function _isMonthWithinEndBound(dateToCheckYear, endDateYear, dateToCheckMonth, endDateMonth) {
-    if (dateToCheckYear === endDateYear && dateToCheckMonth > endDateMonth) {
+  function _isDayWithinBounds(dateToCheckMonth, startDateMonth, endDateMonth, dateToCheckDay, startDateDay, endDateDay) {
+    if ((dateToCheckMonth === startDateMonth) && (dateToCheckDay < startDateDay)) {
       return false;
     }
-    else {
-      return true;
-    }
-  }
-
-  function _isDayWithinStartBound(dateToCheckMonth, startDateMonth, dateToCheckDay, startDateDay) {
-    if (dateToCheckMonth === startDateMonth && dateToCheckDay < startDateDay) {
-      return false;
-    }
-    else {
-      return true;
-    }
-  }
-
-  function _isDayWithinEndBound(dateToCheckMonth, endDateMonth, dateToCheckDay, endDateDay) {
-    if (dateToCheckMonth === endDateMonth && dateToCheckDay > endDateDay) {
+    else if ((dateToCheckMonth === endDateMonth) && (dateToCheckDay > endDateDay)) {
       return false;
     }
     else {
