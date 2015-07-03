@@ -1,7 +1,8 @@
 <div class="col-xs-12 col-sm-8 col-md-8 col-lg-8 search-lg searchbar" style="">
   <div class="form-group has-feedback">
-    <input type="text" class="form-control" name="name" id="fdaSearch" placeholder="Enter Food, Drug, or Device Keywords" value="" ng-keydown="handleKeypress($event)" autocomplete="off">
-    <ul class="typeahead dropdown-menu"></ul>
+    <div ng-controller="TypeaheadController">
+      <input type="text" name="name" id="fdaSearch" placeholder="Enter Food, Drug, or Device Keywords" value="" ng-keydown="handleKeypress($event)" autocomplete="off" ng-model="selected" typeahead="term for term in terms | filter:$viewValue | limitTo:20" class="form-control">
+    </div>
     <button id="searchBarBtn" ng-click="sendSearch($event)" href="#/search" class="btn btn-lg btn-default">Submit</button>
   </div>
 </div>

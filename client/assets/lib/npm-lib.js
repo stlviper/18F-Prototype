@@ -14,6 +14,8 @@ require('bootstrap/dist/js/bootstrap');
 require('leaflet/dist/leaflet');
 require('angular-leaflet-directive/dist/angular-leaflet-directive');
 require('leaflet.heat/dist/leaflet-heat');
+require('angular-bootstrap/dist/ui-bootstrap.min');
+require('angular-bootstrap/dist/ui-bootstrap-tpls.min');
 
 window.d3 = require('d3/d3.min');
 window.c3 = require('c3/c3.min');
