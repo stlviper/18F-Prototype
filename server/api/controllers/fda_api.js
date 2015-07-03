@@ -143,7 +143,9 @@ function getAggregateSplashSearchData(req, res) {
           chosenFields = req.swagger.params.deviceFields.value.split(',');
         }
         getAPIData('device', 'enforcement', req, chosenFields, function (data) {
-          callback(null, {key: 'device', value: data});
+          geoCodeDeviceData(data, function (data) {
+            callback(null, {key: 'device', value: data});
+          });
         });
       },
       function (callback) {
