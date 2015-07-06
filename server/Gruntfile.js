@@ -26,7 +26,7 @@ module.exports = function (grunt) {
           script: ']/main.js'
         }
       },
-      prod: { // TODO: decide where prod is
+      prod: {
         options: {
           script: 'www/server/main.js',
           node_env: 'production'
@@ -74,8 +74,9 @@ module.exports = function (grunt) {
     aws: grunt.file.readJSON('../aws.json'),
     aws_s3: {
       options: {
-        accessKeyId: '<%= aws.AWSAccessKeyId %>', // Use the variables
-        secretAccessKey: '<%= aws.AWSSecretKey %>', // You can also use env variables
+        // the aws. variables come from the aws.json file loaded above
+        accessKeyId: '<%= aws.AWSAccessKeyId %>',
+        secretAccessKey: '<%= aws.AWSSecretKey %>',
         region: 'us-east-1',
         uploadConcurrency: 5, // 5 simultaneous uploads
         downloadConcurrency: 5 // 5 simultaneous downloads
@@ -132,9 +133,7 @@ module.exports = function (grunt) {
 
   // Register other tasks
   grunt.registerTask('default', ['test']);
-  //include 'coverage' task at the end of 'test' to fail the build if coverage requirements not met
   grunt.registerTask('test', ['env:coverage', 'instrument', 'mochaTest:coverage', 'storeCoverage', 'makeReport']);
-  //grunt.registerTask('test', ['mochaTest:server', 'mochaTest:all']);
   grunt.registerTask('build', ['test', 'compress']);
   grunt.registerTask('deploy', ['build', 'aws_s3']);
   grunt.registerTask('start', ['build', 'shell:start']);

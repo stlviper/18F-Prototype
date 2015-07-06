@@ -175,10 +175,13 @@ module.exports = function (grunt) {
           // Arguments passed to the command
         }
       },
-      run: {   // Grunt requires at least one target to run so you can simply put 'all: {}' here too.
+      // Grunt requires at least one target to run so you can simply put 'all: {}' here too.
+      run: {
         options: {
-          configFile: "test/selenium/e2e.conf.js", // Target-specific config file
-          args: {} // Target-specific arguments
+          // Target-specific config file
+          configFile: "test/selenium/e2e.conf.js",
+          // Target-specific arguments
+          args: {}
         }
       }
     },
@@ -232,9 +235,9 @@ module.exports = function (grunt) {
   grunt.loadNpmTasks('grunt-contrib-uglify');
   grunt.loadNpmTasks('grunt-mocha-test');
 
-  //to install, run npm install -g protractor, to start protractor independently, first run webdriver-manager start --standalone
+  // to install, run npm install -g protractor, to start protractor independently, first run webdriver-manager start --standalone
   grunt.loadNpmTasks('grunt-protractor-runner');
-  //to install, run node_modules/protractor/bin/webdriver-manager update --standalone --chrome
+  // to install, run node_modules/protractor/bin/webdriver-manager update --standalone --chrome
   grunt.loadNpmTasks('grunt-protractor-webdriver');
   grunt.loadNpmTasks('grunt-sass');
   grunt.loadNpmTasks('grunt-shell');
