@@ -1,4 +1,4 @@
-openFDAViz URL: http://s3.amazonaws.com/openfdaviz/client/index.html
+openFDAViz URL: http://openfdaviz.cloudogsystems.com/
 
 # openFDAViz
 
