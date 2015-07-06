@@ -1,6 +1,6 @@
 <div id="searchPanel" class="container main-contents" ng-controller="SearchController">
   <div class="row">
-    <div id="mapPanel" class="col-sm-7">
+    <div id="mapPanel" class="col-md-7">
       <div>
         <leaflet defaults="defaults" center="fdaVizMapCenter" layers="layers" class="angular-leaflet-map"></leaflet>
       </div>
@@ -28,7 +28,7 @@
       <div ng-include src="'/app/shared/search/queryPane.html'"></div>
     </div>
 
-    <div id="resultsPanel" class="col-sm-5">
+    <div id="resultsPanel" class="col-md-5">
       <div class="details">
         <div ng-include src="'/app/shared/search/resultsPane.html'"></div>
       </div>
