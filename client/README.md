@@ -12,9 +12,32 @@ $ grunt start:dev
 This will start the server on http://localhost:8000/
 
 # Running Test
+
+Test are written using [Protractor](http://angular.github.io/protractor/#/).
+
+### Running Selenium automated browser tests
+
+- First set up the protractor and webdriver components (wrappers for selenium + angular enhancements)
+
 ```
-$ grunt test
-$ grunt selenium
+$ cd client
+$ npm install -g protractor, to start, first run webdriver-manager start --standalone
+$ ./node_modules/protractor/bin/webdriver-manager update --standalone --chrome
 ```
 
-Test are written using [Mocha](http://mochajs.org/) and [Protractor](http://angular.github.io/protractor/#/).
+- Then start the mock application server and run selenium
+
+```
+$ node test/mockserver/mockserver_prod.js &
+$ grunt selenium
+```
+NOTE: to clean up server instance run the following:
+
+```
+$ ps aux | grep mockserver
+```
+
+kill the process listed below
+<user>     27523   0.0  0.2  3054504  32996 s000  S     4:52PM   0:00.27 node test/mockserver/mockserver.js
+
+Or run node mockserver.js in a separate terminal window without the &
