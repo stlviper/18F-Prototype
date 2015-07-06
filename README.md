@@ -97,11 +97,10 @@ Above will run a fake openFDA server for testing. You can view it at
 
 You will need to have [Docker](https://www.docker.com/) already installed and setup. Configuring Docker is outside the scope of this README.
 
-Once you have a working docker environment you can build a docker image and run it using the following commands,
+Once you have a working docker environment you can run a docker image using the following command,
 
 ```
-$ docker build -t stlviper/openfdaviz .
-$ docker run -t -i -p 3002:3002 -p 8000:8000 stlviper/openfdaviz
+$ docker run -t -i -p 3002:3002 -p 8000:8000 stlviper/18f-prototype
 ```
 
 If you are on a OSX you will need to tunnel ports 3002 and 8000 so the client can access the server using localhost, this can be done by issuing the following commands,
