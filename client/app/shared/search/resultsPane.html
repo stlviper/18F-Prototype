@@ -39,7 +39,8 @@
             <span ng-repeat="result in results.drugs">
             <li class="result-list-item" ng-if="result.isDisplayable" ng-click="showModal(result)">
               <dl>
-                <dd><b>Description: </b>{{result.product_description}}</dd>
+                <dd><b>Description: </b>{{result.product_description | limitTo: 150}}
+                  <span ng-if="result.product_description.length > 150">...</span></dd>
                 <dd ng-if="result.openfda.brand_name[0]"><b>Brand Name: </b>{{result.openfda.brand_name[0]}}</dd>
                 <dd ng-if="result.openfda.manufacturer_name[0]"><b>Manufacturer: </b>{{result.openfda.manufacturer_name[0]}}
                 </dd>
@@ -63,7 +64,8 @@
             <span ng-repeat="result in results.devices">
             <li class="result-list-item" ng-if="result.isDisplayable" ng-click="showModal(result)">
               <dl>
-                <dd><b>Description: </b>{{result.product_description}}</dd>
+                <dd><b>Description: </b>{{result.product_description | limitTo: 150}}
+                  <span ng-if="result.product_description.length > 150">...</span></dd>
                 <dd><b>Recall Report Date: </b>{{result.report_date}}</dd>
                 <dd><b>Recalling Firm: </b>{{result.recalling_firm}}</dd>
               </dl>
@@ -84,7 +86,8 @@
             <span ng-repeat="result in results.foods">
             <li class="result-list-item" ng-if="result.isDisplayable" ng-click="showModal(result)">
               <dl>
-                <dd><b>Description: </b>{{result.product_description}}</dd>
+                <dd><b>Description: </b>{{result.product_description | limitTo: 150}}
+                  <span ng-if="result.product_description.length > 150">...</span></dd>
                 <dd><b>Recall Report Date: </b>{{result.report_date}}</dd>
                 <dd><b>Recalling Firm: </b>{{result.recalling_firm}}</dd>
               </dl>
