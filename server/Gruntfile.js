@@ -133,7 +133,7 @@ module.exports = function (grunt) {
 
   // Register other tasks
   grunt.registerTask('default', ['test']);
-  grunt.registerTask('test', ['env:coverage', 'instrument', 'mochaTest:coverage', 'storeCoverage', 'makeReport']);
+  grunt.registerTask('test', ['mochaTest:all','env:coverage', 'instrument', 'mochaTest:coverage', 'storeCoverage', 'makeReport']);
   grunt.registerTask('build', ['test', 'compress']);
   grunt.registerTask('deploy', ['build', 'aws_s3']);
   grunt.registerTask('start', ['build', 'shell:start']);
