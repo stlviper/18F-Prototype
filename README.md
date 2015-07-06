@@ -228,6 +228,7 @@ alt="A Day of Design, Development and collaboration!" width="240" height="180" b
 Client Side
 
  - [angular](http://angularjs.org/) - [MIT](http://opensource.org/licenses/MIT)
+ - [angular-bootstrap](https://angular-ui.github.io/bootstrap/) - [MIT](http://opensource.org/licenses/MIT)
  - [angular-leaflet-directive](https://github.com/tombatossals/angular-leaflet-directive) - [MIT](http://opensource.org/licenses/MIT)
  - [angular-route](https://github.com/angular/angular.js) - [MIT](http://opensource.org/licenses/MIT)
  - [angular-ui-router](https://github.com/angular-ui/ui-router) - [MIT](http://opensource.org/licenses/MIT)
@@ -252,6 +253,7 @@ Client Side
 Server Side API
 
  - [async](https://github.com/nodejitsu/forever) - [BSD](http://opensource.org/licenses/BSD-2-Clause)
- - [express](https://github.com/strongloop/express) - [MIT](http://opensource.org/licenses/MIT)
+ - [express](http://expressjs.com/) - [MIT](http://opensource.org/licenses/MIT)
+ - [node-geocoder](https://github.com/nchaulet/node-geocoder) - [MIT](http://opensource.org/licenses/MIT)
  - [request](https://github.com/request/request) - [Apache-2.0](http://opensource.org/licenses/Apache-2.0)
  - [swagger-express-mw](https://github.com/apigee-127/swagger-express) - [MIT](http://opensource.org/licenses/MIT)
