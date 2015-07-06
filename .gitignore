@@ -48,3 +48,6 @@ client/build
 client/css
 client/index.html
 mocha.json
+
+# Intellij Code Coverage module
+wallaby.json
