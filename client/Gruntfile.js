@@ -195,6 +195,9 @@ module.exports = function (grunt) {
       }
     },
     shell: {
+      startDocker: {
+        command: 'node test/mockserver/mockserver_dev.js'
+      },
       startDev: {
         command: 'node_modules/forever/bin/forever start test/mockserver/mockserver_dev.js'
       },
@@ -239,6 +242,7 @@ module.exports = function (grunt) {
   // Register other tasks
   grunt.registerTask('start:dev', ['build', 'shell:startDev']);
   grunt.registerTask('start:prod', ['build:prod', 'shell:startProd']);
+  grunt.registerTask('start:docker', ['build', 'shell:startDocker']);
   grunt.registerTask('test', ['mochaTest:client']);
   grunt.registerTask('selenium', ['protractor_webdriver', 'protractor:run']);
   grunt.registerTask('default', ['build']);

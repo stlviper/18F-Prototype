@@ -13,8 +13,7 @@ RUN     cd /src; npm install --unsafe-perm
 
 EXPOSE  3002 8000
 
-RUN     chmod 755 /src/start.sh
 WORKDIR  "/src"
 
 # Run openFDA Viz
-CMD     ["/src/start.sh"]
+CMD     ["grunt", "start:docker"]

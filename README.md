@@ -101,14 +101,19 @@ Once you have a working docker environment you can build a docker image and run 
 
 ```
 $ docker build -t stlviper/openfdaviz .
-$ docker run -t -i -p 3002:3002 -p 8000:8000 stlviper/openfdaviz /bin/bash
-$ ./start.sh
+$ docker run -t -i -p 3002:3002 -p 8000:8000 stlviper/openfdaviz
 ```
 
-If you are on a OSX you will need to tunnel ports 3002 and 8000 so you can access them using localhost, this can be done by issuing the following commands
+If you are on a OSX you will need to tunnel ports 3002 and 8000 so the client can access the server using localhost, this can be done by issuing the following commands,
 ```
 $ VBoxManage controlvm boot2docker-vm natpf1 "swagger,tcp,127.0.0.1,3002,,3002"
 $ VBoxManage controlvm boot2docker-vm natpf1 "client,tcp,127.0.0.1,8000,,8000"
+```
+
+To Remove the tunnels when you are done you can issue these commands,
+```
+$ VBoxManage modifyvm boot2docker-vm --natpf1 delete swagger
+$ VBoxManage modifyvm boot2docker-vm --natpf1 delete client
 ```
 
 Once the Docker image is running you can access it at:

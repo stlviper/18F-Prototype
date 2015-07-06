@@ -47,6 +47,9 @@ module.exports = function(grunt) {
 			},
 			startServer: {
 				command: 'cd server && npm start'
+			},
+			startClientDocker: {
+				command: 'cd client && npm run-script startDocker'
 			}
 		}
 	});
@@ -93,6 +96,7 @@ module.exports = function(grunt) {
 
 	grunt.registerTask('start', ['clean:client', 'deploysubproject:client', 'clean:server', 'deploysubproject:server',
 			'shell:startClientDev', 'shell:startServer']);
-	grunt.registerTask('start:dev', ['start:clientDev', 'start:server'])
-	grunt.registerTask('start:prod', ['start:clientProd', 'start:server'])
+	grunt.registerTask('start:dev', ['start:clientDev', 'start:server']);
+	grunt.registerTask('start:prod', ['start:clientProd', 'start:server']);
+	grunt.registerTask('start:docker', ['start:server', 'shell:startClientDocker']);
 };
