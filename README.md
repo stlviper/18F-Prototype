@@ -131,7 +131,7 @@ The team used Kanban and established a cadence for an iteration demo, a release 
  
 (Figure 1: Agile Approach Roadmap) 
  
-![alt text](https://github.com/stlviper/18F-Prototype/blob/master/assets/process/openFDAViz-AI-09.png "Agile Approach Roadmap") 
+![alt text](https://github.com/stlviper/18F-Prototype/blob/master/assets/process/openFDAViz-AI-10-PNG.png "Agile Approach Roadmap") 
  
 Following the kick-off meeting, we conducted a [Frame the Challenge mindmapping](https://github.com/stlviper/18F-Prototype/blob/master/assets/process/68-EF-Framing the Challengev02.docx) exercise to establish a vision and strategy for the project. The PM and team used the MindMap to create the initial backlog and priorities, and provided a baseline to brainstorm data options and prototype design, Figure 2. 
  
