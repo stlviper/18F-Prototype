@@ -224,6 +224,8 @@ paths:
 
   /food/event/search:
     get:
+      tags:
+        - food
       x-swagger-router-controller: fda_api
       operationId: foodEventSearch
       description: Search field(s)
