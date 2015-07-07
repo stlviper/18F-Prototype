@@ -3,7 +3,7 @@ openFDAViz URL: http://openfdaviz.cloudogsystems.com/
 # openFDAViz
 
 * [Brief Description](#description)
-* [Digital Service Playbook evidence](https://github.com/stlviper/18F-Prototype/tree/master/assets/DigitalServicesPlaybook.pdf)
+* [Digital Service Playbook Evidence](https://github.com/stlviper/18F-Prototype/tree/master/assets/DigitalServicesPlaybook.pdf)
 * [Attachment E Approach Criteria](https://github.com/stlviper/18F-Prototype/tree/master/assets/AttachmentEApproachCriteriaEvidenceMod5.xlsx)
 
 openFDAViz is a cloud based viewer for the openFDA Api Data
@@ -148,8 +148,7 @@ We engaged end customers in a collaborative session to brainstorm needs and soli
  
 (Figure 3.1: Customer Engagement Session) 
  
-<a href="http://www.youtube.com/watch?feature=player_embedded&v=myWMVXG98so" target="_blank"><img src="http://img.youtube.com/vi/myWMVXG98so/0.jpg" 
-alt="A Day of Design, Development and collaboration!" width="240" height="180" border="10" /></a> 
+[Customer Engagement Capture](https://github.com/stlviper/18F-Prototype/raw/master/assets/process/smallUserEngamentSession1.mp4) 
  
 (Figure 3.2: Customer Suggestions) 
  
@@ -157,7 +156,7 @@ alt="A Day of Design, Development and collaboration!" width="240" height="180" b
  
 [Human-centered design](https://github.com/stlviper/18F-Prototype/blob/master/assets/design/61-EF-HCDElements-AI-001.pdf) is always at the forefront of our process. We leveraged the following human-centered-design methods (Criteria D): 
  
-1. [Frame the Challenge](https://github.com/stlviper/18F-Prototype/blob/master/assets/process/68-EF-Framing the Challengev02.docx) and Mindmapping    
+1. [Frame the Challenge](https://github.com/stlviper/18F-Prototype/raw/master/assets/process/68-EF-Framing%20the%20Challengev02.docx) and Mindmapping    
    * We 'framed the challenge' to create a common understanding of objectives by conducting a brainstorming session and discussion, and mindmapping the discussion to capture and highlight salient and related ideas.   
 2. [User Interviews](https://github.com/stlviper/18F-Prototype/blob/master/assets/design/18F-UserEngagementSession001.jpg)
    * We created an Interview Guide and conducted a user interview session with our Mock Users. The Interview Guide employed open-ended questions to provide a safe forum for users to provide insights, opinions, and perspectives on a range of topics affecting this project, such as the need for food/device/drug information, their occupation, and their interaction with online search tools. 
@@ -227,9 +226,7 @@ We conducted a user demo mid-day Wednesday to test the application and gather fe
  
 (Figure 11: A Day of Design, Development and collaboration!) 
  
-<a href="http://www.youtube.com/watch?feature=player_embedded&v=-aAyHSWz8lQ 
-" target="_blank"><img src="http://img.youtube.com/vi/-aAyHSWz8lQ/0.jpg" 
-alt="A Day of Design, Development and collaboration!" width="240" height="180" border="10" /></a> 
+[A Day of Design, Development and collaboration!](https://github.com/stlviper/18F-Prototype/blob/master/assets/process/OpenFDAVizDevDay1.mp4)
  
 Team OGSystems using already established agile engineering methods was ready to deliver at the first release boundary presented by the ADS I RFQ. When the boundary was extended, we tagged release version 1.0.0 of the application in our GITHub repo and prepped our backlog with the next PO set of prioritized items.  
  
