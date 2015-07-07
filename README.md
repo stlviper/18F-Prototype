@@ -2,6 +2,10 @@ openFDAViz URL: http://openfdaviz.cloudogsystems.com/
 
 # openFDAViz
 
+* [Brief Description](#description)
+* [Digital Service Playbook evidence](https://github.com/stlviper/18F-Prototype/tree/master/assets/DigitalServicesPlaybook.pdf)
+* [Attachment E Approach Criteria](https://github.com/stlviper/18F-Prototype/tree/master/assets/AttachmentEApproachCriteriaEvidenceMod5.xlsx)
+
 openFDAViz is a cloud based viewer for the openFDA Api Data
 
 ### Prerequisites
@@ -115,7 +119,8 @@ $ eb open
 
 You will now have a running version of the openFDAViz app. The eb open command will open the API in your browser.
 
-## *** Team OGSystems Agile Approach *** 
+(#description)
+## *** Team OGSystems Agile Approach Description *** 
  
 OGSystems’ agile engineering method employs user-centric design elements, such as rapid prototyping and deployment of capabilities, to iterate on and refine solutions. Our unique blend of agile, scaled agile and visually-based facilitation methods allows us to quickly respond to challenges scaling from Team to Enterprise. 
 Team OGSystems created the FDA Prototype following our normal agile software development approach. Our staff of experienced and certified agile practitioners responded to and built the prototype by adding the RFQ response as a high priority project to our normal backlog. 
@@ -136,7 +141,6 @@ Following the kick-off meeting, we conducted a [Frame the Challenge mindmapping]
  
 Our team self-identified in roles that matched their experience and expertise, scheduled customer engagement sessions and started design development, [building wireframes](https://github.com/stlviper/18F-Prototype/blob/master/assets/design/18F-UI-MockUp003.jpg), designing architecture and creating a [design style guide](26-EF-52DesignStyleGuide-1506.pdf)(Criteria E). 
 We engaged end customers in a collaborative session to brainstorm needs and solicit feedback on initial design concepts, Figure 3, yielding additional design and development concepts and stories, Figure 3.1 and Figure 3.2 (Criteria C). 
- 
  
 (Figure 3: Customer Engagement) 
  
@@ -165,9 +169,9 @@ alt="A Day of Design, Development and collaboration!" width="240" height="180" b
 5. Rapid Prototyping 
    * [Paper Prototypes](https://github.com/stlviper/18F-Prototype/blob/master/assets/design/20150619001-InitialUIDesignNotes.jpg)
      * We further leveraged human-centered design techniques by sketching out paper prototype user interfaces prior to writing any code. Creating paper prototypes saves time, money, and fosters an environment where all participants (team members and users alike) feel welcome to participate in, revise, and comment on prototype design. 
-   * [Mock-ups](https://github.com/stlviper/18F-Prototype/blob/master/assets/design/18F-UI-MockUp003.jpg)(Criteria F)
+   * [Mock-ups](https://github.com/stlviper/18F-Prototype/blob/master/assets/design/18F-UI-MockUp003.jpg) (Criteria F)
      * We transferred our Paper Prototypes into digital code to resemble the look and feel of a working product. While Paper Prototypes foster an atmosphere for creating ideas, mock-ups are effective at representing design decisions and the potential for functional limitations. When a customer experiences these decisions and limitations, it creates a more meaningful feedback session. 
-    * [Feedback Cycles](https://github.com/stlviper/18F-Prototype/blob/master/assets/design/openFDAViz-AI-10-PNG.png)(Criteria F)
+    * [Feedback Cycles](https://github.com/stlviper/18F-Prototype/blob/master/assets/design/openFDAViz-AI-10-PNG.png) (Criteria F)
       * The secret to Rapid Prototyping is increasing the number and frequency of feedback cycles. By rapidly creating paper prototypes and digital mock-ups, we were able to increase the number of user reviews, inter-team reviews, and leadership reviews. We also employed the Deep Dive method for facilitating these feedback sessions – the presentation of functionality is very short; the feedback providers may then comment on anything they wish; the feedback receivers take notes and do not defend the prototype. All feedback is sacred and evaluated from multiple angles.  
  
 As described, we conducted a Persona Development brainstorming session, Figure 4, and developed User Personas, Figure 5, to aid in the design and prioritization process. 
@@ -180,7 +184,7 @@ As described, we conducted a Persona Development brainstorming session, Figure 4
  
 ![alt text](https://github.com/stlviper/18F-Prototype/blob/master/assets/design/27-EF-46UserPersonas-1506.jpg "Persona Development") 
  
-We swarmed on the architectural runway and build out the initial architecture as our first configuration design priority. Nolan Hager led the devops decisions to get us running in [AWS using Elastic Beanstalk](https://github.com/stlviper/18F-Prototype/blob/master/assets/deployment) (Criteria J) with a scalable web application that interfaces with the FDA api, Figure 6. We used [CloudWatch](https://github.com/stlviper/18F-Prototype/blob/master/assets/deployment/Cloudwatch.png) to provide continous monitoring (Criteria N).
+We swarmed on the architectural runway and build out the initial architecture as our first configuration design priority. Nolan Hager led the devops decisions to get us running in [AWS using Elastic Beanstalk](https://github.com/stlviper/18F-Prototype/blob/master/assets/deployment/AWSElasticBeanstalkMultiAvabilityZones.png) (Criteria J) with a scalable web application that interfaces with the FDA api, Figure 6. We used [CloudWatch](https://github.com/stlviper/18F-Prototype/blob/master/assets/deployment/Cloudwatch.png) to provide continous monitoring (Criteria N).
 This architecture supports scaling and load balancing based on server capacity and configuration.  We used the following five modern and open-source technologies (Criteria I/Q): 
  
    * Leaflet.js to add a geospatial map based component to our UI. It also plugged into angular very well.  
@@ -189,14 +193,14 @@ This architecture supports scaling and load balancing based on server capacity a
    * Swagger API (http://openfdavizapi.cloudogsystems.com/docs/) to remix the FDA data by adding geo location and allows other interfaces to use and display the data in new ways.  
    * Node.js to interact with the data on the server side increasing the efficiency of remixing the data provided by the FDA API and to implement the Swagger API.  
    * [Wapiti](https://github.com/stlviper/18F-Prototype/blob/master/assets/deployment/wapiti.png) to run real time security scans looking for vulnerabilities in the application and generating reports on each build. 
-   * [Docker](https://registry.hub.docker.com/u/stlviper/18f-prototype/builds_history/247777/) to provide System level virtualization (Criteria O).
+   * [Docker](https://registry.hub.docker.com/u/stlviper/18f-prototype/) to provide System level virtualization (Criteria O).
  
 (Figure 6: openFDAViz Architecture) 
  
 ![alt text](https://github.com/stlviper/18F-Prototype/blob/master/assets/process/18fAWSArchitecture.png "openFDAViz Architecture") 
  
 We used several applications to facilitate collaboration among remotely-based teams (Saint Louis, MO; Chantilly, VA), including HipChat for day-to-day interactions, Figure 7.  HipChat was integrated with JIRA and Confluence to receive notifications in our 18F chat room and with Appear video chat capability. JIRA (Requirements), Confluence (Documentation), [GitHub](https://github.com/stlviper/18F-Prototype/blob/master/README.md)(Criteria P) (Source Control) were our primary configuration managment tools (Criteria M).
-Collaboration via chat and video was continuous. Our Agile workflow was tracked in JIRA with two or more parties reviewing each task, leveraging Crucible for version-controlled, user-story based reviews and GitHub for version control and [Bamboo](https://github.com/stlviper/18F-Prototype/blob/master/assets/process/BambooRunningTest.png) for continous integration and deployment (Criteria L). 
+Collaboration via chat and video was continuous. Our Agile workflow was tracked in JIRA with two or more parties reviewing each task, leveraging Crucible for version-controlled, user-story based reviews and GitHub for version control and [Bamboo](https://github.com/stlviper/18F-Prototype/blob/master/assets/process/BambooRunningTest.png) for continous integration and deployment to Beanstalk (Criteria L). 
 [Mocha](https://github.com/stlviper/18F-Prototype/blob/master/assets/process/GruntMochaTest.png) and [Selenium](https://github.com/stlviper/18F-Prototype/blob/master/assets/process/GruntSeleniumTest.png), used for automatic unit tests and automatic UI testing, were integral to our Test Driven Development Approach, ensuring code quality and reducing cross-browser inconstancies (Criteria K). We used a Kanban board to iterate through stories and track the state of the prototype. Setting work in progress (WIP) limits in each swim lane on the Kanban board kept our team lean and allowed us to complete more work with less delay, Figure 8. 
  
 (Figure 7: HipChat Snapshot) 
@@ -242,7 +246,7 @@ This allowed the team to enhance the overall user experience by conducting more 
 Team OGSystems’ agile approach positioned our multidisciplinary team to adjust to the changing timeline and incorporate additional user testing and feedback sessions, resulting in more user-requested features.  
  
 We continued to use the extended timeframe to provide a ‘release on demand’ cadence and support the final delivery date with a full-featured mature web application. We conducted two retrospectives, increasing the team’s Kaizen finishing with an overall retrospective to improve our internal agile engineering practices. 
-
+ 
 ### Included Libraries / Projects
 Client Side
 
