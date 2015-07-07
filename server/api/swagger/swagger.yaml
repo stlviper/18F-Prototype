@@ -17,9 +17,20 @@ consumes:
 # format of the responses to the client (Accepts)
 produces:
   - application/json
+tags:
+  - name: splash
+    description: splash page aggregated search
+  - name: drug
+    description: drug endpoint
+  - name: food
+    description: food endpoint
+  - name: device
+    description: device endpoint
 paths:
   /search/splash:
     get:
+      tags:
+        - splash
       x-swagger-router-controller: fda_api
       operationId: aggregateSplashSearch
       description: Aggregated search for the splash page
@@ -59,6 +70,8 @@ paths:
             $ref: "#/definitions/ErrorResponse"
   /drug/event/search:
     get:
+      tags:
+        - drug
       x-swagger-router-controller: fda_api
       operationId: drugEventSearch
       description: Search field(s)
@@ -99,6 +112,8 @@ paths:
             $ref: "#/definitions/ErrorResponse"
   /drug/event/rangecount:
     get:
+      tags:
+        - drug
       x-swagger-router-controller: fda_api
       operationId: drugEventRangeCount
       description: Returns test fetch of a drugs query count
@@ -132,6 +147,8 @@ paths:
 
   /device/event/search:
     get:
+      tags:
+        - device
       x-swagger-router-controller: fda_api
       operationId: deviceEventSearch
       description: Search field(s)
@@ -172,6 +189,8 @@ paths:
             $ref: "#/definitions/ErrorResponse"
   /device/event/rangecount:
     get:
+      tags:
+        - device
       x-swagger-router-controller: fda_api
       operationId: deviceEventRangeCount
       description: Returns test fetch of a drugs query count
@@ -245,6 +264,8 @@ paths:
             $ref: "#/definitions/ErrorResponse"
   /food/event/rangecount:
       get:
+        tags:
+          - food
         x-swagger-router-controller: fda_api
         operationId: foodEventRangeCount
         description: Returns test fetch of a drugs query count
