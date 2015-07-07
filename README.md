@@ -119,7 +119,7 @@ $ eb open
 
 You will now have a running version of the openFDAViz app. The eb open command will open the API in your browser.
 
-(#description)
+<a name="description"></a>
 ## *** Team OGSystems Agile Approach Description *** 
  
 OGSystems’ agile engineering method employs user-centric design elements, such as rapid prototyping and deployment of capabilities, to iterate on and refine solutions. Our unique blend of agile, scaled agile and visually-based facilitation methods allows us to quickly respond to challenges scaling from Team to Enterprise. 
