@@ -7,18 +7,18 @@ var request = require('request'),
 //'http://54.165.240.32/drug/label.json?search=effective_time:[20090601+TO+20140731]&limit=50',
 
 
-var FDA_DRUG_EVENT = 'https://api.fda.gov/drug/';
+var FDA_DRUG_EVENT = 'http://usfed-test.apigee.net/api/fda/drug';
 
 
 var FDA_END_POINTS = {
-  device: 'https://api.fda.gov/device/',
-  drug: 'https://api.fda.gov/drug/',
-  food: 'https://api.fda.gov/food/'
+  device: 'http://usfed-test.apigee.net/api/fda/device/',
+  drug: 'http://usfed-test.apigee.net/api/fda/drug/',
+  food: 'http://usfed-test.apigee.net/api/fda/food/'
 };
 var FDA_END_TYPES = {
-  event: 'event.json',
-  enforcement: 'enforcement.json',
-  label: 'label.json'
+  event: 'event',
+  enforcement: 'enforcement',
+  label: 'label'
 };
 
 var formatSearchFields = function (value, fields) {
