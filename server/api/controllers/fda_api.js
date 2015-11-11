@@ -6,14 +6,10 @@ var request = require('request'),
 //'https://api.fda.gov/drug/event.json?search=receivedate:[20040101+TO+20150101]&count=patient.patientsex',
 //'http://54.165.240.32/drug/label.json?search=effective_time:[20090601+TO+20140731]&limit=50',
 
-
-var FDA_DRUG_EVENT = 'http://usfed-test.apigee.net/api/fda/drug';
-
-
 var FDA_END_POINTS = {
   device: 'http://usfed-test.apigee.net/api/fda/device/',
   drug: 'http://usfed-test.apigee.net/api/fda/drug/',
-  food: 'http://usfed-test.apigee.net/api/fda/food/'
+  food: 'http://usfed-test.apigee.net/api/fda/food/',
 };
 var FDA_END_TYPES = {
   event: 'event',
@@ -115,7 +111,7 @@ var getAPIData = function (endPointBase, typeOfEngPoint, req, fields, callback) 
   if (req.swagger.params.query) {
     search = req.swagger.params.query.value;
   }
-  if (fields.length > 0) {
+  if (fields && fields.length > 0) {
     search = formatSearchFields(req.swagger.params.query.value, fields);
   }
   var fdaUrl = FDA_END_POINTS[endPointBase] + FDA_END_TYPES[typeOfEngPoint] + '?search=' + search;
@@ -166,7 +162,7 @@ function getAggregateSplashSearchData(req, res) {
         }
         getAPIData('drug', 'enforcement', req, chosenFields, function (data) {
           geoCodeDrugData(data, function (data) {
-            callback(null, {key: 'drug', value: data});
+            callback(null, {key: 'drug', value: (data ? data : [])});
           });
         });
 
@@ -175,7 +171,7 @@ function getAggregateSplashSearchData(req, res) {
     function (err, data) {
       var returnData = {drug: [], device: [], food: []};
       for (var idx in data) {
-        if (data[idx].value instanceof  Array) {
+        if (data[idx].value instanceof Array) {
           returnData[data[idx].key] = data[idx].value;
         }
       }
@@ -190,7 +186,7 @@ function getAggregateSplashSearchData(req, res) {
 }
 
 function getRangeCountData(req, callback) {
-  var fdaUrl = FDA_DRUG_EVENT + 'event.json?search=receivedate:[' + req.swagger.params.start.value + '+TO+' + req.swagger.params.end.value + ']&count=' + req.swagger.params.field.value;
+  var fdaUrl = FDA_END_POINTS.drug + FDA_END_TYPES.event + '?search=receivedate:[' + req.swagger.params.start.value + '+TO+' + req.swagger.params.end.value + ']&count=' + req.swagger.params.field.value;
   getDataFromFdaApi(fdaUrl, function (data) {
     callback(data);
   });
@@ -199,7 +195,7 @@ function getRangeCountData(req, callback) {
 function getEventSearchData(req, callback) {
   var limit = req.swagger.params.limit.value || 100;
   var start = req.swagger.params.skip.value || 0;
-  var fdaUrl = FDA_DRUG_EVENT + 'event.json?search=' + req.swagger.params.query.value + '&limit=' + limit + '&skip=' + start;
+  var fdaUrl = FDA_END_POINTS.drug + FDA_END_TYPES.event + '?search=' + req.swagger.params.query.value + '&limit=' + limit + '&skip=' + start;
 
   getDataFromFdaApi(fdaUrl, function (data) {
     callback(data);

@@ -54,8 +54,8 @@ describe('Testing Drugs Controller.', function () {
 
       drugs.tests.getEventSearchData(mockReq, function (data) {
         expect(data.length).to.equal(11);
-        expect(data[0]['@epoch']).to.exist;
-        expect(data[10]['@epoch']).to.exist;
+        expect(data[0]['primarysourcecountry']).to.exist;
+        expect(data[10]['primarysourcecountry']).to.exist;
         var totalCorrectResults = 0;
         for (var i = 0; i < data.length; i++) {
           if (data[i].primarysourcecountry.toLowerCase() === "us") {
@@ -93,8 +93,8 @@ describe('Testing Drugs Controller.', function () {
 
       drugs.tests.getEventSearchData(mockReq, function (data) {
         expect(data.length).to.equal(11);
-        expect(data[0]['@epoch']).to.exist;
-        expect(data[10]['@epoch']).to.exist;
+        expect(data[0]['primarysourcecountry']).to.exist;
+        expect(data[10]['primarysourcecountry']).to.exist;
         var totalCorrectResults = 0;
         for (var i = 0; i < data.length; i++) {
           if (data[i].primarysourcecountry.toLowerCase() === "us") {
@@ -117,8 +117,8 @@ describe('Testing Drugs Controller.', function () {
 
       drugs.tests.getAPIData('food', 'enforcement', mockReq, [], function (data) {
         expect(data.length).to.equal(5);
-        expect(data[0]['@epoch']).to.exist;
-        expect(data[3]['@epoch']).to.exist;
+        expect(data[0]['state']).to.exist;
+        expect(data[3]['state']).to.exist;
         var totalCorrectResults = 0;
         for (var i = 0; i < data.length; i++) {
           if (data[i].state.toLowerCase() === "mo") {
@@ -140,8 +140,8 @@ describe('Testing Drugs Controller.', function () {
 
       drugs.tests.getAPIData('device', 'enforcement', mockReq, ['state'], function (data) {
         expect(data.length).to.equal(5);
-        expect(data[0]['@epoch']).to.exist;
-        expect(data[3]['@epoch']).to.exist;
+        expect(data[0]['state']).to.exist;
+        expect(data[3]['state']).to.exist;
         var totalCorrectResults = 0;
         for (var i = 0; i < data.length; i++) {
           if (data[i].state.toLowerCase() === "ca") {
@@ -163,8 +163,8 @@ describe('Testing Drugs Controller.', function () {
 
       drugs.tests.getAPIData('device', 'enforcement', mockReq, ['state'], function (data) {
         expect(data.length).to.equal(5);
-        expect(data[0]['@epoch']).to.exist;
-        expect(data[3]['@epoch']).to.exist;
+        expect(data[0]['state']).to.exist;
+        expect(data[3]['state']).to.exist;
         var totalCorrectResults = 0;
         for (var i = 0; i < data.length; i++) {
           if (data[i].state.toLowerCase() === "mo") {
