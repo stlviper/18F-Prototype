@@ -4,9 +4,9 @@
     "js": "js"
   },
   "resources": {
-    "general": "http://openfdavizapi.cloudogsystems.com/search/splash",
-    "drugs": "http://openfdavizapi.cloudogsystems.com/drug/event/search",
-    "foods": "http://openfdavizapi.cloudogsystems.com/food/event/search",
-    "devices": "http://openfdavizapi.cloudogsystems.com/device/event/search"
+    "general": "http://usfed-test.apigee.net/api/openfdaviz/search/splash",
+    "drugs": "http://usfed-test.apigee.net/api/openfdaviz/drug/event/search",
+    "foods": "http://usfed-test.apigee.net/api/openfdaviz/food/event/search",
+    "devices": "http://usfed-test.apigee.net/api/openfdaviz/device/event/search"
   }
 }
