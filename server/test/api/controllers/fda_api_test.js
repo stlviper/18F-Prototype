@@ -131,7 +131,7 @@ describe('Testing Drugs Controller.', function () {
     });
   });
 
-  describe('Should return an array of counts for a Range of records in Food Events', function () {
+  describe('Should return an array of counts for a Range of records in Device Events', function () {
     it('Contain an array of enforcement reports for a time range', function (done) {
       var mockReq = this.mockReq;
       mockReq.swagger.params.query = {value: "ca"};
@@ -183,7 +183,7 @@ describe('Testing Drugs Controller.', function () {
       mockReq.swagger.params.start = {value: "20100521"};
       mockReq.swagger.params.end = {value: "20150410"};
       mockReq.swagger.params.field = {value: 'manufacturer_state'};
-      drugs.tests.getAPIRangeData('device', 'event', 'report_date', mockReq, function (data) {
+      drugs.tests.getAPIRangeData('device', 'enforcement', 'report_date', mockReq, function (data) {
         expect(data[0]).to.exist;
         expect(data[0].count).to.exist;
         done();
